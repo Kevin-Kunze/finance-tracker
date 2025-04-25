@@ -1,10 +1,12 @@
 ---
-name: Custom issue template A
-about: Describe this issue template's purpose here.
+name: Task Issue Template
+about: Use this template to create a task.
 title: ''
-labels: ''
+labels: 'task'
 assignees: ''
 
 ---
 
+## Aufgabenstellung
 
+## Hinweise
