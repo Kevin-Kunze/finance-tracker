@@ -1,6 +1,6 @@
 // Meta
-:project-name: Projektthema (T00)
-:project-system-name: Software-Name
+:project-name: Finanztracker
+:project-system-name: Pantha
 // Settings:
 :toc:
 :toc-title: Inhaltsverzeichnis

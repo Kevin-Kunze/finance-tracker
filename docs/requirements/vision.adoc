@@ -1,5 +1,5 @@
 = Vision: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <email>; Loris Kulke <email>; Luca Funk <email>; Ruben Czock <email>; Lucas Effenberger <email>; Ali <email>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -12,7 +12,7 @@ Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäte
 Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von <Team> entwickelt wird. Das System wird es <Zielkunde/Auftraggeber> erlauben, <Hauptfunktionen> zu nutzen, um damit <Vorteile> zu erreichen / <Aufgabe> zu erleichtern / <Problem> zu lösen.
+Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von {project-system-name}-Team entwickelt wird. Das System wird es dem Studenten erlauben, sich selbst finanziell zu planen, um damit unnötige Ausgaben zu reduzieren und selbst gesetzte Sparziel zu erreichen.
 
 === Definitionen, Akronyme und Abkürzungen
 //Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
@@ -20,27 +20,27 @@ Siehe <<#glossary, Glossar>>.
 //Siehe <<./glossary.adoc#glossary, Glossar>>.
 
 === Referenzen
-(hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
+//(hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
 
 
 == Positionierung
 
 === Fachliche Motivation
 //Erläutern Sie kurz den Hintergrund, in dem das Projekt angesiedelt ist. Welches Problem soll gelöst werden, wie ist es entstanden? Welche Verbesserung wird angestrebt. Achten Sie darauf, eine fachliche (organisatorische, betriebswirtschaftliche) Perspektive einzunehmen.
+Aufgrund der Tatsache, dass unser Team selbst aus Studenten besteht, ist die finanzielle Lage der Meisten aus unserem Umfeld gering. Mit unserer App gibt es die Möglichkeit, finanzielle Tätigkeiten zu tracken, damit das Einkommen von Minijobs, Bafög etc. bis zum Monatsende ausreicht und Sparmaßnahmen möglich sind.
 
 === Produktvision
 //Eine Produktvision beschreibt das Einsatzziel der Anwendung und sorgt für ein gemeinsames Ziel und Verständnis für alle Beteiligten im Projekt. Geben Sie in knapper Form übersichtsartig die Positionierung der angestrebten Lösung im Vergleich zu verfügbaren Alternativen dar. Das folgende Format kann dazu verwendet werden:
 
-
 [cols="1,3"]
 |===
-| Für | [Zielkunde / Persona]
-| der / die | [Angabe des Bedarfs oder Chance]
-| ist das  | [Produktname]
-| eine  | [Produktkategorie]
-| der / die | [Aussage zum Hauptvorteil / Alleinstellungsmerkmal]
-| anders als | [wesentliche Lösungsalternative]
-| kann unser Produkt | [Aussage zum Hauptunterschied]
+| Für | Studenten und Azubis
+| die | eine knappe finanzielle Lage haben
+| ist die  | App {project-system-name}
+| eine  | Unterstützung zur finanziellen Planung
+| die | es ermöglicht, Einnahmen und Ausgaben zu tracken
+| anders als | vergleichbare Apps
+| kann unser Produkt | Eingaben mit Hilfe von KI erfassen
 |===
 
 
@@ -80,9 +80,85 @@ Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mi
 [%header, cols="4,1,4,1"]
 |===
 | Bedarf | Priorität | Features / Funktionen | Geplantes Release
-| xx | xx | xx | xx
-|===
 
+| Transaktionen
+| sehr hoch
+a|
+* Scannen von Bildern womit Einnahmen und Ausgaben durch KI erfasst werden
+** Automatische Kategorisierung von Transaktionen durch KI
+* Manuelle Eingabe von Einnahmen und Ausgaben
+** Vorschläge für Kategorien
+* Wiederkehrende Transaktionen
+| xx
+
+| Kategorisierung
+| sehr hoch
+a|
+* Möglichkeit eine Kategorien zu erstellen, zu bearbeiten und zu löschen
+* Möglichkeit Kategorien zu organisieren
+* Möglichkeit Kategorien visuell zu gestalten (Farben, Icons)
+* Möglichkeit Kategorien zu einer Transaktion zuzuordnen
+| xx
+
+| Budget
+| hoch
+a|
+* Möglichkeit Budgets zu erstellen, zu bearbeiten und zu löschen
+* Möglichkeit Budgets Kategorien zuzuordnen
+| xx
+
+| Konto
+| hoch
+a|
+* Möglichkeit Konten zu erstellen, zu bearbeiten und zu löschen
+* Möglichkeit Konten in vorgegebenen Kategorien zu kategorisieren
+* Möglichkeit Konten visuell zu gestalten (Farben, Icons)
+* Möglichkeit Konten Transaktionen zuzuordnen
+* Anzeigen des aktuellen Kontostands
+| xx
+
+| Konto
+| hoch
+a|
+* Möglichkeit Konten zu erstellen, zu bearbeiten und zu löschen
+* Möglichkeit Konten in vorgegebenen Kategorien zu kategorisieren
+* Möglichkeit Konten visuell zu gestalten (Farben, Icons)
+* Möglichkeit Konten Transaktionen zuzuordnen
+* Anzeigen des aktuellen Kontostands
+| xx
+
+| Dashboard
+| mittel
+a|
+* Überblick über aktuelle Trends
+* Darstellung von übersichtlichen Statistiken
+| xx
+
+| Export/Import
+| niedrig
+a|
+* Export aller Daten in einem geeigneten Format
+** auch in offiziellen Formaten
+* Import von Daten aus einem geeigneten Format
+| xx
+
+| Export/Import
+| niedrig
+a|
+* Export aller Daten in einem geeigneten Format
+** auch in offiziellen Formaten
+* Import von Daten aus einem geeigneten Format
+| xx
+
+| Benachrichtigungen
+| niedrig
+a|
+* Benachrichtigung bei und vor dem Erreichen von Budgets
+* Benachrichtigung wenn wiederkehrende Transaktionen anstehen
+* Benutzerdefinierte regelmäßige zusammenfassende Benachrichtigungen
+| xx
+
+|===
 
 === Zusätzliche Produktanforderungen
 //Zutreffendes angeben, nicht zutreffendes streichen oder auskommentieren
@@ -97,5 +173,17 @@ Hinweise:
 [%header, cols="4,1,1"]
 |===
 | Anforderung | Priorität | Geplantes Release
-| xx | xx | xx
+
+| Gute Leistung (auf einfachen Geräten)
+| sehr hoch
+| xx
+
+| Benutzerfreundlichkeit
+| sehr hoch
+| xx
+
+| Robustheit
+| hoch
+| xx
+
 |===
