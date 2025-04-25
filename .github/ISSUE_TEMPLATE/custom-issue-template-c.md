@@ -1,10 +1,12 @@
 ---
-name: Custom issue template C
-about: Describe this issue template's purpose here.
+name: Risk Issue Tempate
+about: Use this template to create a risk.
 title: ''
-labels: ''
+labels: 'risk'
 assignees: ''
 
 ---
 
+## Risikobeschreibung
 
+## Bewältigungsstrategie
