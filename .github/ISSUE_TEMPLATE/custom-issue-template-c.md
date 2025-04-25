@@ -1,5 +1,5 @@
 ---
-name: Risk Issue Tempate
+name: Risk Issue Template
 about: Use this template to create a risk.
 title: ''
 labels: 'risk'
