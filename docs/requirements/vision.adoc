@@ -1,5 +1,5 @@
 = Vision: {project-name}
-Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <email>; Loris Kulke <email>; Luca Funk <email>; Ruben Czock <email>; Lucas Effenberger <email>; Ali <email>
+Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze s86218@htw-dresden.de; Loris Kulke s87072@htw-dresden.de; Luca Funk <email>; Ruben Czock s87149@htw-dresden.de; Lucas Effenberger s87202@htw-dresden.de; Ali s85161@htw-dresden.de
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -12,7 +12,7 @@ Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäte
 Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von {project-system-name}-Team entwickelt wird. Das System wird es dem Studenten erlauben, sich selbst finanziell zu planen, um damit unnötige Ausgaben zu reduzieren und selbst gesetzte Sparziel zu erreichen.
+Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von {project-system-name}-Team entwickelt wird. Das System wird es Studierenden erlauben, sich selbst finanziell zu planen, um damit unnötige Ausgaben zu reduzieren und selbst gesetzte Sparziel zu erreichen.
 
 === Definitionen, Akronyme und Abkürzungen
 //Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
@@ -27,20 +27,24 @@ Siehe <<#glossary, Glossar>>.
 
 === Fachliche Motivation
 //Erläutern Sie kurz den Hintergrund, in dem das Projekt angesiedelt ist. Welches Problem soll gelöst werden, wie ist es entstanden? Welche Verbesserung wird angestrebt. Achten Sie darauf, eine fachliche (organisatorische, betriebswirtschaftliche) Perspektive einzunehmen.
-Aufgrund der Tatsache, dass unser Team selbst aus Studenten besteht, ist die finanzielle Lage der Meisten aus unserem Umfeld gering. Mit unserer App gibt es die Möglichkeit, finanzielle Tätigkeiten zu tracken, damit das Einkommen von Minijobs, Bafög etc. bis zum Monatsende ausreicht und Sparmaßnahmen möglich sind.
+Aufgrund der Tatsache, dass unser Team selbst aus Studierenden besteht, kennen wir die finanziellen Herausforderungen in unserem Umfeld sehr gut. Viele Studierende haben nur ein begrenztes Einkommen aus Minijobs, BaföG oder Unterstützung von Angehörigen.
+
+Mit unserer App bieten wir eine einfache Möglichkeit, Einnahmen und Ausgaben schnell und unkompliziert zu tracken. So können Studierende ihr Budget besser im Blick behalten, sicherstellen, dass ihr Geld bis zum Monatsende reicht, und gezielt Sparmaßnahmen umsetzen.
+
+Durch intuitive Funktionen, moderne Visualisierungen und smarte Tipps unterstützt unsere App junge Menschen dabei, ohne großen Aufwand mehr finanzielle Kontrolle und Sicherheit zu gewinnen.
 
 === Produktvision
 //Eine Produktvision beschreibt das Einsatzziel der Anwendung und sorgt für ein gemeinsames Ziel und Verständnis für alle Beteiligten im Projekt. Geben Sie in knapper Form übersichtsartig die Positionierung der angestrebten Lösung im Vergleich zu verfügbaren Alternativen dar. Das folgende Format kann dazu verwendet werden:
 
 [cols="1,3"]
 |===
-| Für | Studenten und Azubis
-| die | eine knappe finanzielle Lage haben
+| Für | junge Studierende
+| die | eine knappe finanzielle Lage haben und mit minimalem Aufwand den Überblick über ihre Ausgaben und Sparziele behalten wollen,
 | ist die  | App {project-system-name}
-| eine  | Unterstützung zur finanziellen Planung
-| die | es ermöglicht, Einnahmen und Ausgaben zu tracken
-| anders als | vergleichbare Apps
-| kann unser Produkt | Eingaben mit Hilfe von KI erfassen
+| eine  | moderne und smarte Finanzapp
+| die | schnell, unkompliziert und individuell zugeschnitten Einnahmen erfässt und durch KI intelligent mitdenkt,
+| anders als | klassische Finanz-Apps, die oft überladen, kompliziert oder auf Profi-Nutzer ausgerichtet sind,
+| kann unser Produkt | durch intuitive Bedienung, modernes Design und gezielte KI-Unterstützung die Bedürfnisse von Digital Natives mit begrenztem Budget optimal erfüllen.
 |===
 
 
@@ -59,6 +63,32 @@ Aufgrund der Tatsache, dass unser Team selbst aus Studenten besteht, ist die fin
 == Stakeholder Beschreibungen
 
 === Zusammenfassung der Stakeholder
+*Primäre Stakeholder*
+
+[%header, cols="1,3,3"]
+|===
+| Name | Beschreibung | Verantwortlichkeiten
+
+| Studierende 
+| Junge Erwachsene, meist Digital Natives, die oft nur über ein geringes Einkommen verfügen. Sie wünschen sich eine einfache, schnelle und motivierende Möglichkeit, ihre Finanzen zu verwalten, Ausgaben im Blick zu behalten und Sparziele zu erreichen – am liebsten per Smartphone und in einer optisch modernen, smarten und intuitiven App.
+| Studierende nutzen die App aktiv zur Verwaltung ihrer Einnahmen und Ausgaben. Ihr Hauptinteresse ist eine übersichtliche, verständliche Darstellung ihrer Finanzen ohne komplizierte Fachbegriffe. Sie erwarten eine einfache Handhabung, intelligente und motivierende Unterstützung (z. B. durch Finanztipps) und eine leichte Anpassbarkeit an ihre individuellen Bedürfnisse.
+|===
+
+*Sekundäre Stakeholder* 
+[%header, cols="1,3,3"]
+|===
+| Name | Beschreibung | Verantwortlichkeiten
+
+| Universitäten und Hochschulen
+| Bildungseinrichtungen, die Studierende akademisch ausbilden und dabei auch deren persönliche Entwicklung unterstützen wollen. Sie haben ein Interesse daran, dass Studierende Kompetenzen wie Finanzmanagement frühzeitig aufbauen, um ihre Lebenssituation während des Studiums zu verbessern und Studienabbrüche aus finanziellen Gründen zu vermeiden.
+| Universitäten und Hochschulen könnten die App indirekt unterstützen oder empfehlen, z. B. über Studienberatungen oder Veranstaltungen zum Thema Finanzkompetenz. Ihr besonderes Interesse liegt darin, Studierende bei einem erfolgreichen und stabilen Studienverlauf zu fördern. Außerdem könnten sie Feedback zur Weiterentwicklung der App im Bereich Bildung und Nutzendenunterstützung geben.
+| Angehörige 
+| Eltern oder andere enge Bezugspersonen, die Studierende finanziell unterstützen oder sich um deren Wohl sorgen. Ihr Ziel ist es, dass die Studierenden lernen, selbstständig mit Geld umzugehen und finanziell besser organisiert sind, um Sorgen und Engpässe zu vermeiden. 
+| Angehörige haben ein indirektes Interesse daran, dass die App die finanzielle Selbstständigkeit und Verantwortungsbereitschaft der Studierenden fördert. 
+|===
+
+*Interne Stakeholder*
+#Dev-Team, SM, PO, Testende, ...# 
 
 [%header, cols="1,3,3"]
 |===
@@ -68,6 +98,7 @@ Aufgrund der Tatsache, dass unser Team selbst aus Studenten besteht, ist die fin
 | [Kurze Beschreibung des Stakeholders und seiner Ziele]
 | [Fassen Sie die wesentlichen Verantwortlichkeiten des Stakeholder mit Bezug auf das zu entwickelnde System kurz zusammen, d.h. ihr besonderen Interessen. Beispiele: Dieser Stakeholder sorgt dafür, dass das System gewartet wird / dass die angezeigten Daten aktuell sind / überwacht den Projektfortschritt / usw.]
 |===
+
 
 Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mittels Personas vorgenommen.
 
