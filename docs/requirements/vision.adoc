@@ -148,6 +148,14 @@ a|
 * Anzeigen des aktuellen Kontostands
 | xx
 
+| Sparziele
+| mittel
+a|
+* Möglichkeit Sparziele zu erstellen, zu bearbeiten und zu löschen
+* Möglichkeit Raten für Sparziele zu erstellen
+* Möglichkeit Sparziele visuell zu gestalten (Farben, Icons)
+| xx
+
 | Dashboard
 | mittel
 a|
