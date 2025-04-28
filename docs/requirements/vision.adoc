@@ -148,29 +148,11 @@ a|
 * Anzeigen des aktuellen Kontostands
 | xx
 
-| Konto
-| hoch
-a|
-* Möglichkeit Konten zu erstellen, zu bearbeiten und zu löschen
-* Möglichkeit Konten in vorgegebenen Kategorien zu kategorisieren
-* Möglichkeit Konten visuell zu gestalten (Farben, Icons)
-* Möglichkeit Konten Transaktionen zuzuordnen
-* Anzeigen des aktuellen Kontostands
-| xx
-
 | Dashboard
 | mittel
 a|
 * Überblick über aktuelle Trends
 * Darstellung von übersichtlichen Statistiken
-| xx
-
-| Export/Import
-| niedrig
-a|
-* Export aller Daten in einem geeigneten Format
-** auch in offiziellen Formaten
-* Import von Daten aus einem geeigneten Format
 | xx
 
 | Export/Import
@@ -215,6 +197,10 @@ Hinweise:
 
 | Robustheit
 | hoch
+| xx
+
+| Onboarding
+| mittel
 | xx
 
 |===
