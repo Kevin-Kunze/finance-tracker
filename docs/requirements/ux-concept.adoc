@@ -15,7 +15,38 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 * Angaben über die Gestaltung der Benutzeroberfläche, z.B. Styling, Bedienbarkeit, ...
 
 == Personas
-// Fügen Sie hier als Tabelle oder Bild die Persons der wichtigsten Stakeholder ein
+[cols="1,4,4,4", options="header"]
+|===
+|Eigenschaft |Eva Effizienz |Joachim Kannnix |Norman Normalo
+
+|**Alter** |19 |21 |20
+|**Geschlecht** |Weiblich |Männlich |Männlich
+|**Wohnort** |Leipzig |Berlin |Dresden
+|**Studienfach** |Psychologie |Lehramt |Wirtschaftsinformatik
+|**Nebentätigkeit** |Keine |Keine |Werkstudent
+
+|**Technische Fähigkeiten** 
+|Erfahren mit iPhone/iPad, nutzt Standard-Apps wie Notion, keine Probleme mit PDFs, bevorzugt mobile Anwendungen
+|Erfahrung mit Desktop & Videospielen, wenig Mobile-Erfahrung, abonniert Streaming-Dienste (Netflix, Twitch)
+|Informatikkenntnisse, sicherer Umgang mit Programmen, nutzt viele Apps für Fitness, Social Media, Unterhaltung und Wissen
+
+|**Bedürfnisse / Ziele**
+|Effizientere Organisation, intelligente Apps, Sparpläne erstellen (z. B. für Reisen), schöne Diagramme und UI
+|Finanzen in den Griff bekommen, Schuldenabbau, Motivation durch App-Anweisungen, schnelle Übersicht über Abos
+|Übersicht über Einnahmen, möchte Details erkennen können, keine Sparziele – will Endbetrag wissen
+
+|**Hindernisse / Frustration**
+|Störungen durch Technikprobleme, hohe Ansprüche an UI, benötigt klares Feedback, unklare Bedienung schreckt ab
+|Impulskäufe, kein Finanzkonzept, schnell überfordert durch Fachsprache
+|Kein fester Job, empfindet fehlende Personalisierung als Manko, wünscht einfache All-in-One-Lösung
+
+|**Verhaltensvariablen**
+|Nutzt Apps sehr häufig, aber will Feedback und Übersichtlichkeit, ist visuell orientiert
+|Tendenz zu Impulskäufen, sucht Kontrolle, braucht Motivation durch App
+|Zielorientiert, möchte pragmatische Lösung mit wenig Ablenkung
+
+|===
+
 
 == Nutzungskontext
 // Beschreiben Sie die Arbeitsaufgaben, Arbeitsmittel, physische und soziale Umgebung, in der das Produkt genutzt wird. 
