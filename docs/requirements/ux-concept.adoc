@@ -15,6 +15,7 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 * Angaben über die Gestaltung der Benutzeroberfläche, z.B. Styling, Bedienbarkeit, ...
 
 == Personas
+* Drei mögliche User Personas
 [cols="1,4,4,4", options="header"]
 |===
 |Eigenschaft |Eva Effizienz |Joachim Kannnix |Norman Normalo
