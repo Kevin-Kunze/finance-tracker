@@ -6,13 +6,13 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Einführung
-Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäten des Systems {project-system-name} überblicksartig zu beschreiben. Der Fokus liegt auf den Fähigkeiten, die von Stakeholdern und adressierten Nutzern benötigt werden, und der Begründung dieser Bedarfe. Die Details, wie das System {project-system-name} diese Bedarfe erfüllt, werden durch User Stories im Product Backlog sowie dem UX-Konzept beschrieben.
+Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäten des Systems Spendex überblicksartig zu beschreiben. Der Fokus liegt auf den Fähigkeiten, die von Stakeholdern und adressierten Nutzenden benötigt werden, und der Begründung dieser Bedarfe. Die Details, wie das System Spendex diese Bedarfe erfüllt, werden durch User Stories im Product Backlog sowie dem UX-Konzept beschrieben.
 
 === Zweck
 Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von {project-system-name}-Team entwickelt wird. Das System wird es Studierenden erlauben, sich selbst finanziell zu planen, um damit unnötige Ausgaben zu reduzieren und selbst gesetzte Sparziel zu erreichen.
+Dieses Visions-Dokument bezieht sich auf das System Spendex, das vom Spendex-Team entwickelt wird. Die App unterstützt Studierende dabei, ihre finanzielle Situation selbstbestimmt und unkompliziert zu organisieren – mit dem Ziel, bewusster mit Ausgaben umzugehen und individuelle Sparziele erfolgreich zu verfolgen. Im Rahmen dieses Projekts wird bewusst auf komplexe Funktionalitäten verzichtet, die über die grundlegende Budgetverwaltung hinausgehen (Out-of-Scope). Nicht Bestandteil des Projektumfangs sind insbesondere die Anbindung externer Bankkonten, tiefgreifende Analysefunktionen sowie die Verwendung von fachspezifischer Terminologie.
 
 === Definitionen, Akronyme und Abkürzungen
 //Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
@@ -40,7 +40,7 @@ Durch intuitive Funktionen, moderne Visualisierungen und smarte Tipps unterstüt
 |===
 | Für | junge Studierende
 | die | eine knappe finanzielle Lage haben und mit minimalem Aufwand den Überblick über ihre Ausgaben und Sparziele behalten wollen,
-| ist die  | App {project-system-name}
+| ist die  | App Spendex
 | eine  | moderne und smarte Finanzapp
 | die | schnell, unkompliziert und individuell zugeschnitten Einnahmen erfässt und durch KI intelligent mitdenkt,
 | anders als | klassische Finanz-Apps, die oft überladen, kompliziert oder auf Profi-Nutzer ausgerichtet sind,
@@ -72,13 +72,18 @@ Durch intuitive Funktionen, moderne Visualisierungen und smarte Tipps unterstüt
 | Studierende
 | Junge Erwachsene, meist Digital Natives, die oft nur über ein geringes Einkommen verfügen. Sie wünschen sich eine einfache, schnelle und motivierende Möglichkeit, ihre Finanzen zu verwalten, Ausgaben im Blick zu behalten und Sparziele zu erreichen – am liebsten per Smartphone und in einer optisch modernen, smarten und intuitiven App.
 | Studierende nutzen die App aktiv zur Verwaltung ihrer Einnahmen und Ausgaben. Ihr Hauptinteresse ist eine übersichtliche, verständliche Darstellung ihrer Finanzen ohne komplizierte Fachbegriffe. Sie erwarten eine einfache Handhabung, intelligente und motivierende Unterstützung (z. B. durch Finanztipps) und eine leichte Anpassbarkeit an ihre individuellen Bedürfnisse.
+| Testende 
+| Studierende, die potenzielle Nutzer*innen der App sind und regelmäßig im Rahmen der Scrum Reviews eingeladen werden, um das Produkt zu testen. Ziel ist es, durch ihre Rückmeldung einen realitätsnahen Blick auf die Nutzbarkeit, Verständlichkeit und den Funktionsumfang der Anwendung zu gewinnen.
+| Dieser Stakeholder bringt die Perspektive zukünftiger Endnutzender ein. Die Testenden haben kein direktes Mitspracherecht bei der Projektplanung, liefern jedoch wertvolles Feedback zu Usability, Design und Funktionsverständnis. Ihr Beitrag unterstützt das Team dabei, frühzeitig Schwachstellen zu erkennen und Nutzerbedürfnisse besser zu adressieren. Ihre Rückmeldungen fließen iterativ in die Produktentwicklung ein.
 |===
 
 *Sekundäre Stakeholder*
 [%header, cols="1,3,3"]
 |===
 | Name | Beschreibung | Verantwortlichkeiten
-
+| Dozent / Coach
+| Der Dozent vermittelt die theoretischen und methodischen Grundlagen des Software Engineerings im Rahmen der Lehrveranstaltung. Der Coach begleitet das Team praxisnah bei der Projektarbeit, steht für Fragen zur Verfügung und gibt regelmäßig individuelles Feedback. Ziel ist es, sowohl das methodische Verständnis als auch die praktische Umsetzung im Projekt zu fördern.
+| Der Dozent stellt Anforderungen und Rahmenbedingungen für das Projekt bereit (z. B. Iterationsziele, Abgabekriterien) und bewertet die Projektarbeit im Kontext des Moduls. Der Coach unterstützt das Team bei methodischen Fragen, überwacht den Projektfortschritt aus fachlicher Sicht und gibt Rückmeldung zu Zwischenergebnissen. Beide Stakeholder tragen dazu bei, die Qualität der Arbeit sicherzustellen und das Lernziel des Moduls zu erreichen.
 | Universitäten und Hochschulen
 | Bildungseinrichtungen, die Studierende akademisch ausbilden und dabei auch deren persönliche Entwicklung unterstützen wollen. Sie haben ein Interesse daran, dass Studierende Kompetenzen wie Finanzmanagement frühzeitig aufbauen, um ihre Lebenssituation während des Studiums zu verbessern und Studienabbrüche aus finanziellen Gründen zu vermeiden.
 | Universitäten und Hochschulen könnten die App indirekt unterstützen oder empfehlen, z. B. über Studienberatungen oder Veranstaltungen zum Thema Finanzkompetenz. Ihr besonderes Interesse liegt darin, Studierende bei einem erfolgreichen und stabilen Studienverlauf zu fördern. Außerdem könnten sie Feedback zur Weiterentwicklung der App im Bereich Bildung und Nutzendenunterstützung geben.
@@ -88,16 +93,24 @@ Durch intuitive Funktionen, moderne Visualisierungen und smarte Tipps unterstüt
 |===
 
 *Interne Stakeholder*
-#Dev-Team, SM, PO, Testende, ...#
 
 [%header, cols="1,3,3"]
 |===
 | Name | Beschreibung | Verantwortlichkeiten
-
-| [Benennung des Stakeholders (als Rolle)]
-| [Kurze Beschreibung des Stakeholders und seiner Ziele]
-| [Fassen Sie die wesentlichen Verantwortlichkeiten des Stakeholder mit Bezug auf das zu entwickelnde System kurz zusammen, d.h. ihr besonderen Interessen. Beispiele: Dieser Stakeholder sorgt dafür, dass das System gewartet wird / dass die angezeigten Daten aktuell sind / überwacht den Projektfortschritt / usw.]
+| Scrum Master
+| Mitglied des Projektteams mit der Verantwortung, den Scrum-Prozess zu fördern und sicherzustellen, dass das Team effektiv und organisiert zusammenarbeitet. Ziel ist es, Hindernisse im Entwicklungsprozess frühzeitig zu erkennen und zu beseitigen sowie das Team in der Anwendung agiler Prinzipien zu unterstützen.
+| Der Scrum Master sorgt dafür, dass die Scrum-Meetings (z. B. Weekly, Planning, Review, Retro) regelmäßig stattfinden und organisiert ablaufen. Er achtet darauf, dass das Team fokussiert arbeiten kann und nicht durch organisatorische oder zwischenmenschliche Blockaden gebremst wird. Zudem vermittelt er bei Konflikten und schützt das Team vor externen Störungen.
+| Product-Owner 
+| Der Product Owner ist Teil des Projektteams und verantwortlich für die inhaltliche Ausrichtung des Produkts. Er vertritt die Interessen der Nutzenden und Stakeholder, priorisiert Anforderungen und trägt die Verantwortung für den Product Backlog. Ziel ist es, den größtmöglichen Produktnutzen im Rahmen der gegebenen Ressourcen zu erzielen.
+| Der Product Owner formuliert und priorisiert Anforderungen in Form von User Stories im Product Backlog. Er sorgt dafür, dass das Entwicklungsteam ein klares Verständnis für die Anforderungen und deren Mehrwert hat. Darüber hinaus steht er regelmäßig im Austausch mit Stakeholdern (z. B. Testende, Coach), um deren Rückmeldungen in die Produktentwicklung einfließen zu lassen.
+| Development Team
+| Das Development Team besteht aus den Mitgliedern, die aktiv an der Umsetzung des Produkts arbeiten. Dazu gehören z. B. Frontend- und Backend-Entwicklung, UX/UI-Design, Dokumentation und Testing. Ziel ist es, in jeder Iteration ein funktionsfähiges Inkrement des Produkts bereitzustellen.
+| Das Entwicklungsteam ist verantwortlich für die technische Umsetzung der Anforderungen aus dem Product Backlog. Es plant und organisiert die Arbeit im Rahmen der Sprints eigenverantwortlich, schätzt den Aufwand von Aufgaben ein und stellt durch kontinuierliche Abstimmung sicher, dass qualitativ hochwertige Ergebnisse entstehen.
 |===
+
+
+// | [Kurze Beschreibung des Stakeholders und seiner Ziele]
+// | [Fassen Sie die wesentlichen Verantwortlichkeiten des Stakeholder mit Bezug auf das zu entwickelnde System kurz zusammen, d.h. ihr besonderen Interessen. Beispiele: Dieser Stakeholder sorgt dafür, dass das System gewartet wird / dass die angezeigten Daten aktuell sind / überwacht den Projektfortschritt / usw.]
 
 
 Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mittels Personas vorgenommen.
