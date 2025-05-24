@@ -34,7 +34,10 @@ export default function ScanScreen() {
       ? -Math.abs(parseFloat(amount))
       : Math.abs(parseFloat(amount))
 
-    const result = await createTransaction(numericAmount, description.trim())
+    const result = await createTransaction({
+      amount: numericAmount,
+      description: description.trim(),
+    })
 
     if (result) {
       setAmount("")

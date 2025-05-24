@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "b8e659f6-be86-4f7a-b499-f8027110cc6c",
+  "id": "d1f919d1-d5e2-4a5a-ab72-cf48b430f562",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "transactions": {
@@ -9,10 +9,17 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         },
         "amount": {
           "name": "amount",

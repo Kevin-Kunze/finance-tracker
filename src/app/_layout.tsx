@@ -4,28 +4,28 @@ import { Suspense } from "react"
 import { ActivityIndicator } from "react-native"
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 import migrations from "@/db/migrations/migrations"
+import { DB_NAME } from "@/db/constants"
 import "../global.css"
 
-export const DATABASE_NAME = "spendex.db"
-
 export default function RootLayout() {
-  const expoDb = openDatabaseSync(DATABASE_NAME)
+  const expoDb = openDatabaseSync(DB_NAME)
   const db = drizzle(expoDb)
-  const { success, error } = useMigrations(db, migrations)
-  if (success) console.log("Migrations success:", success)
-  if (error) console.error("Migration error:", error)
+  useMigrations(db, migrations)
 
   return (
     <Suspense fallback={<ActivityIndicator size='large' />}>
       <SQLiteProvider
-        databaseName={DATABASE_NAME}
+        databaseName={DB_NAME}
         options={{ enableChangeListener: true }}
         useSuspense
       >
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name='(tabs)' />
-        </Stack>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='(tabs)' />
+          </Stack>
+        </GestureHandlerRootView>
       </SQLiteProvider>
     </Suspense>
   )
