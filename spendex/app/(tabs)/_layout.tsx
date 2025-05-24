@@ -1,7 +1,7 @@
 import { Tabs, usePathname } from "expo-router"
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
-import { Pressable, View, TouchableOpacity } from "react-native"
+import { Pressable, View } from "react-native"
 
 export default function TabLayout() {
   const isScanActiveRoute = usePathname().includes("/scan")
