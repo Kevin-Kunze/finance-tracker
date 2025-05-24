@@ -3,8 +3,10 @@ import { Text, View, FlatList, ActivityIndicator } from "react-native"
 import useTransactions from "@/db/queries/transaction"
 import { Transaction } from "@/db/schemas/transaction"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useColorScheme } from "nativewind"
 
 export default function TransactionScreen() {
+  const { colorScheme } = useColorScheme()
   const { getTransactions, loading, error } = useTransactions()
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -31,9 +33,11 @@ export default function TransactionScreen() {
   }
 
   return (
-    <SafeAreaView className='flex-1 bg-background'>
+    <SafeAreaView className='flex-1 bg-background dark:bg-background-dark'>
       <View className='p-4'>
-        <Text className='text-primary text-2xl font-bold'>Transactions</Text>
+        <Text className='text-primary-600 text-2xl font-bold'>
+          Transactions
+        </Text>
       </View>
 
       {error && (
@@ -47,12 +51,24 @@ export default function TransactionScreen() {
           data={transactions}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View className='mx-4 mb-2 p-4 bg-white rounded-lg shadow-sm'>
-              <Text className='text-lg font-medium'>{item.description}</Text>
+            <View
+              className={`${
+                colorScheme === "light"
+                  ? item.amount < 0
+                    ? "bg-red-700"
+                    : "bg-green-700"
+                  : item.amount < 0
+                  ? "bg-red-900"
+                  : "bg-green-900"
+              } mx-4 mb-2 p-3 rounded-lg`}
+            >
+              <Text className='text-lg font-medium text-text-dark'>
+                {item.description}
+              </Text>
               <View className='flex-row justify-between mt-2'>
                 <Text
                   className={`text-lg font-semibold ${
-                    item.amount < 0 ? "text-red-500" : "text-green-500"
+                    item.amount < 0 ? "text-red-200" : "text-green-200"
                   }`}
                 >
                   {item.amount > 0 ? "+" : ""}

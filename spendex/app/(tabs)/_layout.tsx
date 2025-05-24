@@ -1,28 +1,43 @@
-import { Tabs, usePathname } from "expo-router"
+import { Tabs } from "expo-router"
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
-import { Pressable, View } from "react-native"
+import { View, Pressable } from "react-native"
+import { useColorScheme } from "nativewind"
 
 export default function TabLayout() {
-  const isScanActiveRoute = usePathname().includes("/scan")
+  const { colorScheme } = useColorScheme()
 
   return (
     <>
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: "#000",
-          tabBarInactiveTintColor: "#888",
+          tabBarActiveTintColor: colorScheme === "light" ? "#5071b3" : "#fff",
+          tabBarInactiveTintColor:
+            colorScheme === "light" ? "#6b7280" : "#9ca3af",
           tabBarStyle: {
-            backgroundColor: "#fff",
+            backgroundColor: colorScheme === "light" ? "#fff" : "#28395c",
             borderTopWidth: 0,
-            height: 84,
-            paddingBottom: 10,
-            paddingTop: 10,
+            height: 92,
+            paddingTop: 16,
           },
-          tabBarButton: (props) => (
-            <Pressable {...props} android_ripple={null} style={props.style} />
-          ),
+          tabBarItemStyle: {
+            borderRadius: 0,
+          },
+          tabBarButton: (props) => {
+            return (
+              <Pressable
+                onPress={props.onPress}
+                onPressIn={props.onPressIn}
+                onPressOut={props.onPressOut}
+                android_ripple={null}
+                android_disableSound={true}
+                style={props.style}
+              >
+                {props.children}
+              </Pressable>
+            )
+          },
         }}
       >
         <Tabs.Screen
@@ -30,8 +45,12 @@ export default function TabLayout() {
           options={{
             title: "Home",
             headerShown: false,
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name='home' size={size} color={color} />
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
@@ -40,8 +59,12 @@ export default function TabLayout() {
           options={{
             title: "Transactions",
             headerShown: false,
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name='card' size={size} color={color} />
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "card" : "card-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
@@ -50,13 +73,23 @@ export default function TabLayout() {
           options={{
             title: "Scan",
             headerShown: false,
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            tabBarIcon: ({ focused, color, size }) => (
               <View
                 className={`${
-                  isScanActiveRoute ? "bg-secondary" : "bg-primary"
+                  colorScheme === "light"
+                    ? focused
+                      ? "bg-white border-2 border-primary-600"
+                      : "bg-primary-600"
+                    : focused
+                    ? "bg-gray-400"
+                    : "bg-primary-650"
                 } w-16 h-16 rounded-full items-center justify-center -mt-16`}
               >
-                <Ionicons name='scan' size={size} color='#fff' />
+                <Ionicons
+                  name='scan'
+                  size={size}
+                  color={focused ? color : "#fff"}
+                />
               </View>
             ),
           }}
@@ -66,8 +99,12 @@ export default function TabLayout() {
           options={{
             title: "Budget",
             headerShown: false,
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name='wallet' size={size} color={color} />
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "wallet" : "wallet-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
@@ -76,9 +113,20 @@ export default function TabLayout() {
           options={{
             title: "Overview",
             headerShown: false,
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name='stats-chart' size={size} color={color} />
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "stats-chart" : "stats-chart-outline"}
+                size={size}
+                color={color}
+              />
             ),
+          }}
+        />
+        <Tabs.Screen
+          name='settings'
+          options={{
+            headerShown: false,
+            href: null,
           }}
         />
       </Tabs>
