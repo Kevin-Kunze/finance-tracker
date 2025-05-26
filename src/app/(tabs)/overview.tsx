@@ -1,9 +1,9 @@
 import { Text, View } from "react-native"
 
-export default function BudgetScreen() {
+export default function OverviewScreen() {
   return (
     <View className='flex-1 items-center justify-center bg-background'>
-      <Text className='text-primary text-3xl'>Budget</Text>
+      <Text className='text-primary-600 text-3xl'>Overview</Text>
     </View>
   )
 }
