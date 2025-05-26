@@ -14,17 +14,17 @@ export const categories = sqliteTable("categories", {
   updatedAt: integer("updatedAt")
     .default(sql`(unixepoch())`)
     .notNull(),
-  title: text("title").notNull(),
-  supercategoryId: text("supercategoryId"),
+  name: text("name").notNull(),
   color: text("color"),
   icon: text("icon"),
+  parentCategoryId: text("parentCategory"),
 })
 
 export const categorieRelations = relations(categories, ({ one, many }) => ({
   transactions: many(transactions),
   categoriesToBudgets: many(categoriesToBudgets),
   supercategory: one(categories, {
-    fields: [categories.supercategoryId],
+    fields: [categories.parentCategoryId],
     references: [categories.id],
   }),
 }))

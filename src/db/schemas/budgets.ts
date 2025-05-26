@@ -19,15 +19,15 @@ export const budgets = sqliteTable("budgets", {
   updatedAt: integer("updatedAt")
     .default(sql`(unixepoch())`)
     .notNull(),
-  title: text("title").notNull(),
+  name: text("name").notNull(),
   amount: real("amount").notNull(),
   start: integer("start").notNull(),
   end: integer("end"),
   period: text("period", {
     enum: ["daily", "weekly", "monthly", "semesterly", "yearly"],
   }).notNull(),
-  color: text("color"),
-  icon: text("icon"),
+  color: text("color").notNull(),
+  icon: text("icon").notNull(),
 })
 
 export const budgetRelations = relations(budgets, ({ many }) => ({

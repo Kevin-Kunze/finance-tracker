@@ -9,6 +9,7 @@ import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
 import { categories } from "./categories"
 import { accounts } from "./accounts"
+import { images } from "./images"
 
 export const transactions = sqliteTable(
   "transactions",
@@ -24,15 +25,16 @@ export const transactions = sqliteTable(
       .notNull(),
     amount: real("amount").notNull(),
     date: integer("date").notNull(),
-    description: text("description").notNull(),
+    description: text("description"),
     categoryId: text("categoryId").notNull(),
     accountId: text("accountId").notNull(),
+    imageId: text("imageId"),
   },
-  (table) => ({
-    dateIndex: index("date_index").on(table.date),
-    categoryIndex: index("category_index").on(table.categoryId),
-    accountIndex: index("account_index").on(table.accountId),
-  })
+  (table) => [
+    index("date_index").on(table.date),
+    index("category_index").on(table.categoryId),
+    index("account_index").on(table.accountId),
+  ]
 )
 
 export const transactionRelations = relations(transactions, ({ one }) => ({
@@ -43,6 +45,10 @@ export const transactionRelations = relations(transactions, ({ one }) => ({
   account: one(accounts, {
     fields: [transactions.accountId],
     references: [accounts.id],
+  }),
+  image: one(images, {
+    fields: [transactions.imageId],
+    references: [images.id],
   }),
 }))
 

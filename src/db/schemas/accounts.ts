@@ -15,7 +15,7 @@ export const accounts = sqliteTable("accounts", {
     .default(sql`(unixepoch())`)
     .notNull(),
   name: text("name").notNull(),
-  balance: real("balance").notNull(),
+  balance: real("balance").notNull().default(0),
   color: text("color").notNull(),
   icon: text("icon").notNull(),
   currencyId: text("currencyId").notNull(),
