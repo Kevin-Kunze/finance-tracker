@@ -17,7 +17,7 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 //Hinweise: Beschreiben Sie den zentralen Ansatz für ihre Architektur. Identifizieren Sie alle Aspekte, die die Philosophie beeinflussen, z.B. komplexe Auslieferung Aspekte, Anpassung von Altsystemen oder besondere Geschwindigkeitsanforderungen. Muss es besonders robust sein, um eine langfristige Wartung und Pflege zu ermöglichen?
 
 //Formulieren Sie eine Reihe von Zielen, die die Architektur in ihrer Struktur und ihrem Verhalten erfüllen muss. Identifizieren Sie kritische Fragen, die von der Architektur adressiert werden müssen, z.B. besondere Hardware-Abhängigkeiten, die vom Rest des Systems isoliert werden sollten oder Sicherstellung der Funktionsfähigkeit unter besonderen Bedingungen (z.B. Offline-Nutzung).
-- Entwicklung einer plattformübergreifenden mobilen Anwendung (iOS, Android, Web).
+- Entwicklung einer plattformübergreifenden mobilen Anwendung (iOS, Android,).
 - Moderne, nutzerfreundliche und übersichtliche Benutzeroberfläche.
 - Einfache Erweiterbarkeit für zukünftige Integration eines Backends.
 - Leichte Wartbarkeit und Weiterentwicklung durch komponentenbasierten Aufbau.
@@ -31,12 +31,12 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 - Das Entwicklungsteam hat Kenntnisse in JavaScript/TypeScript und React Native.
 - Die App wird aktuell als reines Frontend mit React Native und Expo entwickelt.
 - Backend-Integration und Datenspeicherung sind als nächste Schritte geplant.
-- Jeder Nutzer besitzt ein mobiles Endgerät (iOS oder Android) oder kann die Web-Version verwenden.
+- Jeder Nutzer besitzt ein mobiles Endgerät (iOS oder Android) verwenden.
 - Expo ermöglicht schnelle Entwicklung und Testing auf verschiedenen Plattformen.
 
 == Architektur-relevante Anforderungen
 //Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
-- Plattformunabhängigkeit (Android, iOS, Web)
+- Plattformunabhängigkeit (Android, iOS)
 - Offline-Funktionalität (soweit möglich mit lokalem Speicher)
 - Übersichtliche und performante Benutzeroberfläche
 - Klare Trennung zwischen UI, Logik und (zukünftig) Datenhaltung
@@ -51,7 +51,7 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 * **Navigation:** Implementierung mit React Navigation für eine flexible und modulare Navigationsstruktur innerhalb der App.
 * **Datenhaltung:** In der ersten Version ausschließlich lokal (z.B. AsyncStorage, Expo-Speicherlösungen), Backend-Anbindung geplant.
 * **Backend:** Noch nicht umgesetzt, Anbindung an REST API vorgesehen.
-* **Plattformstrategie:** Fokus auf plattformübergreifende Nutzung (iOS, Android, Web) ohne spezielle Hardwareabhängigkeiten.
+* **Plattformstrategie:** Fokus auf plattformübergreifende Nutzung (iOS, Android) ohne spezielle Hardwareabhängigkeiten.
 * **Testing:** Nutzung von Expo-Tools für einfaches Testen und Debugging.
 
 == Schichten oder Architektur-Framework
@@ -112,7 +112,6 @@ Die gesamte Datenhaltung erfolgt lokal auf dem Gerät, wodurch die App offline-f
 
 - **Physische Knoten:**  
   - Mobilgerät des Nutzers (iOS, Android)
-  - Webbrowser (bei Nutzung der Web-App)
 - **Geplante Erweiterung:**  
   In zukünftigen Versionen ist die Anbindung an einen externen Backend-Service (z.B. Cloud-Datenbank) vorgesehen. Diese würde als zusätzlicher Knoten in der Infrastruktur auftreten.
 
