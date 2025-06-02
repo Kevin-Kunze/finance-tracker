@@ -1,7 +1,6 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
-import { relations, sql } from "drizzle-orm"
-import { categoryToBudgetTable } from "./categoriesToBudgets"
+import { sql } from "drizzle-orm"
 
 export const budgetTable = sqliteTable("budgets", {
   id: text()
@@ -23,9 +22,5 @@ export const budgetTable = sqliteTable("budgets", {
   color: text().notNull(),
   icon: text().notNull(),
 })
-
-export const budgetRelations = relations(budgetTable, ({ many }) => ({
-  categoryToBudget: many(categoryToBudgetTable),
-}))
 
 export type Budget = typeof budgetTable.$inferSelect

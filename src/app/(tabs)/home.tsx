@@ -1,7 +1,7 @@
 import CircularButton from "@/components/CircularButton"
 import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
@@ -26,7 +26,8 @@ export default function HomeScreen() {
     } catch (err) {
       console.error("Failed to fetch totalAmount:", err)
     }
-  }, [getTotalAmount])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const fetchTransactions = useCallback(async () => {
     try {
@@ -35,12 +36,8 @@ export default function HomeScreen() {
     } catch (err) {
       console.error("Failed to fetch transactions:", err)
     }
-  }, [getTransactionGroups])
-
-  useEffect(() => {
-    fetchTransactions()
-    fetchTotalAmount()
-  }, [fetchTotalAmount, fetchTransactions])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useFocusEffect(
     useCallback(() => {

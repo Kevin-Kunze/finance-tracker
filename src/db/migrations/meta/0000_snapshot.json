@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1bb334bb-7280-4831-82ad-eac93fb5a411",
+  "id": "1ec1a874-0844-484a-b2de-71e28a8f1e07",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -422,17 +422,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "amount": {
-          "name": "amount",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "generated": {
-            "as": "((select sum(amount) from transactions where transactionGroupId = transactionGroups.id))",
-            "type": "virtual"
-          }
-        },
         "date": {
           "name": "date",
           "type": "integer",
@@ -486,17 +475,6 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "date": {
-          "name": "date",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "generated": {
-            "as": "((select date from transactionGroups where transactionGroups.id = transactions.transactionGroupId))",
-            "type": "virtual"
-          }
         },
         "categoryTermId": {
           "name": "categoryTermId",

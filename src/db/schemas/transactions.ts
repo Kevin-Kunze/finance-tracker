@@ -16,11 +16,6 @@ export const transactionTable = sqliteTable("transactions", {
     .default(sql`(unixepoch())`)
     .notNull(),
   amount: real().notNull(),
-  date: integer({ mode: "timestamp" })
-    .notNull()
-    .generatedAlwaysAs(
-      sql`(select date from transactionGroups where transactionGroups.id = transactions.transactionGroupId)`
-    ),
   categoryTermId: text()
     .notNull()
     .references(() => categoryTermTable.id),

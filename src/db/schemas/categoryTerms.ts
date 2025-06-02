@@ -2,7 +2,6 @@ import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm"
 import { sqliteTable, text, unique } from "drizzle-orm/sqlite-core"
 import { categoryTable } from "./categories"
-import { transactionTable } from "./transactions"
 
 export const categoryTermTable = sqliteTable(
   "categoryTerms",
@@ -20,8 +19,7 @@ export const categoryTermTable = sqliteTable(
 
 export const categoryTermsRelations = relations(
   categoryTermTable,
-  ({ one, many }) => ({
-    transactions: many(transactionTable),
+  ({ one }) => ({
     category: one(categoryTable, {
       fields: [categoryTermTable.categoryId],
       references: [categoryTable.id],

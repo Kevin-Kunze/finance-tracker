@@ -1,7 +1,6 @@
 import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
-import { transactionTable } from "./transactions"
 import { currencyTable } from "./currencies"
 
 export const accountTable = sqliteTable("accounts", {
@@ -23,8 +22,7 @@ export const accountTable = sqliteTable("accounts", {
     .references(() => currencyTable.id),
 })
 
-export const accountRelations = relations(accountTable, ({ one, many }) => ({
-  transactions: many(transactionTable),
+export const accountRelations = relations(accountTable, ({ one }) => ({
   currency: one(currencyTable, {
     fields: [accountTable.currencyId],
     references: [currencyTable.id],

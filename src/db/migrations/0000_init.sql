@@ -62,7 +62,6 @@ CREATE TABLE `transactionGroups` (
 	`updatedAt` integer DEFAULT (unixepoch()) NOT NULL,
 	`name` text,
 	`note` text,
-	`amount` real GENERATED ALWAYS AS ((select sum(amount) from transactions where transactionGroupId = transactionGroups.id)) VIRTUAL NOT NULL,
 	`date` integer NOT NULL,
 	`imagePath` text
 );
@@ -72,7 +71,6 @@ CREATE TABLE `transactions` (
 	`createdAt` integer DEFAULT (unixepoch()) NOT NULL,
 	`updatedAt` integer DEFAULT (unixepoch()) NOT NULL,
 	`amount` real NOT NULL,
-	`date` integer GENERATED ALWAYS AS ((select date from transactionGroups where transactionGroups.id = transactions.transactionGroupId)) VIRTUAL NOT NULL,
 	`categoryTermId` text NOT NULL,
 	`accountId` text NOT NULL,
 	`transactionGroupId` text NOT NULL,

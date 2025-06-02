@@ -12,15 +12,14 @@ import "../global.css"
 export default function RootLayout() {
   const expoDb = openDatabaseSync(DB_NAME)
   const db = drizzle(expoDb)
-  useMigrations(db, migrations)
+  const { error } = useMigrations(db, migrations)
+  if (error) {
+    console.log(error)
+  }
 
   return (
     <Suspense fallback={<ActivityIndicator size='large' />}>
-      <SQLiteProvider
-        databaseName={DB_NAME}
-        options={{ enableChangeListener: true }}
-        useSuspense
-      >
+      <SQLiteProvider databaseName={DB_NAME} useSuspense>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name='(tabs)' />
