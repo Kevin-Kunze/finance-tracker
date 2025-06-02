@@ -1,54 +1,49 @@
-import { useSQLiteContext } from "expo-sqlite"
-import { drizzle } from "drizzle-orm/expo-sqlite"
-import { transactions } from "@/db/schemas/transaction"
+import { transactionTable } from "@/db/schemas/transactions"
 import { useState } from "react"
-import { eq, sum } from "drizzle-orm"
+import { eq, asc, desc, and } from "drizzle-orm"
+import { useDb } from ".."
+import { categoryTermTable } from "../schemas/categoryTerms"
 
 export default function useTransactions() {
-  const sqliteDb = useSQLiteContext()
-  const db = drizzle(sqliteDb, { schema: { transactions } })
+  const db = useDb()
+
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const createTransaction = async ({
-    amount,
-    description,
+  const getTransactions = async ({
+    transactionGroupId,
+    categoryId,
+    ordered,
   }: {
-    amount: number
-    description: string
-  }) => {
+    transactionGroupId?: string
+    categoryId?: string
+    ordered?: "asc" | "desc"
+  } = {}) => {
     setLoading(true)
     setError(null)
     try {
-      const result = await db
-        .insert(transactions)
-        .values({
-          createdAt: new Date(),
-          amount,
-          description,
-        })
-        .returning()
+      const conditions = []
 
-      return result[0] || null
-    } catch (err) {
-      const error =
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      setError(error)
-      console.error("Error creating transaction:", error)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }
+      if (transactionGroupId)
+        conditions.push(
+          eq(transactionTable.transactionGroupId, transactionGroupId)
+        )
+      if (categoryId)
+        conditions.push(eq(categoryTermTable.categoryId, categoryId))
 
-  const getTransactions = async ({ limit }: { limit?: number } = {}) => {
-    setLoading(true)
-    setError(null)
-    try {
-      return await db.query.transactions.findMany({
-        orderBy: (transactions, { desc }) => desc(transactions.createdAt),
-        limit,
-      })
+      return await db
+        .select()
+        .from(transactionTable)
+        .innerJoin(
+          categoryTermTable,
+          eq(transactionTable.categoryTermId, categoryTermTable.id)
+        )
+        .where(and(...conditions))
+        .orderBy(
+          ordered === "asc"
+            ? asc(transactionTable.date)
+            : desc(transactionTable.date)
+        )
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Unknown error occurred")
@@ -60,15 +55,11 @@ export default function useTransactions() {
     }
   }
 
-  const deleteTransaction = async (id: string) => {
+  const deleteTransaction = async ({ id }: { id: string }) => {
     setLoading(true)
     setError(null)
     try {
-      const result = await db
-        .delete(transactions)
-        .where(eq(transactions.id, id))
-        .returning()
-      return result[0] || null
+      await db.delete(transactionTable).where(eq(transactionTable.id, id))
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Unknown error occurred")
@@ -80,32 +71,9 @@ export default function useTransactions() {
     }
   }
 
-  const getTotalAmount = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const result = await db
-        .select({ total: sum(transactions.amount) })
-        .from(transactions)
-        .limit(1)
-
-      return result[0]?.total || 0
-    } catch (err) {
-      const error =
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      setError(error)
-      console.error("Error calculating total amount:", error)
-      return 0
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return {
-    createTransaction,
     getTransactions,
     deleteTransaction,
-    getTotalAmount,
     error,
     loading,
   }

@@ -1,15 +1,21 @@
 import CircularButton from "@/components/CircularButton"
-import useTransactions from "@/db/queries/transaction"
-import { Transaction } from "@/db/schemas/transaction"
 import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
 import { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import useTransactionGroup from "@/db/queries/transactionGroup"
+import { TransactionGroup } from "@/db/schemas/transactionGroups"
 
 export default function HomeScreen() {
-  const { getTransactions, getTotalAmount, loading, error } = useTransactions()
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const { getTransactionGroups, getTotalAmount, error } = useTransactionGroup()
+  const [transactionGroups, setTransactionGroups] = useState<
+    (TransactionGroup & {
+      categoryName: string
+      categoryColor: string | null
+      categoryIcon: string | null
+    })[]
+  >([])
 
   const [totalAmount, setTotalAmount] = useState<number>(0)
 
@@ -20,18 +26,16 @@ export default function HomeScreen() {
     } catch (err) {
       console.error("Failed to fetch totalAmount:", err)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getTotalAmount])
 
   const fetchTransactions = useCallback(async () => {
     try {
-      const data = await getTransactions({ limit: 3 })
-      setTransactions(data)
+      const data = await getTransactionGroups({ limit: 3 })
+      setTransactionGroups(data)
     } catch (err) {
       console.error("Failed to fetch transactions:", err)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getTransactionGroups])
 
   useEffect(() => {
     fetchTransactions()
@@ -45,14 +49,6 @@ export default function HomeScreen() {
     }, [fetchTotalAmount, fetchTransactions])
   )
 
-  if (loading && transactions.length === 0) {
-    return (
-      <SafeAreaView className='flex-1 items-center justify-center'>
-        <ActivityIndicator size='large' color='#1E3A8A' />
-      </SafeAreaView>
-    )
-  }
-
   return (
     <SafeAreaView className='flex-1 bg-background dark:bg-background-dark gap-4'>
       {error && (
@@ -65,10 +61,6 @@ export default function HomeScreen() {
         <CircularButton
           icon='search'
           onPress={() => console.log("Search button pressed")}
-        />
-        <CircularButton
-          icon='settings-outline'
-          onPress={() => router.push("/home/settings")}
         />
       </View>
 
@@ -86,7 +78,7 @@ export default function HomeScreen() {
           <Text className='text-white text-center'>Last Transactions</Text>
         </TouchableOpacity>
         <View className='rounded-lg'>
-          {transactions.map((transaction) => (
+          {transactionGroups.map((transaction) => (
             <View
               key={transaction.id}
               className='flex-row bg-background dark:bg-background-dark p-3 items-center justify-between mx-2 mb-2 rounded-lg'
@@ -96,7 +88,7 @@ export default function HomeScreen() {
                   transaction.amount < 0 ? "text-red-600" : "text-green-600"
                 }
               >
-                {transaction.description}
+                {transaction.name}
               </Text>
               <Text className='text-text dark:text-text-dark'>
                 {transaction.amount.toFixed(2)} €

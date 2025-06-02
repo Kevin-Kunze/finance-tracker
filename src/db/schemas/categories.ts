@@ -1,32 +1,33 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
-import { categoriesToBudgets } from "./budgets"
-import { transactions } from "./transaction"
+import { categoryTermTable } from "./categoryTerms"
+import { categoryToBudgetTable } from "./categoriesToBudgets"
 
-export const categories = sqliteTable("categories", {
-  id: text("id")
+export const categoryTable = sqliteTable("categories", {
+  id: text()
     .primaryKey()
     .$defaultFn(() => createId()),
-  createdAt: integer("createdAt")
+  createdAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
-  updatedAt: integer("updatedAt")
+  updatedAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
-  name: text("name").notNull(),
-  color: text("color"),
-  icon: text("icon"),
-  parentCategoryId: text("parentCategory"),
+  name: text().notNull(),
+  picked: integer().notNull().default(0),
+  color: text(),
+  icon: text(),
+  parentCategoryId: text(),
 })
 
-export const categorieRelations = relations(categories, ({ one, many }) => ({
-  transactions: many(transactions),
-  categoriesToBudgets: many(categoriesToBudgets),
-  supercategory: one(categories, {
-    fields: [categories.parentCategoryId],
-    references: [categories.id],
+export const categorieRelations = relations(categoryTable, ({ one, many }) => ({
+  categoryTerms: many(categoryTermTable),
+  categoryToBudget: many(categoryToBudgetTable),
+  parentCategory: one(categoryTable, {
+    fields: [categoryTable.parentCategoryId],
+    references: [categoryTable.id],
   }),
 }))
 
-export type Category = typeof categories.$inferSelect
+export type Category = typeof categoryTermTable.$inferSelect

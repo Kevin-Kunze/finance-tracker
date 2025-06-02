@@ -2,9 +2,8 @@ import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
 import { transactionTable } from "./transactions"
-import { currencyTable } from "./currencies"
 
-export const accountTable = sqliteTable("accounts", {
+export const transactionGroupTable = sqliteTable("transactionGroups", {
   id: text()
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -14,21 +13,19 @@ export const accountTable = sqliteTable("accounts", {
   updatedAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
-  name: text().notNull(),
-  balance: real().notNull().default(0),
-  color: text().notNull(),
-  icon: text().notNull(),
-  currencyId: text()
+  name: text(),
+  note: text(),
+  amount: real()
     .notNull()
-    .references(() => currencyTable.id),
+    .generatedAlwaysAs(
+      sql`(select sum(amount) from transactions where transactionGroupId = transactionGroups.id)`
+    ),
+  date: integer({ mode: "timestamp" }).notNull(),
+  imagePath: text(),
 })
 
-export const accountRelations = relations(accountTable, ({ one, many }) => ({
+export const imageRelations = relations(transactionGroupTable, ({ many }) => ({
   transactions: many(transactionTable),
-  currency: one(currencyTable, {
-    fields: [accountTable.currencyId],
-    references: [currencyTable.id],
-  }),
 }))
 
-export type Account = typeof accountTable.$inferSelect
+export type TransactionGroup = typeof transactionGroupTable.$inferSelect

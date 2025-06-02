@@ -6,7 +6,7 @@ import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import migrations from "@/db/migrations/migrations"
-import { DB_NAME } from "@/db/constants"
+import { DB_NAME } from "@/db"
 import "../global.css"
 
 export default function RootLayout() {

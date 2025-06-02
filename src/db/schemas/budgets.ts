@@ -1,65 +1,31 @@
-import {
-  sqliteTable,
-  text,
-  primaryKey,
-  integer,
-  real,
-} from "drizzle-orm/sqlite-core"
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
-import { categories } from "./categories"
+import { categoryToBudgetTable } from "./categoriesToBudgets"
 
-export const budgets = sqliteTable("budgets", {
-  id: text("id")
+export const budgetTable = sqliteTable("budgets", {
+  id: text()
     .primaryKey()
     .$defaultFn(() => createId()),
-  createdAt: integer("createdAt")
+  createdAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
-  updatedAt: integer("updatedAt")
+  updatedAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
-  name: text("name").notNull(),
-  amount: real("amount").notNull(),
-  start: integer("start").notNull(),
-  end: integer("end"),
-  period: text("period", {
+  name: text().notNull(),
+  amount: real().notNull(),
+  start: integer().notNull(),
+  end: integer(),
+  period: text({
     enum: ["daily", "weekly", "monthly", "semesterly", "yearly"],
   }).notNull(),
-  color: text("color").notNull(),
-  icon: text("icon").notNull(),
+  color: text().notNull(),
+  icon: text().notNull(),
 })
 
-export const budgetRelations = relations(budgets, ({ many }) => ({
-  categoriesToBudgets: many(categoriesToBudgets),
+export const budgetRelations = relations(budgetTable, ({ many }) => ({
+  categoryToBudget: many(categoryToBudgetTable),
 }))
 
-export const categoriesToBudgets = sqliteTable(
-  "categories_to_budgets",
-  {
-    budgetId: text("budgetId")
-      .notNull()
-      .references(() => budgets.id),
-    categoryId: text("categoryId")
-      .notNull()
-      .references(() => categories.id),
-  },
-  (t) => [primaryKey({ columns: [t.budgetId, t.categoryId] })]
-)
-
-export const categoriesToBudgetsRelations = relations(
-  categoriesToBudgets,
-  ({ one }) => ({
-    budget: one(budgets, {
-      fields: [categoriesToBudgets.budgetId],
-      references: [budgets.id],
-    }),
-    category: one(categories, {
-      fields: [categoriesToBudgets.categoryId],
-      references: [categories.id],
-    }),
-  })
-)
-
-export type Budget = typeof budgets.$inferSelect
-export type CategoryToBudget = typeof categoriesToBudgets.$inferSelect
+export type Budget = typeof budgetTable.$inferSelect

@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1748123709187,
-      "tag": "0000_test",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1748277881576,
-      "tag": "0001_simple-db",
+      "when": 1748863528516,
+      "tag": "0000_init",
       "breakpoints": true
     }
   ]
