@@ -1,3 +1,5 @@
+import "../i18n";
+
 import { Stack } from "expo-router"
 import { SQLiteProvider, openDatabaseSync } from "expo-sqlite"
 import { Suspense } from "react"

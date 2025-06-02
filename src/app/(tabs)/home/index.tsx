@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import CircularButton from "@/components/CircularButton"
 import useTransactions from "@/db/queries/transaction"
 import { Transaction } from "@/db/schemas/transaction"
@@ -7,11 +8,13 @@ import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
+
 export default function HomeScreen() {
   const { getTransactions, getTotalAmount, loading, error } = useTransactions()
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const [totalAmount, setTotalAmount] = useState<number>(0)
+  const { t } = useTranslation()
 
   const fetchTotalAmount = useCallback(async () => {
     try {
@@ -83,7 +86,7 @@ export default function HomeScreen() {
           }}
         >
           <Ionicons name='card' size={12} color='white' />
-          <Text className='text-white text-center'>Last Transactions</Text>
+          <Text className='text-white text-center'>{t("lastTransactions")}</Text>
         </TouchableOpacity>
         <View className='rounded-lg'>
           {transactions.map((transaction) => (

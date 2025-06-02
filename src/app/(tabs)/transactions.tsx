@@ -13,12 +13,13 @@ import { useColorScheme } from "nativewind"
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable"
 import { useFocusEffect } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
+import { useTranslation } from "react-i18next"
 
 export default function TransactionScreen() {
   const { colorScheme } = useColorScheme()
+  const { t } = useTranslation()
 
-  const { getTransactions, deleteTransaction, loading, error } =
-    useTransactions()
+  const { getTransactions, deleteTransaction, loading, error } = useTransactions()
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const fetchTransactions = useCallback(async () => {
@@ -48,34 +49,34 @@ export default function TransactionScreen() {
 
   if (loading && transactions.length === 0) {
     return (
-      <SafeAreaView className='flex-1 items-center justify-center'>
-        <ActivityIndicator size='large' color='#1E3A8A' />
+      <SafeAreaView className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="#1E3A8A" />
       </SafeAreaView>
     )
   }
 
   return (
-    <SafeAreaView className='flex-1 bg-background dark:bg-background-dark'>
-      <View className='p-4'>
-        <Text className='text-primary-600 text-2xl font-bold'>
-          Transactions
-        </Text>
+    <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+      <View className="p-4">
+        <Text className="text-primary-600 text-2xl font-bold">{t("transactions")}</Text>
       </View>
 
       {error && (
-        <View className='mx-4 p-3 bg-red-100 border border-red-400 rounded'>
-          <Text className='text-red-800'>{error.message}</Text>
+        <View className="mx-4 p-3 bg-red-100 border border-red-400 rounded">
+          <Text className="text-red-800">{error.message}</Text>
         </View>
       )}
 
       <FlatList
-        className='mx-4'
+        className="mx-4"
         data={transactions}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => (
-          <View className='flex-1 items-center justify-center'>
-            <Text className='text-gray-500'>No transactions found</Text>
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-gray-500">
+              {t("noTransactionsFound", "No transactions found")}
+            </Text>
           </View>
         )}
         renderItem={({ item }) => (
@@ -89,8 +90,8 @@ export default function TransactionScreen() {
                 } flex-1 rounded-lg items-center justify-center`}
                 onPress={() => handleDelete(item.id)}
               >
-                <Ionicons name='trash' color='white' size={24} />
-                <Text className='text-white text-sm mt-1'>Delete</Text>
+                <Ionicons name="trash" color="white" size={24} />
+                <Text className="text-white text-sm mt-1">Delete</Text>
               </TouchableOpacity>
             )}
           >
@@ -105,10 +106,10 @@ export default function TransactionScreen() {
                   : "bg-green-900"
               } rounded-lg p-3`}
             >
-              <Text className='text-lg font-medium text-text-dark'>
+              <Text className="text-lg font-medium text-text-dark">
                 {item.description}
               </Text>
-              <View className='flex-row justify-between mt-2'>
+              <View className="flex-row justify-between mt-2">
                 <Text
                   className={`text-lg font-semibold ${
                     item.amount < 0 ? "text-red-200" : "text-green-200"
