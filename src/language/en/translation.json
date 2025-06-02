@@ -1,0 +1,23 @@
+{
+  "settings": "Settings",
+  "appearance": "Appearance",
+  "darkMode": "Dark Mode",
+  "back": "Back",
+  "home": "Home",
+  "transactions": "Transactions",
+  "scan": "Scan",
+  "budget": "Budget",
+  "overview": "Overview",
+  "addTransaction": "Add New Transaction",
+  "expense": "Expense",
+  "income": "Income",
+  "amount": "Amount",
+  "description": "Description",
+  "add": "Add Transaction",
+  "success": "Transaction created successfully",
+  "language": "Language",
+  "lastTransactions": "Last Transactions",
+  "addNewTransaction": "New Transaction",
+  "noTransactionsFound": "No Transaction found"
+}
+
