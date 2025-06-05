@@ -14,7 +14,6 @@ export const categoryTable = sqliteTable("categories", {
     .default(sql`(unixepoch())`)
     .notNull(),
   name: text().notNull(),
-  picked: integer().notNull().default(0),
   color: text(),
   icon: text(),
   parentCategoryId: text(),

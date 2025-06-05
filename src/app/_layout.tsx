@@ -12,6 +12,7 @@ import "../global.css"
 export default function RootLayout() {
   const expoDb = openDatabaseSync(DB_NAME)
   const db = drizzle(expoDb)
+
   const { error } = useMigrations(db, migrations)
   if (error) {
     console.log(error)
