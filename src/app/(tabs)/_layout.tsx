@@ -5,8 +5,10 @@ import { View } from "react-native"
 import { useColorScheme } from "nativewind"
 import TabsButton from "@/components/TabsButton"
 import { colors } from "@/assets/colors"
+import { useTranslation } from "react-i18next"
 
 export default function TabLayout() {
+  const { t } = useTranslation()
   const { colorScheme } = useColorScheme()
 
   return (
@@ -36,7 +38,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name='home'
           options={{
-            title: "Home",
+            title: t("screens.home.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
@@ -50,7 +52,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name='transactions'
           options={{
-            title: "Transactions",
+            title: t("screens.transactions.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
@@ -64,14 +66,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name='scan'
           options={{
-            title: "Scan",
+            title: t("screens.scan.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <View
                 className={`${
                   focused
-                    ? "bg-white dark:bg-primary-600 border-2 border-primary-600 dark:border-primary-800"
-                    : "bg-primary-600 dark:bg-primary-800"
+                    ? "bg-white dark:bg-primary-600 border-2 dark:border-0 border-primary-600"
+                    : "bg-primary-600 dark:bg-primary-700"
                 } w-16 h-16 rounded-full items-center justify-center -mt-16`}
               >
                 <Ionicons
@@ -86,7 +88,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name='budget'
           options={{
-            title: "Budget",
+            title: t("screens.budget.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
@@ -100,7 +102,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name='settings'
           options={{
-            title: "Settings",
+            title: t("screens.settings.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons

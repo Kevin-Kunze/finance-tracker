@@ -1,22 +1,31 @@
 {
-  "settings": "Einstellungen",
-  "appearance": "Darstellung",
-  "darkMode": "Dunkler Modus",
-  "back": "Zurück",
-  "home": "Startseite",
-  "transactions": "Transaktionen",
-  "scan": "Scannen",
-  "budget": "Budget",
-  "overview": "Übersicht",
-  "addTransaction": "Neue Transaktion hinzufügen",
-  "expense": "Ausgabe",
-  "income": "Einnahme",
-  "amount": "Betrag",
-  "description": "Beschreibung",
-  "add": "Transaktion hinzufügen",
-  "success": "Transaktion erfolgreich erstellt",
-  "language": "Sprache",
-  "lastTransactions": "Letzte Transaktionen",
-  "addNewTransaction": "Neue Transaktion",
-  "noTransactionsFound": "Keine Transaktionen gefunden"
+  "screens": {
+    "home": {
+      "title": "Home",
+      "lastTransactions": "Letzte Transaktionen"
+    },
+    "transactions": {
+      "title": "Transaktionen"
+    },
+    "bubbles": {
+      "title": "Blasen"
+    },
+    "scan": {
+      "title": "Scan"
+    },
+    "budget": {
+      "title": "Budget"
+    },
+    "goals": {
+      "title": "Ziele"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "appearance": "Erscheinungsbild",
+      "darkMode": "Dunkel-Modus",
+      "language": "Sprache",
+      "english": "Englisch",
+      "german": "Deutsch"
+    }
+  }
 }

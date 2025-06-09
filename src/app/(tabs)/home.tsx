@@ -9,7 +9,7 @@ import useTransactionGroup from "@/db/queries/transactionGroup"
 import { TransactionGroup } from "@/db/schemas/transactionGroups"
 
 export default function HomeScreen() {
-  const { getTransactionGroups, getTotalAmount, error } = useTransactionGroup()
+  const { error } = useTransactionGroup()
   const [transactionGroups, setTransactionGroups] = useState<
     (TransactionGroup & {
       categoryName: string
@@ -28,7 +28,6 @@ export default function HomeScreen() {
     } catch (err) {
       console.error("Failed to fetch totalAmount:", err)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchTransactions = useCallback(async () => {
@@ -38,7 +37,6 @@ export default function HomeScreen() {
     } catch (err) {
       console.error("Failed to fetch transactions:", err)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useFocusEffect(
@@ -75,7 +73,7 @@ export default function HomeScreen() {
         >
           <Ionicons name='card' size={12} color='white' />
           <Text className='text-white text-center'>
-            {t("lastTransactions")}
+            {t("screens.home.lastTransactions")}
           </Text>
         </TouchableOpacity>
         <View className='rounded-lg'>

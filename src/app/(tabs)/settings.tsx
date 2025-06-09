@@ -1,11 +1,11 @@
-import { Text, View, Switch, TouchableOpacity } from "react-native"
+import { Text, View, Switch } from "react-native"
 import { useColorScheme } from "nativewind"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
-import { router } from "expo-router"
 import { useTranslation } from "react-i18next"
 import { useState, useEffect } from "react"
 import { colors } from "@/assets/colors"
+import ScreenTitle from "@/components/ScreenTitle"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
@@ -27,36 +27,18 @@ export default function SettingsScreen() {
   }, [i18n.language])
 
   return (
-    <SafeAreaView className='flex-1 bg-background dark:bg-background-dark'>
-      <View className='flex-row items-center px-4 py-2'>
-        {/* BUTTON WIEDER EINGEFÜGT */}
-        <TouchableOpacity
-          className='p-2 rounded-full'
-          onPress={() => router.back()}
-        >
-          <Ionicons
-            name='arrow-back'
-            size={24}
-            color={colorScheme === "light" ? "#28535c" : "#fff"}
-          />
-        </TouchableOpacity>
+    <SafeAreaView className='flex-1 bg-background dark:bg-primary-950'>
+      <ScreenTitle title={t("screens.settings.title")} showBackButton={false} />
 
-        <Text className='text-2xl font-bold text-primary-600 dark:text-white ml-2'>
-          {t("settings")}
-        </Text>
-      </View>
-
-      <View className='px-4 py-6'>
+      <View className='px-4 py-6 gap-6'>
         {/* Appearance Section */}
-        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden mb-6'>
-          <View className='p-4'>
-            <Text className='text-lg font-semibold text-text dark:text-text-dark mb-1'>
-              {t("appearance")}
-            </Text>
-          </View>
+        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden p-4'>
+          <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+            {t("screens.settings.appearance")}
+          </Text>
 
-          <View className='flex-row justify-between items-center p-4'>
-            <View className='flex-row items-center'>
+          <View className='flex-row justify-between items-center'>
+            <View className='flex-row items-center gap-3'>
               <Ionicons
                 name={colorScheme === "light" ? "sunny" : "moon"}
                 size={22}
@@ -66,38 +48,53 @@ export default function SettingsScreen() {
                     : colors.gray[50]
                 }
               />
-              <Text className='text-text dark:text-text-dark ml-3'>
-                {t("darkMode")}
+              <Text className='text-gray-900 dark:text-gray-100'>
+                {t("screens.settings.darkMode")}
               </Text>
             </View>
 
             <Switch
               value={colorScheme === "dark"}
               onValueChange={toggleColorScheme}
-              trackColor={{ false: "#888", true: "#888" }}
-              thumbColor={colorScheme === "light" ? "#5071b3" : "#28395c"}
+              trackColor={{ false: colors.gray[500], true: colors.gray[500] }}
+              thumbColor={
+                colorScheme === "light" ? colors.primary[600] : colors.gray[200]
+              }
             />
           </View>
         </View>
 
         {/* Language Section */}
-        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden'>
-          <View className='p-4'>
-            <Text className='text-lg font-semibold text-text dark:text-text-dark mb-1'>
-              {t("language")}
-            </Text>
-          </View>
+        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden p-4'>
+          <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1'>
+            {t("screens.settings.language")}
+          </Text>
 
-          <View className='flex-row justify-between items-center p-4'>
-            <Text className='text-text dark:text-text-dark'>
-              {isGerman ? "Deutsch" : "English"}
-            </Text>
+          <View className='flex-row justify-between items-center'>
+            <View className='flex-row items-center gap-3'>
+              <Ionicons
+                name='globe-outline'
+                size={22}
+                color={
+                  colorScheme === "light"
+                    ? colors.primary[600]
+                    : colors.gray[50]
+                }
+              />
+              <Text className='text-gray-900 dark:text-gray-100'>
+                {isGerman
+                  ? t("screens.settings.german")
+                  : t("screens.settings.english")}
+              </Text>
+            </View>
 
             <Switch
               value={isGerman}
               onValueChange={toggleLanguage}
-              trackColor={{ false: "#888", true: "#888" }}
-              thumbColor={isGerman ? "#5071b3" : "#28395c"}
+              trackColor={{ false: colors.gray[500], true: colors.gray[500] }}
+              thumbColor={
+                colorScheme === "light" ? colors.primary[600] : colors.gray[200]
+              }
             />
           </View>
         </View>

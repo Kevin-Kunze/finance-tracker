@@ -1,23 +1,31 @@
 {
-  "settings": "Settings",
-  "appearance": "Appearance",
-  "darkMode": "Dark Mode",
-  "back": "Back",
-  "home": "Home",
-  "transactions": "Transactions",
-  "scan": "Scan",
-  "budget": "Budget",
-  "overview": "Overview",
-  "addTransaction": "Add New Transaction",
-  "expense": "Expense",
-  "income": "Income",
-  "amount": "Amount",
-  "description": "Description",
-  "add": "Add Transaction",
-  "success": "Transaction created successfully",
-  "language": "Language",
-  "lastTransactions": "Last Transactions",
-  "addNewTransaction": "New Transaction",
-  "noTransactionsFound": "No Transaction found"
+  "screens": {
+    "home": {
+      "title": "Home",
+      "lastTransactions": "Last Transactions"
+    },
+    "transactions": {
+      "title": "Transactions"
+    },
+    "bubbles": {
+      "title": "Bubbles"
+    },
+    "scan": {
+      "title": "Scan"
+    },
+    "budget": {
+      "title": "Budget"
+    },
+    "goals": {
+      "title": "Goals"
+    },
+    "settings": {
+      "title": "Settings",
+      "appearance": "Appearance",
+      "darkMode": "Dark Mode",
+      "language": "Language",
+      "english": "English",
+      "german": "German"
+    }
+  }
 }
-
