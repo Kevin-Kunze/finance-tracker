@@ -1,8 +1,10 @@
 import { Tabs } from "expo-router"
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
-import { View, Pressable } from "react-native"
+import { View } from "react-native"
 import { useColorScheme } from "nativewind"
+import TabsButton from "@/components/TabsButton"
+import { colors } from "@/assets/colors"
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme()
@@ -12,11 +14,13 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: colorScheme === "light" ? "#5071b3" : "#fff",
+          tabBarActiveTintColor:
+            colorScheme === "light" ? colors.primary[600] : colors.gray[50],
           tabBarInactiveTintColor:
-            colorScheme === "light" ? "#6b7280" : "#9ca3af",
+            colorScheme === "light" ? colors.gray[500] : colors.primary[500],
           tabBarStyle: {
-            backgroundColor: colorScheme === "light" ? "#fff" : "#28395c",
+            backgroundColor:
+              colorScheme === "light" ? colors.gray[50] : colors.primary[900],
             borderTopWidth: 0,
             height: 92,
             paddingTop: 16,
@@ -25,18 +29,7 @@ export default function TabLayout() {
             borderRadius: 0,
           },
           tabBarButton: (props) => {
-            return (
-              <Pressable
-                onPress={props.onPress}
-                onPressIn={props.onPressIn}
-                onPressOut={props.onPressOut}
-                android_ripple={null}
-                android_disableSound={true}
-                style={props.style}
-              >
-                {props.children}
-              </Pressable>
-            )
+            return <TabsButton {...props} />
           },
         }}
       >
@@ -76,13 +69,9 @@ export default function TabLayout() {
             tabBarIcon: ({ focused, color, size }) => (
               <View
                 className={`${
-                  colorScheme === "light"
-                    ? focused
-                      ? "bg-white border-2 border-primary-600"
-                      : "bg-primary-600"
-                    : focused
-                    ? "bg-gray-400"
-                    : "bg-primary-650"
+                  focused
+                    ? "bg-white dark:bg-primary-600 border-2 border-primary-600 dark:border-primary-800"
+                    : "bg-primary-600 dark:bg-primary-800"
                 } w-16 h-16 rounded-full items-center justify-center -mt-16`}
               >
                 <Ionicons
@@ -109,13 +98,13 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name='overview'
+          name='settings'
           options={{
-            title: "Overview",
+            title: "Settings",
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
-                name={focused ? "stats-chart" : "stats-chart-outline"}
+                name={focused ? "settings" : "settings-outline"}
                 size={size}
                 color={color}
               />

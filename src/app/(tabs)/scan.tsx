@@ -1,166 +1,197 @@
+import useTransactionGroup from "@/db/queries/transactionGroup"
+import { useRouter } from "expo-router"
+import { useState } from "react"
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
   ActivityIndicator,
   Alert,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-} from "react-native";
-import { useState } from "react";
-import useTransactions from "@/db/queries/transaction";
-import { router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useColorScheme } from "nativewind";
-import { useTranslation } from "react-i18next";
+} from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
+import useTransactions from "@/db/queries/transaction"
+import { router } from "expo-router"
+import { useColorScheme } from "nativewind"
+import { useTranslation } from "react-i18next"
 
 export default function ScanScreen() {
-  const { colorScheme } = useColorScheme();
-  const { t } = useTranslation();
+  const { colorScheme } = useColorScheme()
+  const { t } = useTranslation()
 
-  const { createTransaction, error, loading } = useTransactions();
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [isExpense, setIsExpense] = useState(true);
+  const router = useRouter()
+  const { createTransactionGroup, loading, error } = useTransactionGroup()
 
-  const handleCreateTransaction = async () => {
-    if (!amount || isNaN(parseFloat(amount))) {
-      Alert.alert(t("invalidAmount"), t("pleaseEnterValidNumber"));
-      return;
+  const [formData, setFormData] = useState({
+    name: "",
+    note: "",
+    amount: "",
+    categoryTermId: "",
+    accountId: "",
+  })
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
+  const handleSubmit = async () => {
+    if (!formData.amount || !formData.categoryTermId || !formData.accountId) {
+      Alert.alert("Error", "Please fill in all required fields")
+      return
     }
 
-    const numericAmount = isExpense
-      ? -Math.abs(parseFloat(amount))
-      : Math.abs(parseFloat(amount));
+    try {
+      const result = await createTransactionGroup({
+        name: formData.name || undefined,
+        note: formData.note || undefined,
+        date: new Date(),
+        transactions: [
+          {
+            amount: parseFloat(formData.amount),
+            categoryTermId: formData.categoryTermId,
+            accountId: formData.accountId,
+          },
+        ],
+      })
 
-    const result = await createTransaction({
-      amount: numericAmount,
-      description: description.trim(),
-    });
-
-    if (result) {
-      setAmount("");
-      setDescription("");
-
-      Alert.alert(t("success"), t("transactionCreatedSuccessfully"), [
-        {
-          text: t("viewTransactions"),
-          onPress: () => router.push("/(tabs)/transactions"),
-        },
-        {
-          text: t("addAnother"),
-          style: "cancel",
-        },
-      ]);
+      if (result) {
+        Alert.alert("Success", "Transaction created successfully!", [
+          { text: "OK", onPress: () => router.back() },
+        ])
+        setFormData({
+          name: "",
+          note: "",
+          amount: "",
+          categoryTermId: "",
+          accountId: "",
+        })
+      }
+    } catch (err) {
+      console.error("Failed to create transaction:", err)
+      Alert.alert("Error", "Failed to create transaction")
     }
-  };
+  }
 
+  if (loading) {
+    return (
+      <SafeAreaView className='flex-1 items-center justify-center bg-gray-50'>
+        <ActivityIndicator size='large' color='#1E3A8A' />
+      </SafeAreaView>
+    )
+  }
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1"
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView className="flex-1 bg-background dark:bg-background-dark p-4">
-          <Text className="text-xl font-bold text-primary-600 dark:text-primary-650 mb-4">
-            {t("addNewTransaction")}
-          </Text>
+    <SafeAreaView className='flex-1 bg-background dark:bg-background-dark p-4'>
+      <ScrollView className='flex-1 p-4'>
+        <Text className='text-xl font-bold text-primary-600 dark:text-primary-650 mb-4'>
+          {t("addNewTransaction")}
+        </Text>
 
-          <View className="flex-row mb-6 bg-gray-100 dark:bg-primary-650 rounded-lg">
-            <TouchableOpacity
-              className={`flex-1 p-3 rounded-lg ${
-                isExpense
-                  ? "bg-primary-600 dark:bg-primary-700"
-                  : "bg-transparent"
-              }`}
-              onPress={() => setIsExpense(true)}
-            >
-              <Text
-                className={`text-center ${
-                  isExpense ? "text-white" : "text-gray-500 dark:text-gray-300"
-                }`}
-              >
-                {t("expense")}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className={`flex-1 p-3 rounded-lg ${
-                !isExpense
-                  ? "bg-primary-600 dark:bg-primary-700"
-                  : "bg-transparent"
-              }`}
-              onPress={() => setIsExpense(false)}
-            >
-              <Text
-                className={`text-center ${
-                  !isExpense ? "text-white" : "text-gray-500 dark:text-gray-300"
-                }`}
-              >
-                {t("income")}
-              </Text>
-            </TouchableOpacity>
+        {error && (
+          <View className='p-3 bg-red-100 border border-red-400 rounded mb-4'>
+            <Text className='text-red-800'>{error.message}</Text>
+          </View>
+        )}
+
+        <View className='gap-4'>
+          <View>
+            <Text className='text-text dark:text-text-dark text-lg mb-2'>
+              Name (Optional)
+            </Text>
+            <TextInput
+              className='bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-text dark:text-text-dark'
+              placeholder='Transaction name'
+              placeholderTextColor='#9CA3AF'
+              value={formData.name}
+              onChangeText={(value) => handleInputChange("name", value)}
+            />
           </View>
 
-          <Text className="text-gray-600 dark:text-gray-100 mb-2">
+          <View>
+            <Text className='text-text dark:text-text-dark text-lg mb-2'>
+              Note (Optional)
+            </Text>
+            <TextInput
+              className='bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-text dark:text-text-dark'
+              placeholder='Additional notes'
+              placeholderTextColor='#9CA3AF'
+              value={formData.note}
+              onChangeText={(value) => handleInputChange("note", value)}
+              multiline
+              numberOfLines={3}
+              textAlignVertical='top'
+            />
+          </View>
+
+          <Text className='text-gray-600 dark:text-gray-100 mb-2'>
             {t("amount")}
           </Text>
-          <View className="flex-row items-center relative mb-6">
+          <View className='flex-row items-center relative mb-6'>
             <TextInput
-              className="bg-white rounded-lg p-3 border border-gray-200 flex-1"
-              value={amount}
-              onChangeText={setAmount}
-              placeholder="0.00"
-              keyboardType="decimal-pad"
-              placeholderTextColor={
-                colorScheme === "light" ? "#888" : "#626262"
-              }
-              autoFocus
+              className='bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-text dark:text-text-dark'
+              placeholder='0.00'
+              placeholderTextColor='#9CA3AF'
+              value={formData.amount}
+              onChangeText={(value) => handleInputChange("amount", value)}
+              keyboardType='numeric'
             />
-            <Text className="absolute right-5">€</Text>
           </View>
 
-          <Text className="text-gray-600 dark:text-gray-100 mb-2">
-            {t("description")}
-          </Text>
-          <TextInput
-            className="bg-white rounded-lg p-3 border border-gray-200 mb-6"
-            value={description}
-            onChangeText={setDescription}
-            placeholder={t("description")}
-            cursorColor={colorScheme === "light" ? "#5071b3" : "#28395c"}
-            placeholderTextColor={
-              colorScheme === "light" ? "#888" : "#626262"
-            }
-          />
+          <View>
+            <Text className='text-text dark:text-text-dark text-lg mb-2'>
+              Category Term ID
+            </Text>
+            <TextInput
+              className='bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-text dark:text-text-dark'
+              placeholder='Category term ID'
+              placeholderTextColor='#9CA3AF'
+              value={formData.categoryTermId}
+              onChangeText={(value) =>
+                handleInputChange("categoryTermId", value)
+              }
+            />
+          </View>
+
+          <View>
+            <Text className='text-text dark:text-text-dark text-lg mb-2'>
+              Account ID
+            </Text>
+            <TextInput
+              className='bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-text dark:text-text-dark'
+              placeholder='Account ID'
+              placeholderTextColor='#9CA3AF'
+              value={formData.accountId}
+              onChangeText={(value) => handleInputChange("accountId", value)}
+            />
+          </View>
 
           <TouchableOpacity
-            className={`py-4 rounded-lg ${
-              loading
-                ? "bg-gray-400 dark:bg-gray-600"
-                : "bg-primary-600 dark:bg-primary-700"
-            }`}
-            onPress={handleCreateTransaction}
+            className='bg-primary-600 dark:bg-primary-800 rounded-lg p-4 mt-4'
+            onPress={handleSubmit}
             disabled={loading}
           >
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text className="text-white text-center font-bold">
-                {t("addTransaction")}
-              </Text>
-            )}
+            <Text className='text-white text-center text-lg font-semibold'>
+              Create Transaction
+            </Text>
           </TouchableOpacity>
 
-          {error && (
-            <Text className="text-red-500 mt-4 text-center">
-              {error.message}
+          <TouchableOpacity
+            className='border border-gray-300 dark:border-gray-600 rounded-lg p-4'
+            onPress={() => router.back()}
+          >
+            <Text className='text-text dark:text-text-dark text-center text-lg'>
+              Cancel
             </Text>
-          )}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-  );
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  )
 }

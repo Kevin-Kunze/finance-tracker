@@ -8,21 +8,21 @@ import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import migrations from "@/db/migrations/migrations"
-import { DB_NAME } from "@/db/constants"
+import { DB_NAME } from "@/db"
 import "../global.css"
 
 export default function RootLayout() {
   const expoDb = openDatabaseSync(DB_NAME)
   const db = drizzle(expoDb)
-  useMigrations(db, migrations)
+
+  const { error } = useMigrations(db, migrations)
+  if (error) {
+    console.log(error)
+  }
 
   return (
     <Suspense fallback={<ActivityIndicator size='large' />}>
-      <SQLiteProvider
-        databaseName={DB_NAME}
-        options={{ enableChangeListener: true }}
-        useSuspense
-      >
+      <SQLiteProvider databaseName={DB_NAME} useSuspense>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name='(tabs)' />
