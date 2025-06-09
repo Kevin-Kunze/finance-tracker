@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useState, useEffect } from "react"
 import { colors } from "@/assets/colors"
 import ScreenTitle from "@/components/ScreenTitle"
+import DuoSwitch from "@/components/DuoSwitch"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
@@ -13,7 +14,15 @@ export default function SettingsScreen() {
 
   // Lokaler State für Sprach-Switch (true = Deutsch, false = Englisch)
   const [isGerman, setIsGerman] = useState(i18n.language === "de")
+  const [selectedTab, setSelectedTab] = useState<"Deutsch" | "English">("Deutsch")
+  
 
+
+const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
+  setSelectedTab(lang)
+  const selected = lang === "Deutsch" ? "de" : "en"
+  i18n.changeLanguage(selected)
+}
   // Sprache wechseln
   const toggleLanguage = () => {
     const newLang = isGerman ? "en" : "de"
@@ -99,6 +108,11 @@ export default function SettingsScreen() {
           </View>
         </View>
       </View>
+      <DuoSwitch
+  value={selectedTab}
+  onChange={handleLanguageSwitch}
+  options={["Deutsch", "English"]}
+/>
     </SafeAreaView>
   )
 }
