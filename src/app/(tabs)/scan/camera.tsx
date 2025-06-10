@@ -101,7 +101,7 @@ export default function ScanScreen()
         console.error("Error sending picture to Gemini API:", error);
       }
 
-      router.push("./input");
+      router.push("/scan/input");
     }
   }
  
