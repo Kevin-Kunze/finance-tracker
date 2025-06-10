@@ -10,10 +10,13 @@
     "bubbles": {
       "title": "Bubbles"
     },
-    "scan": {
-      "title": "Scan",
+    "camera": {
+      "title": "Camera",
       "waiting_permission": "Waiting for permission...",
       "no_permission": "No permission given!"
+    },
+    "input": {
+      "title": "Input"
     },
     "budget": {
       "title": "Budget"

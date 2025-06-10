@@ -69,7 +69,6 @@ export default function TabLayout() {
             title: t("screens.scan.title"),
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => ( 
-              !focused?(
               <View
                 className={`${
                   focused
@@ -83,7 +82,6 @@ export default function TabLayout() {
                   color={focused ? color : "#fff"}
                 />
               </View>
-              ): null
             ),
           }}
         />
