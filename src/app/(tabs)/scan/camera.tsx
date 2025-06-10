@@ -10,7 +10,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { GEMINI_API_KEY } from './GEMINI_API_KEY.js';
 
 
-export default function ScanScreen() 
+export default function CameraScreen() 
 {
   const { t } = useTranslation();
 
@@ -22,6 +22,9 @@ export default function ScanScreen()
   const isFocused = useIsFocused();
   const windowWidth = Dimensions.get("window").width;
   const cameraRef = useRef(null);
+
+
+  const [isProcessing, changeState] = useState<Boolean>(false);
 
 
   // Check if permission is given
@@ -48,7 +51,6 @@ export default function ScanScreen()
     if(cameraRef.current) 
     {
       const photo = await cameraRef.current.takePictureAsync({ base64: true });
-
       const apiKey = GEMINI_API_KEY;
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -63,7 +65,7 @@ export default function ScanScreen()
         "- original_amount (ursprünglicher Preis/Betrag in der original Währung, Ausgaben sollen negativ sein, Einnahmen positiv)" +
         "- quantity (Menge in Anzahl, Gewicht oder Volumen mit Einheit angegeben)";
       
-
+      changeState(true);
 
       try {
         const response = await fetch(endpoint, {
@@ -96,25 +98,40 @@ export default function ScanScreen()
 
         const data = await response.json();
         console.log(data.candidates[0].content.parts[0].text);
-
+        changeState(false);
+        router.push({pathname: "/scan/input", params: {geminiResponse: data.candidates[0].content.parts[0].text}});
       } catch (error) {
         console.error("Error sending picture to Gemini API:", error);
       }
-
-      router.push("/scan/input");
     }
+
+    changeState(false);
   }
  
-  return (
-    <View className='flex-1 items-center justify-center bg-background'>
-      { isFocused?(
-      <View style={{width: windowWidth, flex: 1, justifyContent: "center"}}>
-        <CameraView facing={facing} style={{flex: 1}} ref={cameraRef}/>
-      </View>
-      ) : null }
 
-      <View style={{position: "absolute", bottom: 50+(windowWidth/4.5-windowWidth/3.8)/2, left: windowWidth/2-(windowWidth/3.8/2), borderRadius: 90, opacity: 0.5, backgroundColor: "transparent", borderColor: "white", borderWidth: 4.5, width: windowWidth/3.8, height: windowWidth/3.8}}/>
-      <TouchableOpacity onPress={()=>{takePicture()}} style={{position: "absolute", bottom: 50, left: windowWidth/2-(windowWidth/4.5/2), borderRadius: 90, opacity: 0.4, backgroundColor: "white", width: windowWidth/4.5, height: windowWidth/4.5}}/>
+  if(!isProcessing)
+  {
+    return (
+      <View className='flex-1 items-center justify-center bg-background'>
+        { isFocused?(
+        <View style={{width: windowWidth, flex: 1, justifyContent: "center"}}>
+          <CameraView facing={facing} style={{flex: 1}} ref={cameraRef}/>
+        </View>
+        ) : null }
+
+        <View style={{position: "absolute", bottom: 50+(windowWidth/4.5-windowWidth/3.8)/2, left: windowWidth/2-(windowWidth/3.8/2), borderRadius: 90, opacity: 0.5, backgroundColor: "transparent", borderColor: "white", borderWidth: 4.5, width: windowWidth/3.8, height: windowWidth/3.8}}/>
+        <TouchableOpacity onPress={()=>{takePicture()}} style={{position: "absolute", bottom: 50, left: windowWidth/2-(windowWidth/4.5/2), borderRadius: 90, opacity: 0.4, backgroundColor: "white", width: windowWidth/4.5, height: windowWidth/4.5}}/>
+      </View>
+    );
+  }
+  else
+  {
+    return(
+    <View className='flex-1 items-center justify-center bg-background'>
+      <Text>
+        Processing...
+      </Text>
     </View>
-  )
+    );
+  }
 }
