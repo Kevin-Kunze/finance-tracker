@@ -11,7 +11,9 @@
       "title": "Bubbles"
     },
     "scan": {
-      "title": "Scan"
+      "title": "Scan",
+      "waiting_permission": "Waiting for permission...",
+      "no_permission": "No permission given!"
     },
     "budget": {
       "title": "Budget"

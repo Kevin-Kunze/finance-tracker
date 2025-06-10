@@ -11,7 +11,9 @@
       "title": "Blasen"
     },
     "scan": {
-      "title": "Scan"
+      "title": "Scan",
+      "waiting_permission": "Warte auf Berechtigung...",
+      "no_permission": "Keine Berechtigung!"
     },
     "budget": {
       "title": "Budget"
