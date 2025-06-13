@@ -1,13 +1,25 @@
-import CircularButton from "@/components/CircularButton"
-import { useTranslation } from "react-i18next"
-import { View, Text } from "react-native"
+import { SafeAreaView, ScrollView } from "react-native";
+import TransactionItem from "../../../components/TransactionItem";
 
 export default function TransactionsScreen() {
-  const { t } = useTranslation()
+  const transactions = [
+    { emoji: "⚽️", title: "Freizeitaktivitäten", amount: "300" },
+    { emoji: "🛒", title: "Lebensmittel", amount: "300" },
+  ];
 
   return (
-    <View className='flex-1 items-center justify-center bg-background'>
-     <CircularButton onPress={() => {}} icon="calendar"  />
-    </View>
-  )
+    <SafeAreaView style={{ flex: 1 }} className="bg-background">
+      <ScrollView className='flex-1 px-4 py-2'>
+        {transactions.map((transaction, index) => (
+          <TransactionItem
+            key={index}
+            emoji={transaction.emoji}
+            title={transaction.title}
+            amount={transaction.amount}
+            onPress={() => {}}
+          />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
