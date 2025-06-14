@@ -1,4 +1,4 @@
-import { Text, View, Switch } from "react-native"
+import { Text, View, Switch, TouchableOpacity } from "react-native"
 import { useColorScheme } from "nativewind"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 import { colors } from "@/assets/colors"
 import ScreenTitle from "@/components/ScreenTitle"
 import DuoSwitch from "@/components/DuoSwitch"
+import { router } from "expo-router"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
@@ -14,15 +15,15 @@ export default function SettingsScreen() {
 
   // Lokaler State für Sprach-Switch (true = Deutsch, false = Englisch)
   const [isGerman, setIsGerman] = useState(i18n.language === "de")
-  const [selectedTab, setSelectedTab] = useState<"Deutsch" | "English">("Deutsch")
-  
+  const [selectedTab, setSelectedTab] = useState<"Deutsch" | "English">(
+    "Deutsch"
+  )
 
-
-const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
-  setSelectedTab(lang)
-  const selected = lang === "Deutsch" ? "de" : "en"
-  i18n.changeLanguage(selected)
-}
+  const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
+    setSelectedTab(lang)
+    const selected = lang === "Deutsch" ? "de" : "en"
+    i18n.changeLanguage(selected)
+  }
   // Sprache wechseln
   const toggleLanguage = () => {
     const newLang = isGerman ? "en" : "de"
@@ -40,8 +41,26 @@ const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
       <ScreenTitle title={t("screens.settings.title")} showBackButton={false} />
 
       <View className='px-4 py-6 gap-6'>
+        {/* General Section */}
+        <View className='bg-gray-100 dark:bg-primary-800 rounded-lg overflow-hidden p-4'>
+          <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1'>
+            {t("screens.settings.general")}
+          </Text>
+
+          <View className='flex-row items-center gap-3'>
+            <TouchableOpacity
+              className='items-center justify-center p-2 bg-primary-700 rounded-lg'
+              onPress={() => router.push("/settings/categorySettings")}
+            >
+              <Text className='text-gray-900 dark:text-gray-100'>
+                {t("screens.settings.categorySettings")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* Appearance Section */}
-        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden p-4'>
+        <View className='bg-gray-100 dark:bg-primary-800 rounded-lg overflow-hidden p-4'>
           <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
             {t("screens.settings.appearance")}
           </Text>
@@ -74,7 +93,7 @@ const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
         </View>
 
         {/* Language Section */}
-        <View className='bg-gray-100 dark:bg-primary-700 rounded-lg overflow-hidden p-4'>
+        <View className='bg-gray-100 dark:bg-primary-800 rounded-lg overflow-hidden p-4'>
           <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1'>
             {t("screens.settings.language")}
           </Text>
@@ -109,10 +128,10 @@ const handleLanguageSwitch = (lang: "Deutsch" | "English") => {
         </View>
       </View>
       <DuoSwitch
-  value={selectedTab}
-  onChange={handleLanguageSwitch}
-  options={["Deutsch", "English"]}
-/>
+        value={selectedTab}
+        onChange={handleLanguageSwitch}
+        options={["Deutsch", "English"]}
+      />
     </SafeAreaView>
   )
 }

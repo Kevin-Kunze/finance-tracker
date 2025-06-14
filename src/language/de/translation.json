@@ -21,6 +21,8 @@
     },
     "settings": {
       "title": "Einstellungen",
+      "general": "Allgemein",
+      "categorySettings": "Kategorieneinstellungen",
       "appearance": "Erscheinungsbild",
       "darkMode": "Dunkel-Modus",
       "language": "Sprache",
