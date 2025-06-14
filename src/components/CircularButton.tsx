@@ -13,7 +13,7 @@ export default function CircularButton({
 
   return (
     <TouchableOpacity
-      className='p-3 rounded-full bg-primary-100 dark:bg-primary-800 border border-primary-600 dark:border-primary-800 items-center justify-center mr-2'
+      className='p-3 rounded-full bg-primary-100 dark:bg-primary-800 border border-primary-600 dark:border-primary-800 items-center justify-center mr-2 size-12'
       onPress={onPress}
     >
       <Ionicons

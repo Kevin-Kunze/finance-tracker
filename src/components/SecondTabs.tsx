@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router"
-import TabsButton from "./TabsButton"
+import TabButton from "./TabButton"
 import { useColorScheme } from "nativewind"
 import { colors as themeColor } from "@/assets/colors"
 import { Ionicons } from "@expo/vector-icons"
@@ -47,7 +47,7 @@ export default function SecondTabs({
           height: 48,
         },
         tabBarLabelPosition: "beside-icon",
-        tabBarButton: (props) => <TabsButton {...props} />,
+        tabBarButton: (props) => <TabButton {...props} />,
         headerShown: false,
       }}
     >

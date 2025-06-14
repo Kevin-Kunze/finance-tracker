@@ -59,6 +59,10 @@ export default function HomeScreen() {
           icon='search'
           onPress={() => console.log("Search button pressed")}
         />
+        <CircularButton
+          icon='grid-outline'
+          onPress={() => router.push("/kitchensink")}
+        />
       </View>
 
       <View className='bg-primary-600 dark:bg-primary-800 p-4 mx-4 rounded-lg'>

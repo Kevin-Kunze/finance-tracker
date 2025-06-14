@@ -21,6 +21,8 @@
     },
     "settings": {
       "title": "Settings",
+      "general": "General",
+      "categorySettings": "Category Settings",
       "appearance": "Appearance",
       "darkMode": "Dark Mode",
       "language": "Language",
