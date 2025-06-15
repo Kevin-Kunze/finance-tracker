@@ -2,7 +2,7 @@ import { Text, View, Switch, TouchableOpacity } from "react-native"
 import { useColorScheme } from "nativewind"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
-import { useTranslation } from "react-i18next"
+import { useTypedTranslation } from "@/language/useTypedTranslation" //import { useTranslation } from "react-i18next"
 import { useState, useEffect } from "react"
 import { colors } from "@/assets/colors"
 import ScreenTitle from "@/components/ScreenTitle"
@@ -10,7 +10,7 @@ import { router } from "expo-router"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTypedTranslation();
 
   // Lokaler State für Sprach-Switch (true = Deutsch, false = Englisch)
   const [isGerman, setIsGerman] = useState(i18n.language === "de")
