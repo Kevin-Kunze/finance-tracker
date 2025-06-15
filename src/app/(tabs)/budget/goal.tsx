@@ -1,8 +1,9 @@
 import { Text, View } from "react-native"
-import { useTranslation } from "react-i18next"
+//import { useTranslation } from "react-i18next"
+import { useTypedTranslation } from "@/language/useTypedTranslation"
 
 export default function OverviewScreen() {
-  const { t } = useTranslation()
+  const { t } = useTypedTranslation();//const { t } = useTranslation()
 
   return (
     <View className='flex-1 items-center justify-center bg-background'>

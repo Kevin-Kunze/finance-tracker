@@ -11,19 +11,21 @@ import { categoryToBudgetTable } from "./schemas/categoriesToBudgets"
 
 export const DB_NAME = "spendex.db"
 
+export const schema = {
+  accountTable,
+  budgetTable,
+  categoryTable,
+  categoryToBudgetTable,
+  categoryTermTable,
+  currencyTable,
+  transactionGroupTable,
+  transactionTable,
+}
+
 export function useDb() {
   const sqliteDb = useSQLiteContext()
   const db = drizzle(sqliteDb, {
-    schema: {
-      accountTable,
-      budgetTable,
-      categoryTable,
-      categoryToBudgetTable,
-      categoryTermTable,
-      currencyTable,
-      transactionGroupTable,
-      transactionTable,
-    },
+    schema,
   })
 
   return db

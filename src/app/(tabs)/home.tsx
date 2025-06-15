@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next"
+import { useTypedTranslation } from "@/language/useTypedTranslation"// Language
 import CircularButton from "@/components/CircularButton"
 import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   >([])
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
-  const { t } = useTranslation()
+  const { t } = useTypedTranslation(); // Language 
 
   const fetchTotalAmount = useCallback(async () => {
     try {
@@ -58,6 +58,10 @@ export default function HomeScreen() {
         <CircularButton
           icon='search'
           onPress={() => console.log("Search button pressed")}
+        />
+        <CircularButton
+          icon='grid-outline'
+          onPress={() => router.push("/kitchensink")}
         />
       </View>
 

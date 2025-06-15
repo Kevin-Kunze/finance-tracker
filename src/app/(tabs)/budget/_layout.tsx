@@ -1,8 +1,10 @@
 import SecondTabs from "@/components/SecondTabs"
-import { useTranslation } from "react-i18next"
+//import { useTranslation } from "react-i18next"
+import { useTypedTranslation } from "@/language/useTypedTranslation"
 
 export default function BudgetLayout() {
-  const { t } = useTranslation()
+  //const { t } = useTranslation();
+  const { t } = useTypedTranslation();
 
   return (
     <SecondTabs
