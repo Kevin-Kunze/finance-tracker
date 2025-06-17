@@ -1,15 +1,15 @@
 import React from "react"
+import { View, Text } from "react-native"
 
 interface EmojiProps {
-  className?: string
-  label: string
-  symbol: number
+  size: string
+  emoji: string
 }
 
-const Emoji = React.memo(({ className, label, symbol }: EmojiProps) => (
-  <span className={className} role='img' aria-label={label}>
-    {String.fromCodePoint(symbol)}
-  </span>
+const Emoji = React.memo(({ size, emoji }: EmojiProps) => (
+  <View>
+    <Text className={size}>{emoji}</Text>
+  </View>
 ))
 
 Emoji.displayName = "Emoji"

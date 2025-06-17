@@ -1,4 +1,4 @@
-import { useTypedTranslation } from "@/language/useTypedTranslation"// Language
+import { useTypedTranslation } from "@/language/useTypedTranslation" // Language
 import CircularButton from "@/components/CircularButton"
 import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   >([])
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
-  const { t } = useTypedTranslation(); // Language 
+  const { t } = useTypedTranslation() // Language
 
   const fetchTotalAmount = useCallback(async () => {
     try {
@@ -47,7 +47,7 @@ export default function HomeScreen() {
   )
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-50 dark:bg-primary-950 gap-4'>
+    <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950 gap-4'>
       {error && (
         <View className='mx-4 p-3 bg-red-100 border border-red-400 rounded'>
           <Text className='text-red-800'>{error.message}</Text>
@@ -66,7 +66,9 @@ export default function HomeScreen() {
       </View>
 
       <View className='bg-primary-600 dark:bg-primary-800 p-4 mx-4 rounded-lg'>
-        <Text className='text-white text-3xl text-center'>{totalAmount} €</Text>
+        <Text className='text-gray-50 text-base text-center'>
+          {totalAmount} €
+        </Text>
       </View>
       <View className='bg-primary-600 dark:bg-primary-800 mx-4 rounded-lg'>
         <TouchableOpacity
@@ -75,8 +77,8 @@ export default function HomeScreen() {
             router.push("/(tabs)/transactions")
           }}
         >
-          <Ionicons name='card' size={12} color='white' />
-          <Text className='text-white text-center'>
+          <Ionicons name='card' size={16} color='white' />
+          <Text className='text-white text-base text-gray-50 text-center'>
             {t("screens.home.lastTransactions")}
           </Text>
         </TouchableOpacity>

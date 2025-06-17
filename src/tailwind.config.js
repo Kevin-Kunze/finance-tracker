@@ -9,8 +9,20 @@ export const content = [
 export const presets = [require("nativewind/preset")]
 export const darkMode = "class"
 export const theme = {
-  extend: {
-    colors,
+  colors,
+  fontSize: {
+    "emoji-xs": ["24px", "28px"],
+    "emoji-s": ["30px", "34px"],
+    "emoji-xl": ["60px", "68px"],
+    base: ["16px", "24px"],
+    title: ["24px", "32px"],
+  },
+  fontFamily: {
+    sans: ["Helvetica Neue", "sans-serif"],
+  },
+  fontWeight: {
+    normal: "400",
+    bold: "700",
   },
 }
 export const plugins = []
