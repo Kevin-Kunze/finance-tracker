@@ -43,6 +43,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.home.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/home")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -125,6 +131,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.settings.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/settings")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "settings" : "settings-outline"}
