@@ -57,6 +57,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.transactions.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/transactions")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "card" : "card-outline"}
@@ -71,6 +77,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.scan.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/scan")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <View
               className={`${
@@ -93,6 +105,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.budget.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/budget")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "wallet" : "wallet-outline"}
