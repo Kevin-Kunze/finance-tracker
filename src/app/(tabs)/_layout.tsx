@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router"
+import { useRouter, Tabs } from "expo-router"
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { View } from "react-native"
@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next"
 export default function TabLayout() {
   const { t } = useTranslation()
   const { colorScheme } = useColorScheme()
+  const router = useRouter()
 
   return (
     <Tabs
@@ -30,6 +31,9 @@ export default function TabLayout() {
           borderRadius: 0,
         },
         tabBarButton: (props) => {
+          if (props.accessibilityState?.selected) {
+            router.push("/scan")
+          }
           return <TabButton {...props} />
         },
       }}
@@ -39,6 +43,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.home.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/home")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -53,6 +63,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.transactions.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/transactions")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "card" : "card-outline"}
@@ -67,18 +83,24 @@ export default function TabLayout() {
         options={{
           title: t("screens.scan.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/scan")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <View
               className={`${
                 focused
-                  ? "bg-white dark:bg-primary-600 border-2 dark:border-0 border-primary-600"
+                  ? "bg-gray-50 dark:bg-primary-600 border-2 dark:border-0 border-primary-600"
                   : "bg-primary-600 dark:bg-primary-700"
               } w-16 h-16 rounded-full items-center justify-center -mt-16`}
             >
               <Ionicons
                 name='scan'
                 size={size}
-                color={focused ? color : "#fff"}
+                color={focused ? color : colors.gray[50]}
               />
             </View>
           ),
@@ -89,6 +111,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.budget.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/budget")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "wallet" : "wallet-outline"}
@@ -103,6 +131,12 @@ export default function TabLayout() {
         options={{
           title: t("screens.settings.title"),
           headerShown: false,
+          tabBarButton: (props) => {
+            props.onPress = () => {
+              router.push("/settings")
+            }
+            return <TabButton {...props} />
+          },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "settings" : "settings-outline"}

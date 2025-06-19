@@ -29,7 +29,7 @@ export default function ScreenTitle({
         </TouchableOpacity>
       )}
 
-      <Text className='text-2xl font-bold text-primary-600 dark:text-gray-100 ml-2'>
+      <Text className='text-title font-bold text-primary-600 dark:text-gray-100 ml-2'>
         {title}
       </Text>
     </View>

@@ -1,0 +1,78 @@
+{
+  "screens": {
+    "home": {
+      "title": {
+        "en": "Home",
+        "de": "Startseite"
+      },
+      "lastTransactions": {
+        "en": "Recent Transactions",
+        "de": "Letzte Transaktionen"
+      }
+    },
+    "transactions": {
+      "title": {
+        "en": "Transactions",
+        "de": "Transaktionen"
+      }
+    },
+    "bubbles": {
+      "title": {
+        "en": "Bubbles",
+        "de": "Blasen"
+      }
+    },
+    "scan": {
+      "title": {
+        "en": "Scan",
+        "de": "Scan"
+      }
+    },
+    "budget": {
+      "title": {
+        "en": "Budget",
+        "de": "Budget"
+      }
+    },
+    "goals": {
+      "title": {
+        "en": "Goals",
+        "de": "Ziele"
+      }
+    },
+    "settings": {
+      "title": {
+        "en": "Settings",
+        "de": "Einstellungen"
+      },
+      "general": {
+        "en": "General",
+        "de": "Allgemein"
+      },
+      "categorySettings": {
+        "en": "Category Settings",
+        "de": "Kategorieneinstellungen"
+      },
+      "appearance": {
+        "en": "Appearance",
+        "de": "Erscheinungsbild"
+      },
+      "darkMode": {
+        "en": "Dark Mode",
+        "de": "Dunkel-Modus"
+      },
+      "language": {
+        "en": "Language",
+        "de": "Sprache"
+      },
+      "english": {
+        "en": "English",
+        "de": "Englisch"
+      },
+      "german": {
+        "en": "German",
+        "de": "Deutsch"
+      }
+    }
+  }
+}
