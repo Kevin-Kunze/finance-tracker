@@ -53,13 +53,21 @@
         "en": "Category Settings",
         "de": "Kategorieneinstellungen"
       },
+      "personalization": {
+        "en": "Personalization",
+        "de": "Personalisierung"
+      },
       "appearance": {
         "en": "Appearance",
         "de": "Erscheinungsbild"
       },
-      "darkMode": {
-        "en": "Dark Mode",
-        "de": "Dunkel-Modus"
+      "dark": {
+        "en": "Dark",
+        "de": "Dunkel"
+      },
+      "light": {
+        "en": "Light",
+        "de": "Hell"
       },
       "language": {
         "en": "Language",
