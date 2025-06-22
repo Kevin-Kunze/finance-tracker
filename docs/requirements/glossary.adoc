@@ -1,28 +1,112 @@
-= Glossar: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+= Glossar: Spendex
+include::../_includes/team-members.adoc[]
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
 
-
 == Einführung
-In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fachdomäne) der <Projektthema-Systems> definiert. Zur besseren Übersichtlichkeit sind Begriffe, Abkürzungen und Datendefinitionen gesondert aufgeführt.
+In diesem Dokument werden die wichtigsten Begriffe, Abkürzungen und Datendefinitionen aus der Fachdomäne „persönliches Finanzmanagement“ für die App definiert. Die Definitionen helfen bei der einheitlichen Kommunikation im Team und erleichtern neuen Mitgliedern den Einstieg.
 
 == Begriffe
 [%header]
 |===
-| Begriff | Definition und Erläuterung | Synonyme
-//| Kommissionierung | Bereitstellung von Waren aus einem Lager entsprechend eines Kundenauftrags | (keine)
-| xx | xx | xx
-|===
+| Begriff        | Definition und Erläuterung | Synonyme
 
+| Transaktion
+| Eine einzelne Geldbewegung, wie z.B. eine Ausgabe oder Einnahme, die vom Nutzer in der App erfasst wird.
+| Buchung, Zahlung
+
+| Konto
+| Eine virtuelle oder reale Geldquelle bzw. ein Behälter, in dem Transaktionen gespeichert werden (z.B. Girokonto, Bargeld, Sparkonto).
+| Account, Bankkonto
+
+| Kategorie
+| Thematische Zuordnung einer Transaktion (z.B. Lebensmittel, Freizeit, Miete), die eine bessere Auswertung der Ausgaben ermöglicht.
+| Rubrik, Bereich
+
+| Budget
+| Ein festgelegter Geldbetrag, der für einen bestimmten Zeitraum oder eine bestimmte Kategorie zur Verfügung steht.
+| Ausgabenlimit
+
+| Sparziel
+| Ein vom Nutzer definiertes Ziel, für das Geld angespart wird (z.B. Urlaub, neues Fahrrad).
+| Ziel, Saving Goal
+
+| Badge
+| Virtuelle Auszeichnung, die Nutzer für besondere Leistungen (z.B. Sparen, viele Einträge) erhalten können.
+| Auszeichnung
+
+| Währung
+| Die gesetzliche Einheit, in der Beträge verwaltet werden (z.B. Euro, US-Dollar).
+| Currency
+
+| Dashboard
+| Startseite der App mit einer Übersicht über den Kontostand, Ausgaben, Budgets und wichtige Statistiken.
+| Übersichtsseite, Home
+
+| Statistik
+| Grafische oder tabellarische Auswertung von Transaktionen, Kategorien oder Budgets über einen bestimmten Zeitraum.
+| Auswertung, Analyse
+
+| Ausgabenübersicht
+| Bereich im Dashboard, der die letzten oder wichtigsten Ausgaben anzeigt.
+| Expense Overview
+
+| Einstellungen
+| Bereich der App, in dem Nutzer persönliche Präferenzen, Sprache, Design oder Konten verwalten können.
+| Settings
+
+| Onboarding
+| Der erste Einstieg und die Einführung für neue Nutzer in die App.
+| Einführung
+
+| Benachrichtigung
+| Nachricht, die den Nutzer z.B. über anstehende Ausgaben, erreichte Sparziele oder wichtige Ereignisse informiert.
+| Notification
+
+| QR-Code
+| Ein Code, der von der App gescannt werden kann, z.B. zum schnellen Hinzufügen von Daten oder für Export/Import von Informationen.
+|
+
+| Wireframe
+| Ein schematischer Entwurf, der die Struktur der App oder eines Screens zeigt.
+| Mockup, Prototyp
+
+|===
 
 == Abkürzungen und Akronyme
 [%header]
 |===
 | Abkürzung | Bedeutung | Erläuterung
-//| UP | Unified Process | Vorgehensmodell für die Softwareentwicklung
-| xx | xx | xx
+
+| EUR
+| Euro
+| Währungseinheit in Europa
+
+| USD
+| US-Dollar
+| Währungseinheit in den USA
+
+| ID
+| Identifikationsnummer
+| Eindeutige Kennung für Objekte (z.B. Transaktion, Konto)
+
+| API
+| Application Programming Interface
+| Schnittstelle zur Kommunikation zwischen verschiedenen Softwareteilen
+
+| PWA
+| Progressive Web App
+| Webanwendung mit App-ähnlicher Benutzererfahrung
+
+| UI
+| User Interface
+| Benutzeroberfläche
+
+| UX
+| User Experience
+| Nutzererlebnis
+
 |===
 
 == Verzeichnis der Datenstrukturen
@@ -36,11 +120,54 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 | Emailadresse muss `@`-Zeichen und `.` Punkt enthalten.
 | Login
 
-| xx
-| xx
-| xx
-| xx
-| xx
+| Transaktion
+| Repräsentiert eine einzelne Geldbewegung.
+| Objekt (ID, Betrag, Datum, Kategorie, Konto, Notiz)
+| Betrag darf nicht negativ sein; Datum muss gültig sein.
+| Buchung
+
+| Konto
+| Virtuelle oder reale Geldquelle.
+| Objekt (ID, Name, Währung, Saldo, Beschreibung)
+| Name muss eindeutig sein; Währung ist Pflichtfeld.
+| Account, Bankkonto
+
+| Kategorie
+| Thematische Zuordnung für Transaktionen.
+| Objekt (ID, Name, Farbe, Icon, Ober-/Unterkategorie)
+| Name darf nicht leer sein; Hierarchien möglich.
+| Rubrik
+
+| Budget
+| Geldlimit für einen Zeitraum/Kategorie.
+| Objekt (ID, Betrag, Zeitraum, Kategorie)
+| Betrag muss ≥ 0 sein; Kategorie erforderlich.
+| Ausgabenlimit
+
+| Sparziel
+| Ziel, für das gespart wird.
+| Objekt (ID, Name, Zielbetrag, aktueller Betrag)
+| Zielbetrag > 0; Name muss vergeben sein.
+| Saving Goal
+
+| Badge
+| Virtuelle Auszeichnung für Nutzerleistungen.
+| Objekt (ID, Bild, Beschreibung, Datum)
+| Bild als BLOB; Beschreibung max. 200 Zeichen.
+| Auszeichnung
+
+| Währung
+| Geld-Einheit
+| Objekt (ID, Symbol, Name)
+| ID und Name müssen eindeutig sein.
+| Currency
+
+| Benachrichtigung
+| Nachricht an den Nutzer.
+| Objekt (ID, Nachricht, Typ, Datum)
+| Nachricht darf nicht leer sein.
+| Notification
+
 |===
 
 == Domänenmodell
