@@ -53,17 +53,95 @@ export default function CameraScreen()
       HERE WE EDIT THE PROMPTS AND THE MODEL 
     */
 
+    // Just for testing
+    const categories = {
+        'Ausgaben':
+        {
+            'Essen': {
+                'FastFood/Essen gehen': null,
+                'Gemüse und Obst': {
+                    'Obst': {
+                        'Citrusfrüchte': null,
+                        'Sonstige': null
+                    },
+                    'Gemüse': {
+                        'Proteinreich': null,
+                        'Wenige Proteine': null,
+                        'Sonstige': null
+                    },
+                    'Sonstige': null 
+                },
+                'Milchprodukte': {
+                    'Käse und Joghurt': null,
+                    'Milch': null,
+                    'Sonstige': null
+                },
+                'Getreideprodukte': {
+                    'Nudeln': null,
+                    'Brot': {
+                        'Weißbrot': null,
+                        'Schwarzbrot': null,
+                        'Sonstige': null
+                    },
+                    'Sonstige': null
+                },
+                'Fleisch': {
+                    'Huhn': null,
+                    'Rind': null,
+                    'Schwein': null,
+                    'Sonstige': null
+                },
+                'Getränke': {
+                    'Alkohol': null,
+                    'Alkoholfrei': null,
+                    'Koffeinhaltig': null,
+                    'Sonstige': null
+                },
+                'Snacks': {
+                    'Süßigkeiten': null,
+                    'Salziges': null,
+                    'Sonstige': null
+                },
+                'Sonstige': null
+            },
+            'Kleidung': {
+                'Amazon': null,
+                'Zalando': null,
+                'Primark': null,
+                'Sonstige': null
+            },
+            'Wohnen': {
+                'Wohnzimmer': null,
+                'Bad': null,
+                'Küche': null,
+                'Sonstige': null
+            },
+            'Hygiene': {
+                'Kleidung': null,
+                'Körper': null,
+                'Reinigungsmittel': null,
+                'Sonstige': null
+            },
+            'Geschenke': {
+                'Lilly': null,
+                'Peter': null
+            }
+        },
+        'Einnahmen': {
+            'Werksstudent': null,
+            'Rabatte/Rückerstattungen': null,
+            'Sonstige': null
+        }
+    }
+
     // Just for testing at the moment, needs data from database and refacotor
-    const textInput = "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name_scan). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
-      "Leite aus name_scan eine allgemeinere Produktbezeichnung ab (name). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orintieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
-      "Verwende dabei nur die Kategorie-ID aus der folgenden Liste. Verwende nur die Währungs ids aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
-      "- name_scan (Kurzbezeichnung aus dem Bild) " +
-      "- name (allgemeinere Produktbezeichnung) " +
+    const textInput = "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
+      "Leite aus name eine allgemeinere Produktbezeichnung ab (term). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orintieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
+      "Verwende dabei nur die Kategorie aus der folgenden Liste. Verwende nur die Währungs ids aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
+      "- name (Kurzbezeichnung aus dem Bild) " +
+      "- term (allgemeinere Produktbezeichnung) " +
       "- amount (Preis/Betrag in Euro) " +
-      "- category_id (ID der zugewiesenen Kategorie)" +
-      "- original_currency_id (ursprüngliche Währung)" +
-      "- original_amount (ursprünglicher Preis/Betrag in der original Währung, Ausgaben sollen negativ sein, Einnahmen positiv)" +
-      "- quantity (Menge in Anzahl, Gewicht oder Volumen mit Einheit angegeben)";
+      "- category (zugewiesenen Kategorie)" +
     
     changeState(true);
 
@@ -99,6 +177,7 @@ export default function CameraScreen()
 
       const data = await response.json();
       changeState(false);
+      console.log(data.candidates[0].content.parts[0].text)
       router.push({pathname: "/scan/input", params: {geminiResponse: data.candidates[0].content.parts[0].text}});
     } 
     catch (error) 
