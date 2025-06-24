@@ -15,7 +15,7 @@ export default function ScreenTitle({
   const router = useRouter()
 
   return (
-    <View className='flex-row items-center px-4 py-2'>
+    <View className='flex-row items-center mb-2'>
       {showBackButton && (
         <TouchableOpacity
           className='p-2 rounded-full'
@@ -29,7 +29,7 @@ export default function ScreenTitle({
         </TouchableOpacity>
       )}
 
-      <Text className='text-title font-bold text-primary-600 dark:text-gray-100 ml-2'>
+      <Text className='text-title font-bold text-primary-600 dark:text-gray-100'>
         {title}
       </Text>
     </View>

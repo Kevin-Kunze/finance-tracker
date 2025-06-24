@@ -53,6 +53,10 @@ export const colors = {
     gray: "#bebebe",
     green: "#c8ffc2",
   },
+  functional: {
+    delete: "#ff4d4d",
+    edit: "#ffb84d",
+  },
 }
 
 export type customColors = keyof typeof colors.custom

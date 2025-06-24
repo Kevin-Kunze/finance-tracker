@@ -22,10 +22,16 @@
         "de": "Blasen"
       }
     },
-    "scan": {
+    "camera": {
       "title": {
-        "en": "Scan",
-        "de": "Scan"
+        "en": "Camera",
+        "de": "Kamera"
+      }
+    },
+    "input": {
+      "title": {
+        "en": "Input",
+        "de": "Eingabe"
       }
     },
     "budget": {

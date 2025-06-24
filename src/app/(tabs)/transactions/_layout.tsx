@@ -1,4 +1,4 @@
-import SecondTabs from "@/components/SecondTabs"
+import SecondTabs from "@/components/tabs/SecondTabs"
 import { useTranslation } from "react-i18next"
 
 export default function TransactionLayout() {

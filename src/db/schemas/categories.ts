@@ -1,7 +1,7 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
-import { categoryTermTable } from "./categoryTerms"
+import { colors } from "@/assets/colors"
 
 export const categoryTable = sqliteTable("categories", {
   id: text()
@@ -14,9 +14,13 @@ export const categoryTable = sqliteTable("categories", {
     .default(sql`(unixepoch())`)
     .notNull(),
   name: text().notNull(),
-  color: text(),
+  color: text({
+    enum: Object.keys(colors.custom) as [string, ...string[]],
+  }),
   icon: text(),
-  parentCategoryId: text(),
+  parentCategoryId: text().references((): any => categoryTable.id, {
+    onDelete: "cascade",
+  }),
 })
 
 export const categorieRelations = relations(categoryTable, ({ one }) => ({
@@ -26,4 +30,4 @@ export const categorieRelations = relations(categoryTable, ({ one }) => ({
   }),
 }))
 
-export type Category = typeof categoryTermTable.$inferSelect
+export type Category = typeof categoryTable.$inferSelect

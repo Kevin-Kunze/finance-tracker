@@ -3,9 +3,10 @@ import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import { View } from "react-native"
 import { useColorScheme } from "nativewind"
-import TabButton from "@/components/TabButton"
+import TabButton from "@/components/tabs/TabButton"
 import { colors } from "@/assets/colors"
 import { useTranslation } from "react-i18next"
+import useCategory from "@/db/queries/category"
 
 export default function TabLayout() {
   const { t } = useTranslation()
@@ -31,9 +32,6 @@ export default function TabLayout() {
           borderRadius: 0,
         },
         tabBarButton: (props) => {
-          if (props.accessibilityState?.selected) {
-            router.push("/scan")
-          }
           return <TabButton {...props} />
         },
       }}
@@ -85,7 +83,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarButton: (props) => {
             props.onPress = () => {
-              router.push("/scan")
+              router.push("/scan/camera")
             }
             return <TabButton {...props} />
           },

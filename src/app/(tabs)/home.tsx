@@ -1,5 +1,5 @@
 import { useTypedTranslation } from "@/language/useTypedTranslation" // Language
-import CircularButton from "@/components/CircularButton"
+import CircularButton from "@/components/buttons/CircularButton"
 import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
 import { useCallback, useState } from "react"
@@ -7,6 +7,8 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
 import { TransactionGroup } from "@/db/schemas/transactionGroups"
+import useCategory from "@/db/queries/category"
+import Button from "@/components/buttons/Button"
 
 export default function HomeScreen() {
   const { error } = useTransactionGroup()
@@ -17,6 +19,8 @@ export default function HomeScreen() {
       categoryIcon: string | null
     })[]
   >([])
+
+  const { getCategoriesAsJson } = useCategory()
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
   const { t } = useTypedTranslation() // Language
@@ -46,6 +50,11 @@ export default function HomeScreen() {
     }, [fetchTotalAmount, fetchTransactions])
   )
 
+  const handlePress = async () => {
+    const categories = await getCategoriesAsJson()
+    console.log("Categories:", JSON.stringify(categories, null, 2))
+  }
+
   return (
     <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950 gap-4'>
       {error && (
@@ -54,7 +63,10 @@ export default function HomeScreen() {
         </View>
       )}
       <View className='flex-row justify-center px-4 pt-2 gap-4'>
-        <CircularButton icon='add' onPress={() => router.push("/scan")} />
+        <CircularButton
+          icon='add'
+          onPress={() => router.push("/scan/camera")}
+        />
         <CircularButton
           icon='search'
           onPress={() => console.log("Search button pressed")}
@@ -94,6 +106,7 @@ export default function HomeScreen() {
           ))}
         </View>
       </View>
+      <Button title='Click Me!' onPress={handlePress} />
     </SafeAreaView>
   )
 }

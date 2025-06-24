@@ -14,14 +14,17 @@ export const theme = {
     "emoji-xs": ["24px", "28px"],
     "emoji-s": ["30px", "34px"],
     "emoji-xl": ["60px", "68px"],
-    base: ["16px", "24px"],
-    title: ["24px", "32px"],
+    info: ["14px", "18px"],
+    base: ["16px", "22px"],
+    title: ["28px", "36px"],
+    subtitle: ["20px", "28px"],
   },
   fontFamily: {
     sans: ["Helvetica Neue", "sans-serif"],
   },
   fontWeight: {
     normal: "400",
+    semibold: "500",
     bold: "700",
   },
 }

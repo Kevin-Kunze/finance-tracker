@@ -1,4 +1,4 @@
-import "../i18n";
+import "../i18n"
 
 import { Stack } from "expo-router"
 import { SQLiteProvider, openDatabaseSync } from "expo-sqlite"
@@ -8,12 +8,14 @@ import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import migrations from "@/db/migrations/migrations"
-import { DB_NAME } from "@/db"
+import { DB_NAME, initializeDatabase } from "@/db"
 import "../global.css"
 
 export default function RootLayout() {
   const expoDb = openDatabaseSync(DB_NAME)
   const db = drizzle(expoDb)
+
+  initializeDatabase()
 
   const { error } = useMigrations(db, migrations)
   if (error) {

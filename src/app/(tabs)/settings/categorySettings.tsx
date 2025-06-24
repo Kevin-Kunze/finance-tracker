@@ -1,4 +1,4 @@
-import ScreenTitle from "@/components/ScreenTitle"
+import ScreenTitle from "@/components/tabs/ScreenTitle"
 import { useTranslation } from "react-i18next"
 import { SafeAreaView } from "react-native-safe-area-context"
 

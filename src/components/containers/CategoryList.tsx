@@ -1,5 +1,7 @@
 import { View } from "react-native"
-import CategoryContainer, { CategoryContainerProps } from "./CategoryContainer"
+import CategoryContainer, {
+  CategoryContainerProps,
+} from "./containers/CategoryContainer"
 
 type CategoryListProps = {
   categories: CategoryContainerProps[]

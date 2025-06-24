@@ -4,8 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
 import { useTypedTranslation } from "@/language/useTypedTranslation" //import { useTranslation } from "react-i18next"
 import { colors } from "@/assets/colors"
-import ScreenTitle from "@/components/ScreenTitle"
-import DuoSwitch from "@/components/DuoSwitch"
+import ScreenTitle from "@/components/tabs/ScreenTitle"
+import DuoSwitch from "@/components/buttons/DuoSwitch"
+import { ScrollView } from "react-native-gesture-handler"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
@@ -17,68 +18,73 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView className='flex-1 bg-background dark:bg-primary-950'>
-      <ScreenTitle title={t("screens.settings.title")} showBackButton={false} />
+      <ScrollView className='mx-4'>
+        <ScreenTitle
+          title={t("screens.settings.title")}
+          showBackButton={false}
+        />
 
-      <View className='px-4 py-6 gap-6'>
-        {/* Appearance Section */}
-        <View className='bg-gray-100 dark:bg-primary-800 rounded-lg overflow-hidden p-4 gap-3'>
-          <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
-            {t("screens.settings.personalization")}
-          </Text>
+        <View className='gap-6'>
+          {/* Appearance Section */}
+          <View className='bg-gray-100 dark:bg-primary-800 rounded-lg overflow-hidden p-4 gap-3'>
+            <Text className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+              {t("screens.settings.personalization")}
+            </Text>
 
-          <View className='flex-row justify-between items-center'>
-            <View className='flex-row items-center gap-3'>
-              <Ionicons
-                name={colorScheme === "light" ? "sunny" : "moon"}
-                size={22}
-                color={
-                  colorScheme === "light"
-                    ? colors.primary[600]
-                    : colors.gray[50]
-                }
+            <View className='flex-row justify-between items-center'>
+              <View className='flex-row items-center gap-3'>
+                <Ionicons
+                  name={colorScheme === "light" ? "sunny" : "moon"}
+                  size={22}
+                  color={
+                    colorScheme === "light"
+                      ? colors.primary[600]
+                      : colors.gray[50]
+                  }
+                />
+                <Text className='text-gray-900 dark:text-gray-100'>
+                  {t("screens.settings.appearance")}
+                </Text>
+              </View>
+
+              <DuoSwitch
+                value={colorScheme === "dark"}
+                onChange={() => {
+                  toggleColorScheme()
+                }}
+                options={[
+                  t("screens.settings.light"),
+                  t("screens.settings.dark"),
+                ]}
               />
-              <Text className='text-gray-900 dark:text-gray-100'>
-                {t("screens.settings.appearance")}
-              </Text>
             </View>
+            <View className='flex-row justify-between items-center'>
+              <View className='flex-row items-center gap-3'>
+                <Ionicons
+                  name='globe-outline'
+                  size={22}
+                  color={
+                    colorScheme === "light"
+                      ? colors.primary[600]
+                      : colors.gray[50]
+                  }
+                />
+                <Text className='text-gray-900 dark:text-gray-100'>
+                  {t("screens.settings.language")}
+                </Text>
+              </View>
 
-            <DuoSwitch
-              value={colorScheme === "dark"}
-              onChange={() => {
-                toggleColorScheme()
-              }}
-              options={[
-                t("screens.settings.light"),
-                t("screens.settings.dark"),
-              ]}
-            />
-          </View>
-          <View className='flex-row justify-between items-center'>
-            <View className='flex-row items-center gap-3'>
-              <Ionicons
-                name='globe-outline'
-                size={22}
-                color={
-                  colorScheme === "light"
-                    ? colors.primary[600]
-                    : colors.gray[50]
-                }
+              <DuoSwitch
+                value={i18n.language === "en"}
+                onChange={() => {
+                  handleLanguageSwitch(i18n.language === "en" ? "de" : "en")
+                }}
+                options={["Deutsch", "English"]}
               />
-              <Text className='text-gray-900 dark:text-gray-100'>
-                {t("screens.settings.language")}
-              </Text>
             </View>
-
-            <DuoSwitch
-              value={i18n.language === "en"}
-              onChange={() => {
-                handleLanguageSwitch(i18n.language === "en" ? "de" : "en")
-              }}
-              options={["Deutsch", "English"]}
-            />
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

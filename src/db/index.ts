@@ -8,6 +8,8 @@ import { categoryTermTable } from "./schemas/categoryTerms"
 import { currencyTable } from "./schemas/currencies"
 import { transactionGroupTable } from "./schemas/transactionGroups"
 import { categoryToBudgetTable } from "./schemas/categoriesToBudgets"
+import { seedAccounts } from "./seed/accounts"
+import { seedCategories } from "./seed/categories"
 
 export const DB_NAME = "spendex.db"
 
@@ -20,6 +22,17 @@ export const schema = {
   currencyTable,
   transactionGroupTable,
   transactionTable,
+}
+
+export async function initializeDatabase() {
+  try {
+    await seedAccounts()
+    await seedCategories()
+    console.log("Database initialized successfully")
+  } catch (error) {
+    console.error("Database initialization failed:", error)
+    throw error
+  }
 }
 
 export function useDb() {

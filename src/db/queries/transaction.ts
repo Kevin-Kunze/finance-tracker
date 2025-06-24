@@ -1,6 +1,6 @@
 import { transactionTable } from "@/db/schemas/transactions"
 import { useState } from "react"
-import { eq, asc, desc, and } from "drizzle-orm"
+import { eq, and } from "drizzle-orm"
 import { useDb } from ".."
 import { categoryTermTable } from "../schemas/categoryTerms"
 
@@ -39,11 +39,6 @@ export default function useTransactions() {
           eq(transactionTable.categoryTermId, categoryTermTable.id)
         )
         .where(and(...conditions))
-        .orderBy(
-          ordered === "asc"
-            ? asc(transactionTable.date)
-            : desc(transactionTable.date)
-        )
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Unknown error occurred")
