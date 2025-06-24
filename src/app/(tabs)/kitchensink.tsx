@@ -1,6 +1,7 @@
 import CircularButton from "@/components/CircularButton"
 import EmojiWithBackground from "@/components/EmojiWithBackground"
 import ScreenTitle from "@/components/ScreenTitle"
+import BalanceCard from "@/components/BalanceWidget"
 import { useRouter } from "expo-router"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -16,6 +17,15 @@ export default function KitchensinkScreen() {
           Circular Button
         </Text>
         <CircularButton icon='home' onPress={() => router.replace("/home")} />
+      </View>
+
+      <View className='mx-6 flex-col gap-2 mt-4'>
+        <Text className='text-gray-900 dark:text-gray-100'>BalanceWidget</Text>
+        <BalanceCard
+          amount='3.161,45'
+          label='aktueller Kontostand'
+          data={[3800, 3200, 10000, 2900, 3161]} // Beispielverlauf
+        />
       </View>
       <View className='mx-6 flex-col gap-2 justify-start items-start'>
         <Text className='text-gray-900 dark:text-gray-100'>

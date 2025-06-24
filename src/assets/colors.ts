@@ -48,6 +48,11 @@ export const colors = {
     pink: "#ff3da4",
     green: "#4fe63b",
   },
+  balance: {
+    red: "#ffc2c2",
+    gray: "#bebebe",
+    green: "#c8ffc2",
+  },
 }
 
 export type customColors = keyof typeof colors.custom
