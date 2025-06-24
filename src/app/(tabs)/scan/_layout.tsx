@@ -1,0 +1,23 @@
+import SecondTabs from "@/components/SecondTabs"
+import { useTranslation } from "react-i18next"
+
+export default function BudgetLayout() {
+  const { t } = useTranslation()
+
+  return (
+    <SecondTabs
+      leftTab={{
+        title: t("screens.camera.title"),
+        name: "camera",
+        activeIcon: "camera",
+        inactiveIcon: "camera-outline",
+      }}
+      rightTab={{
+        title: t("screens.input.title"),
+        name: "input",
+        activeIcon: "pencil",
+        inactiveIcon: "pencil-outline",
+      }}
+    />
+  )
+}
