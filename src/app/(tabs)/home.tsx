@@ -106,7 +106,6 @@ export default function HomeScreen() {
           ))}
         </View>
       </View>
-      <Button title='Click Me!' onPress={handlePress} />
     </SafeAreaView>
   )
 }

@@ -1,8 +1,8 @@
 import CircularButton from "@/components/buttons/CircularButton"
-import EmojiWithBackground from "@/components/emoji/EmojiWithBackground"
+import EmojiWithBackground from "@/components/display/EmojiWithBackground"
 import ScreenTitle from "@/components/tabs/ScreenTitle"
 import BalanceCard from "@/components/widgets/BalanceWidget"
-import TransactionRow from "@/components/TransactionRow"
+import TransactionRow from "@/components/containers/TransactionRow"
 import { useRouter } from "expo-router"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -21,19 +21,19 @@ export default function KitchensinkScreen() {
         <CircularButton icon='home' onPress={() => router.replace("/home")} />
       </View>
 
-<TransactionRow
-  title="Kino - UCI Dresden"
-  amount={-16.5}
-  emoji="🎬"
-  emojiColor="blue"
-/>
+      <TransactionRow
+        title='Kino - UCI Dresden'
+        amount={-16.5}
+        emoji='🎬'
+        emojiColor='blue'
+      />
 
-<TransactionRow
-  title="Laptop verkauft"
-  amount={1000}
-  emoji="💻"
-  emojiColor="gray"
-/>
+      <TransactionRow
+        title='Laptop verkauft'
+        amount={1000}
+        emoji='💻'
+        emojiColor='gray'
+      />
 
       <View className='mx-6 flex-col gap-2 mt-4'>
         <Text className='text-gray-900 dark:text-gray-100'>BalanceWidget</Text>
