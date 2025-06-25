@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Platform, Pressable, Text, View } from "react-native"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import Field from "./Field"
+import FieldTitle from "./FieldTitle"
 
 type DateInputProps = {
   title: string
@@ -21,7 +22,7 @@ export default function DateField(props: DateInputProps) {
 
   return (
     <View>
-      <Text className='text-base font-semibold'>{props.title}</Text>
+      <FieldTitle title={props.title} />
 
       <Pressable onPress={() => setShowPicker(true)}>
         <Field

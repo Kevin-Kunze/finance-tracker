@@ -2,6 +2,7 @@ import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
 import { currencyTable } from "./currencies"
+import { colors } from "@/assets/colors"
 
 export const accountTable = sqliteTable("accounts", {
   id: text()
@@ -15,7 +16,9 @@ export const accountTable = sqliteTable("accounts", {
     .notNull(),
   name: text().notNull(),
   balance: real().notNull().default(0),
-  color: text().notNull(),
+  color: text({
+    enum: Object.keys(colors.custom) as [string, ...string[]],
+  }),
   icon: text().notNull(),
   currencyId: text()
     .notNull()

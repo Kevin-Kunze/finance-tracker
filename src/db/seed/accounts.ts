@@ -1,5 +1,4 @@
-import { seed } from "drizzle-seed"
-import { DB_NAME } from ".."
+import { DB_NAME } from "@/db/db_name"
 import { accountTable, currencyTable } from "../schemas"
 import { openDatabaseSync } from "expo-sqlite"
 import { drizzle } from "drizzle-orm/expo-sqlite"
@@ -14,34 +13,21 @@ export async function seedAccounts() {
 
   const currencyId = createId()
 
-  await seed(db, currencyTable, {
-    count: 1,
-  }).refine((f) => ({
-    id: currencyId,
-    name: "Euro",
-    symbol: "€",
-  }))
+  await db.insert(currencyTable).values([
+    {
+      id: currencyId,
+      name: "Euro",
+      symbol: "€",
+    },
+  ])
 
-  await seed(db, accountTable, {
-    count: 1,
-  }).refine((f) => ({
-    name: "Default",
-    balance: 0,
-    color: f.valuesFromArray({
-      values: [
-        "orange",
-        "turquoise",
-        "gray",
-        "violet",
-        "yellow",
-        "blue",
-        "pink",
-        "green",
-      ],
-    }),
-    icon: f.valuesFromArray({
-      values: ["🥰", "💰", "💳", "🏠", "🍽️", "🚗", "🎉"],
-    }),
-    currencyId: currencyId,
-  }))
+  await db.insert(accountTable).values([
+    {
+      name: "Default",
+      balance: 0,
+      color: "gray",
+      icon: "💰",
+      currencyId: currencyId,
+    },
+  ])
 }

@@ -12,12 +12,12 @@ export default function Button(props: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      className='flex-row justify-center items-center bg-primary-500 rounded-lg p-4 gap-3'
+      className='flex-row justify-center items-center bg-primary-600 dark:bg-primary-800 rounded-lg p-4 gap-3'
     >
       {props.icon && (
         <Ionicons name={props.icon} size={16} color={colors.gray[50]} />
       )}
-      <Text className='text-gray-50 font-semibold bg-blue-500  rounded-lg'>
+      <Text className='text-gray-50 font-semibold rounded-lg'>
         {props.title}
       </Text>
     </TouchableOpacity>

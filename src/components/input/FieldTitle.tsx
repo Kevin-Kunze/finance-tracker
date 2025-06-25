@@ -5,5 +5,9 @@ type FieldTitleProps = {
 }
 
 export default function FieldTitle(props: FieldTitleProps) {
-  return <Text className='text-base font-semibold'>{props.title}</Text>
+  return (
+    <Text className='text-base font-semibold text-gray-950 dark:text-gray-100'>
+      {props.title}
+    </Text>
+  )
 }

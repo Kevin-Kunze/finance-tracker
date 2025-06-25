@@ -16,7 +16,7 @@ export default function useCategory() {
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const createCategory = async ({
+  const create = async ({
     name,
     color,
     icon,
@@ -55,7 +55,7 @@ export default function useCategory() {
     }
   }
 
-  const getCategory = async ({ id }: { id: string }) => {
+  const get = async ({ id }: { id: string }) => {
     setLoading(true)
     setError(null)
     try {
@@ -71,7 +71,7 @@ export default function useCategory() {
     }
   }
 
-  const getCategories = async ({
+  const getMany = async ({
     parentCategoryId,
   }: { parentCategoryId?: string } = {}) => {
     setLoading(true)
@@ -83,7 +83,7 @@ export default function useCategory() {
         .where(
           parentCategoryId
             ? eq(categoryTable.parentCategoryId, parentCategoryId)
-            : isNull(categoryTable.parentCategoryId)
+            : undefined
         )
         .orderBy(asc(categoryTable.name))
     } catch (err) {
@@ -97,7 +97,7 @@ export default function useCategory() {
     }
   }
 
-  const getCategoriesAsJson = async () => {
+  const getManyAsJson = async () => {
     setLoading(true)
     setError(null)
     try {
@@ -139,10 +139,10 @@ export default function useCategory() {
   }
 
   return {
-    createCategory,
-    getCategory,
-    getCategories,
-    getCategoriesAsJson,
+    create,
+    get,
+    getMany,
+    getManyAsJson,
     error,
     loading,
   }

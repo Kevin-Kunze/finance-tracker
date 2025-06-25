@@ -1,4 +1,4 @@
-import { DB_NAME } from ".."
+import { DB_NAME } from "@/db/db_name"
 import { categoryTable } from "../schemas"
 import { openDatabaseSync } from "expo-sqlite"
 import { drizzle } from "drizzle-orm/expo-sqlite"

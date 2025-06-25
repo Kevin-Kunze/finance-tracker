@@ -7,6 +7,7 @@ import { colors } from "@/assets/colors"
 import ScreenTitle from "@/components/tabs/ScreenTitle"
 import DuoSwitch from "@/components/buttons/DuoSwitch"
 import { ScrollView } from "react-native-gesture-handler"
+import { storage } from "@/utils/storage"
 
 export default function SettingsScreen() {
   const { colorScheme, toggleColorScheme } = useColorScheme()
@@ -14,6 +15,12 @@ export default function SettingsScreen() {
 
   const handleLanguageSwitch = (language: "de" | "en") => {
     i18n.changeLanguage(language)
+    storage.setString("language", language)
+  }
+
+  const handleToggleColorScheme = () => {
+    toggleColorScheme()
+    storage.setString("appearance", colorScheme === "dark" ? "light" : "dark")
   }
 
   return (
@@ -49,9 +56,7 @@ export default function SettingsScreen() {
 
               <DuoSwitch
                 value={colorScheme === "dark"}
-                onChange={() => {
-                  toggleColorScheme()
-                }}
+                onChange={handleToggleColorScheme}
                 options={[
                   t("screens.settings.light"),
                   t("screens.settings.dark"),

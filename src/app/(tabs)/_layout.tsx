@@ -6,7 +6,6 @@ import { useColorScheme } from "nativewind"
 import TabButton from "@/components/tabs/TabButton"
 import { colors } from "@/assets/colors"
 import { useTranslation } from "react-i18next"
-import useCategory from "@/db/queries/category"
 
 export default function TabLayout() {
   const { t } = useTranslation()

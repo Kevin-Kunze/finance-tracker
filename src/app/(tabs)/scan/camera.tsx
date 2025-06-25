@@ -3,7 +3,7 @@ import { GEMINI_API_KEY } from "@/api/GEMINI_API_KEY"
 import { useTranslation } from "react-i18next"
 import { TouchableOpacity, Dimensions, View, Text } from "react-native"
 import { router } from "expo-router"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import {
   CameraType,
   useCameraPermissions,
@@ -17,7 +17,7 @@ export default function CameraScreen() {
   const { t } = useTranslation()
 
   //db
-  const { getCategoriesAsJson } = useCategory()
+  const { getManyAsJson: getCategoriesAsJson } = useCategory()
 
   // Camera variables
   const facing = "back" as CameraType
@@ -28,6 +28,7 @@ export default function CameraScreen() {
   const isFocused = useIsFocused()
   const windowWidth = Dimensions.get("window").width
   const [isProcessing, changeState] = useState<boolean>(false)
+  const [categories, setCategories] = useState<any>(null)
 
   async function takePicture() {
     if (cameraRef.current) {
@@ -36,12 +37,50 @@ export default function CameraScreen() {
     }
   }
 
+  // Load categories with retry mechanism
+  useEffect(() => {
+    const loadCategories = async () => {
+      let retries = 5
+      const retryDelay = 1000
+
+      while (retries > 0) {
+        try {
+          const categoriesData = await getCategoriesAsJson()
+          if (categoriesData && categoriesData.length > 0) {
+            setCategories(categoriesData)
+            console.log("Categories loaded successfully")
+            break
+          } else {
+            throw new Error("No categories returned")
+          }
+        } catch (error) {
+          console.error(
+            `Error loading categories (${retries} retries left):`,
+            error
+          )
+          retries--
+
+          if (retries === 0) {
+            console.error("Failed to load categories after all retries")
+          } else {
+            await new Promise((resolve) => setTimeout(resolve, retryDelay))
+          }
+        }
+      }
+    }
+
+    loadCategories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function askGemini(photo: CameraCapturedPicture) {
     const apiKey = GEMINI_API_KEY
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
 
-    const categories = await getCategoriesAsJson()
-    console.log(categories)
+    if (!categories) {
+      console.error("Categories not loaded yet.")
+      return
+    }
 
     // Just for testing at the moment, needs data from database and refacotor
     const textInput =
@@ -55,7 +94,6 @@ export default function CameraScreen() {
       "- categoryId (zugewiesene Kategorie als ID)" +
       "Folgende Kategorien sind erlaubt: " +
       JSON.stringify(categories) +
-      "Folgende Währungen sind erlaubt: EUR" +
       changeState(true)
 
     try {
@@ -92,7 +130,6 @@ export default function CameraScreen() {
 
       const data = await response.json()
       changeState(false)
-      console.log(data.candidates[0].content.parts[0].text)
       router.push({
         pathname: "/scan/input",
         params: { geminiResponse: data.candidates[0].content.parts[0].text },

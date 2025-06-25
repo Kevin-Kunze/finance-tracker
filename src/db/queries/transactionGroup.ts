@@ -1,10 +1,13 @@
 import { useDb } from ".."
 import { useState } from "react"
-import { transactionGroupTable } from "../schemas/transactionGroups"
-import { transactionTable } from "../schemas/transactions"
 import { eq, sum } from "drizzle-orm"
-import { categoryTermTable } from "../schemas/categoryTerms"
-import { categoryTable } from "../schemas/categories"
+import {
+  categoryTable,
+  accountTable,
+  categoryTermTable,
+  transactionTable,
+  transactionGroupTable,
+} from "../schemas"
 
 export default function useTransactionGroup() {
   const db = useDb()
@@ -12,7 +15,7 @@ export default function useTransactionGroup() {
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const createTransactionGroup = async ({
+  const create = async ({
     name,
     note,
     date,
@@ -21,15 +24,31 @@ export default function useTransactionGroup() {
     name?: string
     note?: string
     date: Date
+    //TODO add account id
     transactions: {
       amount: number
-      categoryTermId: string
-      accountId: string
+      term: string
+      categoryId: string
     }[]
   }) => {
     setLoading(true)
     setError(null)
     try {
+      if (!transactions || transactions.length === 0) {
+        throw new Error("No transactions provided")
+      }
+
+      for (const transaction of transactions) {
+        if (!transaction.categoryId) {
+          throw new Error(
+            `Missing categoryId for transaction: ${transaction.term}`
+          )
+        }
+        if (!transaction.amount || isNaN(transaction.amount)) {
+          throw new Error(`Invalid amount for transaction: ${transaction.term}`)
+        }
+      }
+
       const transactionGroupResult = await db
         .insert(transactionGroupTable)
         .values({
@@ -39,18 +58,71 @@ export default function useTransactionGroup() {
         })
         .returning()
 
-      await db.insert(transactionTable).values(
-        transactions.map((transaction) => ({
-          ...transaction,
-          name:
-            name ||
-            db.query.categoryTermTable.findFirst({
-              where: (categoryTermTable, { eq }) =>
-                eq(categoryTermTable.id, transaction.categoryTermId),
-            }),
-          transactionGroupId: transactionGroupResult[0].id,
-        }))
-      )
+      const categoryTermResults: {
+        id: string
+        categoryId: string
+        term: string
+      }[] = []
+
+      for (const transaction of transactions) {
+        let category = await db
+          .select()
+          .from(categoryTable)
+          .where(eq(categoryTable.id, transaction.categoryId))
+          .limit(1)
+          .then((res) => res[0])
+
+        if (!category) {
+          const categoryResult = await db
+            .insert(categoryTable)
+            .values({
+              id: transaction.categoryId, // <-- ensure the ID matches
+              name: "Uncategorized",
+              color: "gray",
+              icon: "❓",
+            })
+            .returning()
+          category = categoryResult[0]
+        }
+
+        const categoryTermResult = await db
+          .insert(categoryTermTable)
+          .values({
+            term: transaction.term,
+            categoryId: category.id,
+          })
+          .onConflictDoUpdate({
+            target: [categoryTermTable.term, categoryTermTable.categoryId],
+            set: {
+              term: transaction.term,
+              categoryId: category.id,
+            },
+          })
+          .returning()
+
+        categoryTermResults.push(categoryTermResult[0])
+      }
+
+      const accountResult = await db
+        .select()
+        .from(accountTable)
+        .where(eq(accountTable.name, "Default"))
+        .limit(1)
+
+      if (accountResult.length === 0) {
+        throw new Error("Default account not found")
+      }
+
+      const account = accountResult[0]
+
+      const transactionValues = transactions.map((transaction, index) => ({
+        amount: transaction.amount,
+        categoryTermId: categoryTermResults[index].id,
+        transactionGroupId: transactionGroupResult[0].id,
+        accountId: account.id,
+      }))
+
+      await db.insert(transactionTable).values(transactionValues)
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Unknown error occurred")
@@ -62,7 +134,7 @@ export default function useTransactionGroup() {
     }
   }
 
-  const getTransactionGroups = async ({ limit }: { limit?: number }) => {
+  const getMany = async ({ limit }: { limit?: number }) => {
     setLoading(true)
     setError(null)
 
@@ -70,23 +142,17 @@ export default function useTransactionGroup() {
       return await db
         .select({
           id: transactionGroupTable.id,
-          createdAt: transactionGroupTable.createdAt,
-          updatedAt: transactionGroupTable.updatedAt,
           name: transactionGroupTable.name,
           note: transactionGroupTable.note,
           date: transactionGroupTable.date,
-          amount: transactionGroupTable.amount,
-          imagePath: transactionGroupTable.imagePath,
-          categoryName: categoryTable.name,
-          categoryColor: categoryTable.color,
-          categoryIcon: categoryTable.icon,
+          amount: sum(transactionTable.amount),
         })
         .from(transactionGroupTable)
-        .leftJoin(
+        .innerJoin(
           transactionTable,
           eq(transactionTable.transactionGroupId, transactionGroupTable.id)
         )
-        .leftJoin(
+        .innerJoin(
           categoryTermTable,
           eq(transactionTable.categoryTermId, categoryTermTable.id)
         )
@@ -95,7 +161,7 @@ export default function useTransactionGroup() {
           eq(categoryTermTable.categoryId, categoryTable.id)
         )
         .groupBy(transactionGroupTable.id, categoryTermTable.categoryId)
-        .orderBy(sum(transactionTable.amount))
+        .orderBy(transactionGroupTable.date)
         .limit(limit ?? 100) //FIXME: remove hardcoded limit
     } catch (err) {
       const error =
@@ -108,7 +174,7 @@ export default function useTransactionGroup() {
     }
   }
 
-  const deleteTransactionGroup = async ({ id }: { id: string }) => {
+  const remove = async ({ id }: { id: string }) => {
     setLoading(true)
     setError(null)
 
@@ -127,33 +193,10 @@ export default function useTransactionGroup() {
     }
   }
 
-  const getTotalAmount = async () => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const result = await db
-        .select({
-          total: sum(transactionGroupTable.amount),
-        })
-        .from(transactionGroupTable)
-      return result[0]?.total ?? "0"
-    } catch (err) {
-      const error =
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      setError(error)
-      console.error("Error fetching total amount:", error)
-      return "0"
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return {
-    createTransactionGroup,
-    getTransactionGroups,
-    deleteTransactionGroup,
-    getTotalAmount,
+    create: create,
+    getMany: getMany,
+    remove: remove,
     error,
     loading,
   }

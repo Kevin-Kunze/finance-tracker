@@ -14,7 +14,7 @@ export default function Field(props: FieldProps) {
       value={`${props.value || ""}${props.balance ? " €" : ""}`}
       editable={!props.disabled && !props.balance}
       placeholder={props.placeholder}
-      className={`bg-gray-50 rounded-xl p-3 shadow-sm shadow-gray-800 ${
+      className={`bg-gray-50 dark:bg-gray-100 rounded-xl p-3 shadow-sm shadow-gray-800 ${
         props.balance ? "text-title font-semibold text-center" : "text-base"
       }`}
       onChangeText={props.onChangeValue}
