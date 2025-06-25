@@ -6,26 +6,56 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Einführung
-//Kurze Beschreibung und Überblick zum Dokument.
-
+Dieses Dokument beschreibt die Rollen- und Arbeitsverteilungen des Teams. Desweiteren, die verwendeten Arbeitspraktiken mit Bewertungen und Erkenntnissen der Projektarbeit.
 
 == Projektorganisation
 //Introduce the project team, team members, and roles that they play during this project. If applicable, introduce work areas, domains, or technical work packages that are assigned to team members. Introduce neighboring projects, relationships, and communication channels. If the project is introduced somewhere else, reference that location with a link.
+Das Team hat die Aufgabe des Finanztrackers bearbeitet und ist in 2 Teamgruppen unterteilt.
 
+=== Design Team
+* Natalie – Scrum Master, verantwortlich für das Projektmanagement, Projektplanung und UI Design
+* Ruben – Designer, verantwortlich für das UI Design
+
+=== Dev Team
+* Loris – Product Owner, verantwortlich für das Sprint Backlog und KI-Anbindung sowie Datenbank
+* Kevin – Frontend+Backend, Verbindung Frontend-Komponenten & Backend, Datenbankentwicklung
+* Luca – Frontend, Entwicklung von Frontend-Komponenten
+* Lukas – Backend, Entwicklung von Backend-Komponenten
+* Ali – Frontend, Entwicklung von Frontend-Komponenten
+
+=== Kommunikation
+Folgende Channels wurden genutzt:
+
+* Miro – Gesamtübersicht sämtlcher Informationen bezüglich des Projekts
+* GitHub – Aufgabenverteilung und Tracking des Fortschritts
+* Discord & WhatsApp – Teilung von Fortschritt, Dateien und Fragen
 
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
-
+Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlich am Montag war unser "Weekly", indem wir über die abgeschlossenen Tasks, Probleme und die Aufgaben der nächsten Woche besprochen und zugeteilt haben. Aller zwei Wochen hatten wir eine Retroperspective im Weekly, indem wir über generelle Probleme der Projektentwicklung gesprochen haben z.B. technische Aspekte wie auch Kommunikationsprobleme. Besonders am Anfang bei der Erstellung der Produktidee, User Stories, Personas und auch später für die Retroperspektive wurde Miro als Sammelboard sämtlicher wichtiger Informationen benutzt, damit das Team jederzeit vergangene Informationen nachvollziehen können. Für die Zuteilung der Aufgaben wurde ein Ticketboard im Github genutzt, indem der Progress jeder Aufgabe getrackt wird. 
 
 === Definition of Ready
 // Listen Sie hier die Kriterien auf, die ein Product Backlog Item (z.B. User Story) erfüllen muss, damit es bei der Sprint-Planung berücksichtigt werden kann
+-Erstellung eines ausformulierten Tasks auf Basis der User Stories
 
 === Definition of Done
 // Listen Sie hier alle Kritierien auf, damit die Aufgabe eines bestimmten Typs (z.B. Task, User Story) als abgeschlossen gilt.
-
+-Umgesetzt
+-Entwicklertest
+-Review
+-Gesamttest (Nach Merge)
 == Deployment
 //Outline the strategy for deploying the software (and its updates) into the production environment.
-
+-Feature Enwicklung auf verschieden Branches
+-Merge auf den Main Branch nach Review im Weekly
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
+[cols="1,1,1", options="header"]
+|===
+| Problem                    | Maßnahme                           | Ergebnis
+| Terminvergabe unübersichtlich. Jede Woche andere Zeit + Standort      | Termine vereinheitlicht. Jede Woche Montag Online  | Erhöhte Teilnahme, Pünktliche und höhere Flexibilität -> Online
+| Diskussionen zwischen einzelnen Partein im Weekly -> Zeitverlust    | Lange Diskussionen ausgelagert in einzelne Gespräche ausserhalb des Weeklys   | Weekly Termine produktiver und schneller abgearbeitet
+| Unzureichende Kommunikation. Kommunikation fand nur im Weekly statt.     | Kommunikationskanäle stärker genutzt. Ergebnisse in der Woche geteilt        | Produktivität steigt. Diskussionen und Anmerkungen gleich geteilt anhand der präsentierten Ergebnisse
+|Git Hub Tasks vernachlässigt. Verhindert aktives Tracking der Ergebnisse |Git Hub Tasks erstellt und je nach Fortschritt getaggt |Erhöhte Übersicht und Planung möglich
+|===
