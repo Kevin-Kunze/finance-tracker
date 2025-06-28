@@ -49,9 +49,9 @@ export const colors = {
     green: "#4fe63b",
   },
   balance: {
-    red: "#ffc2c2",
+    red: "#ff8181",
     gray: "#bebebe",
-    green: "#c8ffc2",
+    green: "#8eff82",
   },
   functional: {
     delete: "#ff4d4d",

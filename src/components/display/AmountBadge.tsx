@@ -13,7 +13,7 @@ export default function AmountBadge({ amount }: AmountBadgeProps) {
     <View
       className='px-4 py-1 rounded-full'
       style={{
-        backgroundColor: isIncome ? colors.custom.green : colors.custom.orange,
+        backgroundColor: isIncome ? colors.balance.green : colors.balance.red,
       }}
     >
       <Text className='font-bold text-sm' style={{ color: "#ffffff" }}>

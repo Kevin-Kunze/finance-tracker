@@ -130,6 +130,7 @@ export default function CameraScreen() {
 
       const data = await response.json()
       changeState(false)
+
       router.push({
         pathname: "/scan/input",
         params: { geminiResponse: data.candidates[0].content.parts[0].text },
