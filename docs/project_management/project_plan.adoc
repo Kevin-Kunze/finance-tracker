@@ -1,5 +1,5 @@
 = Projektplan: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <s86218@htw-dresden.de>; Loris Kulke <s87072@htw-dresden.de>; Luca Funk <s84313@htw-dresden.de>; Ruben Czock <s87149@htw-dresden.de>; Lucas Effenberger <s87202@htw-dresden.de>; Ali <s85161@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -17,37 +17,42 @@ Das Team hat die Aufgabe des Finanztrackers bearbeitet und ist in 2 Teamgruppen 
 * Ruben – Designer, verantwortlich für das UI Design
 
 === Dev Team
-* Loris – Product Owner, verantwortlich für das Sprint Backlog und KI-Anbindung sowie Datenbank
-* Kevin – Frontend+Backend, Verbindung Frontend-Komponenten & Backend, Datenbankentwicklung
+* Loris – Product Owner, verantwortlich für das Sprint Backlog und KI-Anbindung, Datenbankentwicklung
+* Kevin – Verbindung Frontend & Backend Komponenten, Datenbankentwicklung
 * Luca – Frontend, Entwicklung von Frontend-Komponenten
-* Lukas – Backend, Entwicklung von Backend-Komponenten
+* Lucas – Backend, Entwicklung von Backend-Komponenten
 * Ali – Frontend, Entwicklung von Frontend-Komponenten
 
 === Kommunikation
-Folgende Channels wurden genutzt:
+Folgende Kommunkationskanäle wurden genutzt:
 
 * Miro – Gesamtübersicht sämtlcher Informationen bezüglich des Projekts
-* GitHub – Aufgabenverteilung und Tracking des Fortschritts
+* GitHub – Aufgabenerstellung, Verteilung und Tracking des Fortschritts
 * Discord & WhatsApp – Teilung von Fortschritt, Dateien und Fragen
 
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
-Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlich am Montag war unser "Weekly", indem wir über die abgeschlossenen Tasks, Probleme und die Aufgaben der nächsten Woche besprochen und zugeteilt haben. Aller zwei Wochen hatten wir eine Retroperspective im Weekly, indem wir über generelle Probleme der Projektentwicklung gesprochen haben z.B. technische Aspekte wie auch Kommunikationsprobleme. Besonders am Anfang bei der Erstellung der Produktidee, User Stories, Personas und auch später für die Retroperspektive wurde Miro als Sammelboard sämtlicher wichtiger Informationen benutzt, damit das Team jederzeit vergangene Informationen nachvollziehen können. Für die Zuteilung der Aufgaben wurde ein Ticketboard im Github genutzt, indem der Progress jeder Aufgabe getrackt wird. 
+Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlich am Montag war unser "Weekly", indem wir über die abgeschlossenen Tasks, Probleme und die Aufgaben der nächsten Woche besprochen und zugeteilt haben. Aller zwei Wochen hatten wir eine Retroperspective im Weekly, indem wir über generelle Probleme der Projektentwicklung gesprochen haben z.B. technische Aspekte wie auch Kommunikationsprobleme. Besonders am Anfang bei der Erstellung der Produktidee, User Stories, Personas und auch später für die Retroperspektive wurde Miro als Sammelboard sämtlicher wichtiger Informationen genutzt, damit das Team jederzeit vergangene Informationen nachvollziehen können. Für die Zuteilung der Aufgaben wurde ein Ticketboard im Github genutzt, indem der Progress jeder Aufgabe getrackt wird. 
 
 === Definition of Ready
 // Listen Sie hier die Kriterien auf, die ein Product Backlog Item (z.B. User Story) erfüllen muss, damit es bei der Sprint-Planung berücksichtigt werden kann
--Erstellung eines ausformulierten Tasks auf Basis der User Stories
+* PBI ist klein genug (z. B. 4-5 User Storys passen in einen Sprint)
+* PBI ist für jeden Beteiligten klar verständlich
+* PBI ist geschätzt (Eine Abschätzung der Arbeitsbelastung für die Entwickler)
+* PBI hat Akzeptanzkriterien
 
 === Definition of Done
 // Listen Sie hier alle Kritierien auf, damit die Aufgabe eines bestimmten Typs (z.B. Task, User Story) als abgeschlossen gilt.
--Umgesetzt
--Entwicklertest
--Review
--Gesamttest (Nach Merge)
+* Akzeptanzkriterien umgesetzt
+* Entwicklertest
+* Review (im Weekly)
+* Gesamttest (Nach Merge)
+
 == Deployment
 //Outline the strategy for deploying the software (and its updates) into the production environment.
--Feature Enwicklung auf verschieden Branches
--Merge auf den Main Branch nach Review im Weekly
+* Feature Enwicklung auf verschieden Branches
+* Merge auf den Main Branch nach Review im Weekly
+* Deployment über Expo Hosting
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
