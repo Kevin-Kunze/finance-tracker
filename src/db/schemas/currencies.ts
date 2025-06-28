@@ -1,10 +1,9 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core"
-import { createId } from "@paralleldrive/cuid2"
+import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core"
 
 export const currencyTable = sqliteTable("currencies", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer().primaryKey({
+    autoIncrement: true,
+  }),
   name: text().notNull(),
   symbol: text().notNull(),
 })

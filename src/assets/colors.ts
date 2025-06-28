@@ -59,4 +59,4 @@ export const colors = {
   },
 }
 
-export type customColors = keyof typeof colors.custom
+export type CustomColors = keyof typeof colors.custom

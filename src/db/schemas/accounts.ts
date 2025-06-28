@@ -1,13 +1,12 @@
 import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core"
-import { createId } from "@paralleldrive/cuid2"
 import { relations, sql } from "drizzle-orm"
 import { currencyTable } from "./currencies"
 import { colors } from "@/assets/colors"
 
 export const accountTable = sqliteTable("accounts", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer().primaryKey({
+    autoIncrement: true,
+  }),
   createdAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
@@ -18,9 +17,9 @@ export const accountTable = sqliteTable("accounts", {
   balance: real().notNull().default(0),
   color: text({
     enum: Object.keys(colors.custom) as [string, ...string[]],
-  }),
-  icon: text().notNull(),
-  currencyId: text()
+  }).notNull(),
+  emoji: text().notNull(),
+  currencyId: integer()
     .notNull()
     .references(() => currencyTable.id),
 })

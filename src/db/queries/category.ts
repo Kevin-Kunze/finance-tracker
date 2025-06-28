@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { useDb } from ".."
+import { useDb, isDatabaseInitialized, initializeDatabase } from ".."
 import { categoryTable } from "../schemas/categories"
-import { asc, eq, isNull } from "drizzle-orm"
+import { inArray } from "drizzle-orm"
 import { categoryTermTable } from "../schemas/categoryTerms"
+import { CustomColors } from "@/assets/colors"
 
 type CategoryWithChildren = {
-  id: string
+  id: number
   name: string
   children?: CategoryWithChildren[]
 }
@@ -19,13 +20,13 @@ export default function useCategory() {
   const create = async ({
     name,
     color,
-    icon,
+    emoji,
     parentCategoryId,
   }: {
     name: string
-    color?: string
-    icon?: string
-    parentCategoryId?: string
+    color: CustomColors
+    emoji: string
+    parentCategoryId?: number
   }) => {
     setLoading(true)
     setError(null)
@@ -36,7 +37,7 @@ export default function useCategory() {
         .values({
           name,
           color,
-          icon,
+          emoji,
           parentCategoryId,
         })
         .returning()
@@ -55,43 +56,46 @@ export default function useCategory() {
     }
   }
 
-  const get = async ({ id }: { id: string }) => {
+  const getMany = async ({ ids }: { ids: number[] }) => {
     setLoading(true)
     setError(null)
     try {
-      return db.select().from(categoryTable).where(eq(categoryTable.id, id))
-    } catch (err) {
-      const error =
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      setError(error)
-      console.error("Error fetching categories:", error)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }
+      if (!ids || ids.length === 0) {
+        return []
+      }
+      if (!db) {
+        throw new Error("Database connection not available")
+      }
 
-  const getMany = async ({
-    parentCategoryId,
-  }: { parentCategoryId?: string } = {}) => {
-    setLoading(true)
-    setError(null)
-    try {
-      return db
-        .select()
+      if (!isDatabaseInitialized()) {
+        console.log("Database not initialized, waiting...")
+        await initializeDatabase()
+      }
+
+      const categoryResult = await db
+        .select({
+          id: categoryTable.id,
+          name: categoryTable.name,
+          color: categoryTable.color,
+          emoji: categoryTable.emoji,
+        })
         .from(categoryTable)
-        .where(
-          parentCategoryId
-            ? eq(categoryTable.parentCategoryId, parentCategoryId)
-            : undefined
-        )
-        .orderBy(asc(categoryTable.name))
+        .where(inArray(categoryTable.id, ids))
+      return categoryResult ?? []
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Unknown error occurred")
       setError(error)
       console.error("Error fetching categories:", error)
-      return null
+
+      // If it's a database connection error, return empty array instead of null
+      if (
+        error.message.includes("NativeDatabase") ||
+        error.message.includes("Database connection")
+      ) {
+        return []
+      }
+      return []
     } finally {
       setLoading(false)
     }
@@ -103,7 +107,7 @@ export default function useCategory() {
     try {
       const allCategories = await db.select().from(categoryTable)
       const buildNestedStructure = (
-        parentId: string | null
+        parentId: number | null
       ): CategoryWithChildren[] | undefined => {
         const children = allCategories.filter(
           (category) => category.parentCategoryId === parentId
@@ -140,7 +144,6 @@ export default function useCategory() {
 
   return {
     create,
-    get,
     getMany,
     getManyAsJson,
     error,

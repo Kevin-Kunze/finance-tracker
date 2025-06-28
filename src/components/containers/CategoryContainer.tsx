@@ -1,10 +1,10 @@
-import { colors } from "@/assets/colors"
+import { CustomColors } from "@/assets/colors"
 import { View, Text } from "react-native-reanimated/lib/typescript/Animated"
 import EmojiWithBackground from "../display/EmojiWithBackground"
 
 export type CategoryContainerProps = {
   title: string
-  color: keyof typeof colors.custom
+  color: CustomColors
   emoji: string
 }
 

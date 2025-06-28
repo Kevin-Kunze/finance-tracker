@@ -22,14 +22,37 @@ export const schema = {
   transactionTable,
 }
 
+let initializationPromise: Promise<void> | null = null
+let isInitialized = false
+
 export async function initializeDatabase() {
-  try {
-    await seedAccounts()
-    await seedCategories()
-  } catch (error) {
-    console.error("Database initialization failed:", error)
-    throw error
+  if (isInitialized) return
+
+  if (initializationPromise) {
+    return initializationPromise
   }
+
+  initializationPromise = (async () => {
+    try {
+      const accountsSeeded = await seedAccounts()
+      const categoriesSeeded = await seedCategories()
+      if (!accountsSeeded || !categoriesSeeded) {
+        console.log("Database already seeded")
+      } else {
+        console.log("Database seeded successfully")
+      }
+      isInitialized = true
+    } catch (error) {
+      console.error("Database initialization failed:", error)
+      throw error
+    }
+  })()
+
+  return initializationPromise
+}
+
+export function isDatabaseInitialized() {
+  return isInitialized
 }
 
 export function useDb() {

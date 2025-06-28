@@ -33,7 +33,7 @@ export default function InteractionButton(props: InteractionButtonProps) {
         name={icon}
         color={iconColor}
         onPress={props.onPress}
-        size={20}
+        size={16}
       />
     </TouchableOpacity>
   )

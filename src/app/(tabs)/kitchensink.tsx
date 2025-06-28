@@ -2,7 +2,7 @@ import CircularButton from "@/components/buttons/CircularButton"
 import EmojiWithBackground from "@/components/display/EmojiWithBackground"
 import ScreenTitle from "@/components/tabs/ScreenTitle"
 import BalanceCard from "@/components/widgets/BalanceWidget"
-import TransactionRow from "@/components/containers/TransactionRow"
+import TransactionRow from "@/components/containers/TransactionGroupContainer"
 import { useRouter } from "expo-router"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -22,17 +22,17 @@ export default function KitchensinkScreen() {
       </View>
 
       <TransactionRow
-        title='Kino - UCI Dresden'
-        amount={-16.5}
+        name='Kino - UCI Dresden'
+        amount={"-16.5"}
         emoji='🎬'
-        emojiColor='blue'
+        color='blue'
       />
 
       <TransactionRow
-        title='Laptop verkauft'
-        amount={1000}
+        name='Laptop verkauft'
+        amount={"1000"}
         emoji='💻'
-        emojiColor='gray'
+        color='gray'
       />
 
       <View className='mx-6 flex-col gap-2 mt-4'>

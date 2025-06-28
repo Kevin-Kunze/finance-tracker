@@ -1,16 +1,15 @@
-import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm"
-import { sqliteTable, text, unique } from "drizzle-orm/sqlite-core"
+import { integer, sqliteTable, text, unique } from "drizzle-orm/sqlite-core"
 import { categoryTable } from "./categories"
 
 export const categoryTermTable = sqliteTable(
   "categoryTerms",
   {
-    id: text()
-      .primaryKey()
-      .$defaultFn(() => createId()),
+    id: integer().primaryKey({
+      autoIncrement: true,
+    }),
     term: text().notNull(),
-    categoryId: text()
+    categoryId: integer()
       .notNull()
       .references(() => categoryTable.id),
   },

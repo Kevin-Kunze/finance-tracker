@@ -1,12 +1,11 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core"
-import { createId } from "@paralleldrive/cuid2"
 import { sql } from "drizzle-orm"
 import { colors } from "@/assets/colors"
 
 export const budgetTable = sqliteTable("budgets", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer().primaryKey({
+    autoIncrement: true,
+  }),
   createdAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
@@ -22,8 +21,8 @@ export const budgetTable = sqliteTable("budgets", {
   }).notNull(),
   color: text({
     enum: Object.keys(colors.custom) as [string, ...string[]],
-  }),
-  icon: text().notNull(),
+  }).notNull(),
+  emoji: text().notNull(),
 })
 
 export type Budget = typeof budgetTable.$inferSelect

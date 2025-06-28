@@ -1,4 +1,4 @@
-import { primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
+import { integer, primaryKey, sqliteTable } from "drizzle-orm/sqlite-core"
 import { budgetTable } from "./budgets"
 import { categoryTable } from "./categories"
 import { relations } from "drizzle-orm"
@@ -6,10 +6,10 @@ import { relations } from "drizzle-orm"
 export const categoryToBudgetTable = sqliteTable(
   "categories_to_budgets",
   {
-    budgetId: text("budgetId")
+    budgetId: integer()
       .notNull()
       .references(() => budgetTable.id),
-    categoryId: text("categoryId")
+    categoryId: integer()
       .notNull()
       .references(() => categoryTable.id),
   },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { View, Text, ScrollView } from "react-native"
 import { useRoute } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -9,20 +9,35 @@ import { useTranslation } from "react-i18next"
 import Button from "@/components/buttons/Button"
 import TransactionContainer from "@/components/containers/TransactionContainer"
 import useTransactionGroup from "@/db/queries/transactionGroup"
+import useCategory from "@/db/queries/category"
+import { CustomColors } from "@/assets/colors"
+
+type TransactionResponse = {
+  name: string
+  amount: string
+  term: string
+  categoryId: number
+}
+
+type Category = {
+  id: number
+  name: string
+  color: CustomColors
+  emoji: string
+}
 
 type Transaction = {
   name: string
   amount: string
   term: string
-  categoryName: string
-  categoryId: string
+  category: Category
 }
 
 export default function TransactionScreen() {
   const { t } = useTranslation()
 
   const route = useRoute()
-  let { geminiResponse } = (route.params as { geminiResponse: string }) || {
+  const { geminiResponse } = (route.params as { geminiResponse: string }) || {
     geminiResponse: "",
   }
 
@@ -30,33 +45,75 @@ export default function TransactionScreen() {
   const [note, setNote] = useState("")
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [date, setDate] = useState(new Date())
+  const processedResponse = useRef<string>("")
 
+  const { getMany: getCategories } = useCategory()
   const { create: createTransactionGroup } = useTransactionGroup()
 
-  const processGeminiResponse = useCallback(() => {
+  const processGeminiResponse = async () => {
+    console.log("Processing geminiResponse...")
+    processedResponse.current = geminiResponse
+
     if (geminiResponse && geminiResponse !== "") {
       try {
         const cleaned = geminiResponse.replace(/```|json/g, "").trim()
         const parsed = JSON.parse(cleaned)
-        const mapped = parsed.map((item: Transaction) => ({
-          name: item.name,
-          amount: item.amount,
-          term: item.term,
-          categoryName: item.categoryName,
-          categoryId: item.categoryId,
-        }))
-        setTransactions(mapped)
+
+        console.log("Parsed transactions: ", parsed)
+
+        const categoryIds = parsed.map(
+          (transaction: TransactionResponse) => transaction.categoryId
+        )
+        console.log("Category IDs: ", categoryIds)
+
+        if (!categoryIds || categoryIds.length === 0) {
+          console.warn("No category IDs found in parsed transactions")
+          setTransactions([])
+          return
+        }
+
+        console.log("Attempting to fetch categories...")
+        const categoryResult = await getCategories({
+          ids: categoryIds,
+        })
+
+        console.log("Category result: ", categoryResult)
+        if (!categoryResult || categoryResult.length === 0) {
+          console.warn("Category not found")
+          return
+        }
+
+        setTransactions(
+          parsed.map((transaction: TransactionResponse) => {
+            const category = categoryResult.find(
+              (category: any) => category.id === transaction.categoryId
+            )
+            return {
+              name: transaction.name,
+              amount: transaction.amount,
+              term: transaction.term,
+              category: category,
+            }
+          })
+        )
       } catch (error) {
         console.error("Error while parsing: ", error) //TODO add proper error handling
       }
     } else {
       setTransactions([])
     }
-  }, [geminiResponse])
+  }
 
   useEffect(() => {
-    processGeminiResponse()
-  }, [processGeminiResponse, geminiResponse])
+    const initializeTransactions = async () => {
+      if (geminiResponse && geminiResponse !== "") {
+        await processGeminiResponse()
+      }
+    }
+
+    initializeTransactions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geminiResponse])
 
   const onChangeDate = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
@@ -72,11 +129,9 @@ export default function TransactionScreen() {
 
     const transactionData = transactions.map((transaction) => ({
       amount: parseFloat(transaction.amount),
-      term: transaction.name,
-      categoryId: transaction.categoryId,
+      term: transaction.term,
+      categoryId: transaction.category.id,
     }))
-
-    console.log("transactionData:", transactionData)
 
     const result = await createTransactionGroup({
       name: title,
@@ -84,20 +139,12 @@ export default function TransactionScreen() {
       date,
       transactions: transactionData,
     })
-    console.log("Transaction group created:", result)
 
-    // Reset form after submission
-    // setTitle("")
-    // setNote("")
-    // setTransactions([])
+    setTitle("")
+    setNote("")
+    setTransactions([])
+    console.log("Inserted in database:", result)
   }
-
-  // const addTransaction = () => {
-  //   setTransactions((prev: Transaction[]) => [
-  //     { name: "Neue Transaktion", category: "-", amount: "0" },
-  //     ...prev,
-  //   ])
-  // }
 
   const total = transactions
     .reduce(
@@ -147,7 +194,6 @@ export default function TransactionScreen() {
           <Text className='text-subtitle font-semibold text-gray-950 dark:text-gray-100'>
             {t("screens.input.transactions")}
           </Text>
-          {/* <Button title='Transaktion hinzufügen' onPress={addTransaction} /> */}
         </View>
 
         <View className='gap-2'>
@@ -160,9 +206,10 @@ export default function TransactionScreen() {
             <View key={index}>
               {/* Amount */}
               <TransactionContainer
-                title={transaction.name}
+                name={transaction.name}
                 amount={transaction.amount}
-                category={transaction.categoryName ?? ""}
+                term={transaction.term}
+                category={transaction.category}
                 onDelete={() => {
                   setTransactions((prev) => prev.filter((_, i) => i !== index))
                 }}

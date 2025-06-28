@@ -1,14 +1,13 @@
-import { sqliteTable, text, real, integer } from "drizzle-orm/sqlite-core"
-import { createId } from "@paralleldrive/cuid2"
+import { sqliteTable, real, integer } from "drizzle-orm/sqlite-core"
 import { relations, sql } from "drizzle-orm"
 import { accountTable } from "./accounts"
 import { transactionGroupTable } from "./transactionGroups"
 import { categoryTermTable } from "./categoryTerms"
 
 export const transactionTable = sqliteTable("transactions", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer().primaryKey({
+    autoIncrement: true,
+  }),
   createdAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
@@ -16,13 +15,13 @@ export const transactionTable = sqliteTable("transactions", {
     .default(sql`(unixepoch())`)
     .notNull(),
   amount: real().notNull(),
-  categoryTermId: text()
+  categoryTermId: integer()
     .notNull()
     .references(() => categoryTermTable.id),
-  accountId: text()
+  accountId: integer()
     .notNull()
     .references(() => accountTable.id),
-  transactionGroupId: text()
+  transactionGroupId: integer()
     .notNull()
     .references(() => transactionGroupTable.id, { onDelete: "cascade" }),
 })

@@ -1,11 +1,11 @@
 import { View } from "react-native"
-import { customColors } from "@/assets/colors"
+import { CustomColors } from "@/assets/colors"
 import Emoji from "./Emoji"
 
 export default function EmojiWithBackground(props: {
   size: "xs" | "s" | "l"
   emoji: string
-  color: customColors
+  color: CustomColors
 }) {
   const backgroundSize = {
     xs: "size-16",

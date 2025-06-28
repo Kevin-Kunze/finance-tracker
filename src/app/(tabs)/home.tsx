@@ -8,8 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
 import { TransactionGroup } from "@/db/schemas/transactionGroups"
 import Button from "@/components/buttons/Button"
-import useAccounts from "@/db/queries/accounts"
-import useCategory from "@/db/queries/category"
 
 export default function HomeScreen() {
   const { error } = useTransactionGroup()
@@ -20,9 +18,6 @@ export default function HomeScreen() {
       categoryIcon: string | null
     })[]
   >([])
-
-  const { get: getAccounts } = useAccounts()
-  const { getMany: getCategories } = useCategory()
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
   const { t } = useTypedTranslation() // Language
