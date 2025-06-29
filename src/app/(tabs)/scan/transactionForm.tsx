@@ -35,9 +35,11 @@ export default function TransactionFormScreen() {
   const transactionIndex = params.transactionIndex
     ? Number(params.transactionIndex)
     : -1
-  const editData = params.editData
-    ? JSON.parse(params.editData as string)
-    : null
+  const editData: {
+    name: string
+    amount: number
+    category: Category
+  } = params.editData ? JSON.parse(params.editData as string) : null
 
   const [formData, setFormData] = useState<TransactionFormData>({
     name: "",
@@ -113,9 +115,9 @@ export default function TransactionFormScreen() {
     if (isEditing && editData) {
       setFormData({
         name: editData.name,
-        amount: editData.amount,
+        amount: Math.abs(editData.amount).toString(),
         categoryId: editData.category.id,
-        type: editData.type || "expense",
+        type: editData.amount < 0 ? "expense" : "income",
       })
       setSelectedCategory(editData.category)
     }
@@ -203,14 +205,12 @@ export default function TransactionFormScreen() {
       })
     }
 
-    // Reset form after successful submission
     if (!isEditing) {
       resetForm()
     }
   }
 
   const handleCancel = () => {
-    // Reset form when canceling (only for new transactions)
     if (!isEditing) {
       resetForm()
     }

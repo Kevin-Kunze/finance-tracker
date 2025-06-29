@@ -185,15 +185,7 @@ export default function CameraScreen() {
     requestPermission()
   }
 
-  if (!permission?.granted) {
-    // Check if camera permission is given
-    // No camery permission given
-    return (
-      <View className='flex-1 items-center justify-center bg-background'>
-        <Text>{t("screens.camera.waiting_permission")}</Text>
-      </View>
-    )
-  } else if (!isProcessing) {
+  if (!isProcessing) {
     // Camera View
     return (
       <View className='flex-1 items-center justify-center bg-gray-100 dark:bg-primary-950'>
@@ -245,10 +237,10 @@ export default function CameraScreen() {
           color={colorScheme === "dark" ? colors.gray[100] : colors.gray[950]}
           className='mb-5'
         />
-        <Text className='text-white text-lg font-medium'>
+        <Text className='text-gray-950 dark:text-gray-100 text-lg font-medium'>
           {t("screens.camera.processing")}
         </Text>
-        <Text className='text-white/70 text-sm mt-2 text-center px-8'>
+        <Text className='text-gray-950 dark:text-gray-100 text-sm mt-2 text-center px-8'>
           {t("screens.camera.processing_description")}
         </Text>
       </View>
