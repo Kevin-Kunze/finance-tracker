@@ -18,9 +18,12 @@ import {
 } from "expo-camera"
 import { useIsFocused } from "@react-navigation/native"
 import useCategory from "@/db/queries/category"
+import { useColorScheme } from "nativewind"
+import { colors } from "@/assets/colors"
 
 export default function CameraScreen() {
-  const { t } = useTranslation()
+  const { colorScheme } = useColorScheme()
+  const { t, i18n } = useTranslation()
 
   //db
   const { getManyAsJson: getCategoriesAsJson } = useCategory()
@@ -85,7 +88,7 @@ export default function CameraScreen() {
 
   async function askGemini(photo: CameraCapturedPicture) {
     const apiKey = GEMINI_API_KEY
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`
 
     if (!categories) {
       console.error("Categories not loaded yet.")
@@ -94,17 +97,43 @@ export default function CameraScreen() {
 
     // Just for testing at the moment, needs data from database and refacotor
     const textInput =
-      "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
-      "Leite aus name eine allgemeinere Produktbezeichnung ab (term). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orientieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
-      "Falls du keinen Betrag erkennen kannst, setze ihn auf eine geschätzte Zahl. " +
-      "Verwende dabei nur die Kategorie aus der folgenden Liste. Verwende nur die Währungs ids aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
-      "- name (Kurzbezeichnung aus dem Bild) " +
-      "- term (allgemeinere Produktbezeichnung) " +
-      "- amount (Preis/Betrag in Euro) " +
-      "- categoryId (zugewiesene Kategorie als ID)" +
-      "Folgende Kategorien sind erlaubt: " +
-      JSON.stringify(categories) +
-      changeState(true)
+      "You are given an image that contains a financial record – such as a receipt, invoice, payroll statement, or similar document. Your task is to extract all recognizable individual items or line entries (e.g. products, services, income types) and return them in structured JSON format.\n" +
+      "\n" +
+      "Each extracted item must be represented as a separate JSON object with the following fields:\n" +
+      `Use ${
+        i18n.language === "de" ? "german" : "english"
+      } in the return values.\n` +
+      "\n" +
+      "- specific: The exact label as it appears in the image.\n" +
+      '- term: A more general, standardized term derived from the name (e.g., "Cappuccino Large" → "Coffee drink", or "Tax Advisor May 2024" → "Tax service").\n' +
+      "- amount: The monetary amount in Euros. Use a negative value for expenses (e.g., -12.49), and a positive value for all income, discounts, and refunds (e.g., 2500.00 or 0.50).\n" +
+      "- categoryId: The ID of that specific category (only the final selected category, not the entire path).\n" +
+      "\n" +
+      "Classification Rules:\n" +
+      "- Use only the category structure provided in the JSON below.\n" +
+      "- Assign exactly one category to each item.\n" +
+      "- Be creative and precise: select the most specific and appropriate category available in the tree – as deep as possible, without being speculative.\n" +
+      "- Refunds and discounts count as income.\n" +
+      "- In payslips: salaries, bonuses, and allowances are income; taxes, insurance, and deductions are expenses.\n" +
+      "- If multiple subcategories match, choose the most relevant and descriptive one.\n" +
+      "\n" +
+      "Output format (JSON array):\n" +
+      "[\n" +
+      "  {\n" +
+      '    "specific": "Original label from the image",\n' +
+      '    "term": "Generalized product/service name",\n' +
+      '    "amount": -12.49,\n' +
+      '    "categoryId": "61"\n' +
+      "  },\n" +
+      "  ...\n" +
+      "]\n" +
+      "\n" +
+      "Important:\n" +
+      "- Only return categoryId for the selected category, not the full hierarchy.\n" +
+      "- Use only valid category IDs and names from the following tree:\n" +
+      JSON.stringify(categories)
+
+    changeState(true)
 
     try {
       const response = await fetch(endpoint, {
@@ -167,7 +196,7 @@ export default function CameraScreen() {
   } else if (!isProcessing) {
     // Camera View
     return (
-      <View className='flex-1 items-center justify-center bg-background'>
+      <View className='flex-1 items-center justify-center bg-gray-100 dark:bg-primary-950'>
         {isFocused ? (
           <View
             style={{ width: windowWidth, flex: 1, justifyContent: "center" }}
@@ -210,11 +239,11 @@ export default function CameraScreen() {
   } // Process View
   else {
     return (
-      <View className='flex-1 items-center justify-center bg-background'>
+      <View className='flex-1 items-center justify-center bg-gray-100 dark:bg-primary-950'>
         <ActivityIndicator
           size='large'
-          color='#ffffff'
-          style={{ marginBottom: 20 }}
+          color={colorScheme === "dark" ? colors.gray[100] : colors.gray[950]}
+          className='mb-5'
         />
         <Text className='text-white text-lg font-medium'>
           {t("screens.camera.processing")}

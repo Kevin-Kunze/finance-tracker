@@ -15,8 +15,8 @@ import FunctionalButton from "@/components/buttons/FunctionalButton"
 import { useRouter, useLocalSearchParams } from "expo-router"
 
 type TransactionResponse = {
-  name: string
-  amount: string
+  specific: string
+  amount: number
   term: string
   categoryId: number
 }
@@ -54,7 +54,6 @@ export default function TransactionScreen() {
   const { getMany: getCategories } = useCategory()
   const { create: createTransactionGroup } = useTransactionGroup()
 
-  // Handle new transaction added from form
   useEffect(() => {
     if (params.newTransaction) {
       try {
@@ -67,7 +66,6 @@ export default function TransactionScreen() {
     }
   }, [params.newTransaction, router])
 
-  // Handle transaction update from form
   useEffect(() => {
     if (params.updatedTransaction) {
       try {
@@ -91,12 +89,9 @@ export default function TransactionScreen() {
         const cleaned = geminiResponse.replace(/```|json/g, "").trim()
         const parsed = JSON.parse(cleaned)
 
-        console.log("Parsed transactions: ", parsed)
-
         const categoryIds = parsed.map(
           (transaction: TransactionResponse) => transaction.categoryId
         )
-        console.log("Category IDs: ", categoryIds)
 
         if (!categoryIds || categoryIds.length === 0) {
           console.warn("No category IDs found in parsed transactions")
@@ -104,12 +99,10 @@ export default function TransactionScreen() {
           return
         }
 
-        console.log("Attempting to fetch categories...")
         const categoryResult = await getCategories({
           ids: categoryIds,
         })
 
-        console.log("Category result: ", categoryResult)
         if (!categoryResult || categoryResult.length === 0) {
           console.warn("Category not found")
           return
@@ -121,9 +114,9 @@ export default function TransactionScreen() {
               (category: any) => category.id === transaction.categoryId
             )
             return {
-              name: transaction.name,
-              amount: transaction.amount,
-              term: transaction.term,
+              name: transaction.term,
+              specific: transaction.specific || "",
+              amount: transaction.amount.toString(),
               category: category,
             }
           })
@@ -165,7 +158,7 @@ export default function TransactionScreen() {
       categoryId: transaction.category.id,
     }))
 
-    const result = await createTransactionGroup({
+    await createTransactionGroup({
       name: title,
       note,
       date,
@@ -175,7 +168,6 @@ export default function TransactionScreen() {
     setTitle("")
     setNote("")
     setTransactions([])
-    console.log("Inserted in database:", result)
   }
 
   const handleAddTransaction = () => {
