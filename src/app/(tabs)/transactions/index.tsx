@@ -7,7 +7,7 @@ import useTransactionGroup from "@/db/queries/transactionGroup"
 import { useTypedTranslation } from "@/language/useTypedTranslation"
 import { useFocusEffect } from "expo-router"
 import { useCallback, useState } from "react"
-import { View, Text } from "react-native"
+import { View, Text, ScrollView } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 type TransactionGroups = {
@@ -47,28 +47,30 @@ export default function TransactionsScreen() {
 
   return (
     <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950'>
-      <View className='mx-4 flex-col justify-between'>
+      <View className='mx-4'>
         <ScreenTitle title={t("screens.transactions.title")} />
-        {transactionGroups.map((grouped, index) => (
-          <View key={index} className='gap-2'>
-            <Text className='text-subtitle text-gray-950 dark:text-gray-100'>
-              {i18n.language === "en"
-                ? grouped.date.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                : grouped.date.toLocaleDateString("de-DE", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-            </Text>
-            <TransactionGroupList groups={grouped.groups} />
-          </View>
-        ))}
+        <ScrollView>
+          {transactionGroups.map((grouped, index) => (
+            <View key={index} className='gap-2'>
+              <Text className='text-subtitle text-gray-950 dark:text-gray-100'>
+                {i18n.language === "en"
+                  ? grouped.date.toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : grouped.date.toLocaleDateString("de-DE", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+              </Text>
+              <TransactionGroupList groups={grouped.groups} />
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   )

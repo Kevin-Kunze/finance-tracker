@@ -18,6 +18,7 @@ export default function BudgetLayout() {
         activeIcon: "pencil",
         inactiveIcon: "pencil-outline",
       }}
+      invisibleTabs={["categorySelector", "transactionForm"]}
     />
   )
 }

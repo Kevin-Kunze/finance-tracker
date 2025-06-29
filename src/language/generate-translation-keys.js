@@ -1,11 +1,10 @@
 const fs = require("fs")
 const path = require("path")
 
-// Input: deine Übersetzungen
-const inputFile = path.resolve(path.__dirname, "./translation.json")
+const scriptDir = path.dirname(process.argv[1])
 
-// Output: Typen-Datei im selben Ordner
-const outputFile = path.resolve(path.__dirname, "./translationKeys.ts")
+const inputFile = path.join(scriptDir, "translation.json")
+const outputFile = path.join(scriptDir, "translationKeys.ts")
 
 const translation = require(inputFile)
 

@@ -11,6 +11,8 @@ import TransactionContainer from "@/components/containers/TransactionContainer"
 import useTransactionGroup from "@/db/queries/transactionGroup"
 import useCategory from "@/db/queries/category"
 import { CustomColors } from "@/assets/colors"
+import FunctionalButton from "@/components/buttons/FunctionalButton"
+import { useRouter, useLocalSearchParams } from "expo-router"
 
 type TransactionResponse = {
   name: string
@@ -28,13 +30,15 @@ type Category = {
 
 type Transaction = {
   name: string
+  specific?: string
   amount: string
-  term: string
   category: Category
 }
 
 export default function TransactionScreen() {
   const { t } = useTranslation()
+  const router = useRouter()
+  const params = useLocalSearchParams()
 
   const route = useRoute()
   const { geminiResponse } = (route.params as { geminiResponse: string }) || {
@@ -50,8 +54,36 @@ export default function TransactionScreen() {
   const { getMany: getCategories } = useCategory()
   const { create: createTransactionGroup } = useTransactionGroup()
 
+  // Handle new transaction added from form
+  useEffect(() => {
+    if (params.newTransaction) {
+      try {
+        const newTransaction = JSON.parse(params.newTransaction as string)
+        setTransactions((prev) => [...prev, newTransaction])
+        router.setParams({ newTransaction: undefined })
+      } catch (error) {
+        console.error("Error parsing new transaction:", error)
+      }
+    }
+  }, [params.newTransaction, router])
+
+  // Handle transaction update from form
+  useEffect(() => {
+    if (params.updatedTransaction) {
+      try {
+        const { index, data } = JSON.parse(params.updatedTransaction as string)
+        setTransactions((prev) =>
+          prev.map((transaction, i) => (i === index ? data : transaction))
+        )
+        router.setParams({ updatedTransaction: undefined })
+      } catch (error) {
+        console.error("Error parsing updated transaction:", error)
+      }
+    }
+  }, [params.updatedTransaction, router])
+
   const processGeminiResponse = async () => {
-    console.log("Processing geminiResponse...")
+    console.log("Processing geminiResponse:", geminiResponse)
     processedResponse.current = geminiResponse
 
     if (geminiResponse && geminiResponse !== "") {
@@ -129,7 +161,7 @@ export default function TransactionScreen() {
 
     const transactionData = transactions.map((transaction) => ({
       amount: parseFloat(transaction.amount),
-      term: transaction.term,
+      term: transaction.name,
       categoryId: transaction.category.id,
     }))
 
@@ -144,6 +176,21 @@ export default function TransactionScreen() {
     setNote("")
     setTransactions([])
     console.log("Inserted in database:", result)
+  }
+
+  const handleAddTransaction = () => {
+    router.push("/scan/transactionForm")
+  }
+
+  const handleEditTransaction = (index: number) => {
+    const transaction = transactions[index]
+    router.push({
+      pathname: "/scan/transactionForm",
+      params: {
+        transactionIndex: index.toString(),
+        editData: JSON.stringify(transaction),
+      },
+    })
   }
 
   const total = transactions
@@ -190,10 +237,14 @@ export default function TransactionScreen() {
           />
         </View>
 
-        <View className='gap-1 mb-2'>
+        <View className='flex-row gap-1 mb-4 justify-between items-center'>
           <Text className='text-subtitle font-semibold text-gray-950 dark:text-gray-100'>
             {t("screens.input.transactions")}
           </Text>
+          <FunctionalButton
+            title={t("screens.input.add")}
+            onPress={handleAddTransaction}
+          />
         </View>
 
         <View className='gap-2'>
@@ -208,8 +259,9 @@ export default function TransactionScreen() {
               <TransactionContainer
                 name={transaction.name}
                 amount={transaction.amount}
-                term={transaction.term}
+                specific={transaction.specific}
                 category={transaction.category}
+                onEdit={() => handleEditTransaction(index)}
                 onDelete={() => {
                   setTransactions((prev) => prev.filter((_, i) => i !== index))
                 }}

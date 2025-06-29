@@ -5,8 +5,8 @@ import { CustomColors } from "@/assets/colors"
 
 type TransactionContainerProps = {
   name: string
+  specific?: string
   amount: string
-  term: string
   category: {
     name: string
     color: CustomColors
@@ -28,6 +28,10 @@ export default function TransactionContainer(props: TransactionContainerProps) {
     green: "text-custom-green",
   }[props.category.color]
 
+  const balanceColor = props.amount.startsWith("-")
+    ? "text-balance-red"
+    : "text-balance-green"
+
   return (
     <View className='flex-row justify-between items-center bg-gray-50 dark:bg-primary-800 rounded-xl p-4 gap-4'>
       <EmojiWithBackground
@@ -40,12 +44,14 @@ export default function TransactionContainer(props: TransactionContainerProps) {
           {props.category.name}
         </Text>
         <Text className='text-base font-semibold flex-wrap text-gray-950 dark:text-gray-100'>
-          {props.term}
-        </Text>
-        <Text className='text-info flex-wrap text-gray-950 dark:text-gray-100'>
           {props.name}
         </Text>
-        <Text className='text-info font-bold text-primary-500 dark:text-primary-300'>
+        {props.specific && (
+          <Text className='text-info flex-wrap text-gray-950 dark:text-gray-100'>
+            {props.specific}
+          </Text>
+        )}
+        <Text className={`text-info font-bold ${balanceColor}`}>
           {props.amount} €
         </Text>
       </View>

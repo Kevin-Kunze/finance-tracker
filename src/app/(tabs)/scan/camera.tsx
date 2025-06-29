@@ -1,7 +1,13 @@
 import { GEMINI_API_KEY } from "@/api/GEMINI_API_KEY"
 
 import { useTranslation } from "react-i18next"
-import { TouchableOpacity, Dimensions, View, Text } from "react-native"
+import {
+  TouchableOpacity,
+  Dimensions,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native"
 import { router } from "expo-router"
 import { useState, useRef, useEffect } from "react"
 import {
@@ -32,7 +38,11 @@ export default function CameraScreen() {
 
   async function takePicture() {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync({ base64: true })
+      const photo = await cameraRef.current.takePictureAsync({
+        base64: true,
+        quality: 0.7,
+        skipProcessing: true,
+      })
       askGemini(photo)
     }
   }
@@ -85,12 +95,12 @@ export default function CameraScreen() {
     // Just for testing at the moment, needs data from database and refacotor
     const textInput =
       "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
-      "Leite aus name eine allgemeinere Produktbezeichnung ab (term). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orintieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
+      "Leite aus name eine allgemeinere Produktbezeichnung ab (term). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orientieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
+      "Falls du keinen Betrag erkennen kannst, setze ihn auf eine geschätzte Zahl. " +
       "Verwende dabei nur die Kategorie aus der folgenden Liste. Verwende nur die Währungs ids aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
       "- name (Kurzbezeichnung aus dem Bild) " +
       "- term (allgemeinere Produktbezeichnung) " +
       "- amount (Preis/Betrag in Euro) " +
-      "- categoryName (zugewiesene Kategoriename)" +
       "- categoryId (zugewiesene Kategorie als ID)" +
       "Folgende Kategorien sind erlaubt: " +
       JSON.stringify(categories) +
@@ -201,7 +211,17 @@ export default function CameraScreen() {
   else {
     return (
       <View className='flex-1 items-center justify-center bg-background'>
-        <Text>Processing...</Text>
+        <ActivityIndicator
+          size='large'
+          color='#ffffff'
+          style={{ marginBottom: 20 }}
+        />
+        <Text className='text-white text-lg font-medium'>
+          {t("screens.camera.processing")}
+        </Text>
+        <Text className='text-white/70 text-sm mt-2 text-center px-8'>
+          {t("screens.camera.processing_description")}
+        </Text>
       </View>
     )
   }

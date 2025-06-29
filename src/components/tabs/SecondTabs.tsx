@@ -14,9 +14,11 @@ type TabInfo = {
 export default function SecondTabs({
   leftTab,
   rightTab,
+  invisibleTabs = [],
 }: {
   leftTab: TabInfo
   rightTab: TabInfo
+  invisibleTabs?: string[]
 }) {
   const { colorScheme } = useColorScheme()
 
@@ -79,6 +81,16 @@ export default function SecondTabs({
           ),
         }}
       />
+      {invisibleTabs?.map((tabName) => (
+        <Tabs.Screen
+          key={tabName}
+          name={tabName}
+          options={{
+            headerShown: false,
+            href: null,
+          }}
+        />
+      ))}
     </Tabs>
   )
 }

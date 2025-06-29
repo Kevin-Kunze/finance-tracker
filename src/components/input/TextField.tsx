@@ -2,7 +2,7 @@ import { View } from "react-native"
 import Field from "./Field"
 import FieldTitle from "./FieldTitle"
 
-type TextInputProps = {
+type TextFieldProps = {
   title: string
   value?: string
   onChangeValue?: (value: string) => void
@@ -10,9 +10,9 @@ type TextInputProps = {
   balance?: boolean
 }
 
-export default function TextField(props: TextInputProps) {
+export default function TextField(props: TextFieldProps) {
   return (
-    <View>
+    <View className='gap-1'>
       <FieldTitle title={props.title} />
       <Field
         placeholder={props.placeholder}
