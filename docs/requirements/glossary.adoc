@@ -172,3 +172,11 @@ In diesem Dokument werden die wichtigsten Begriffe, Abkürzungen und Datendefini
 
 == Domänenmodell
 // Fügen Sie hier eine Abbildung mit ihrem Domänenmodell ein
+
+:imagesdir: images
+
+[.center]
+image::domaenenmodell.jpg[Domänenmodell Finanztracker, width=600]
+
+
+
