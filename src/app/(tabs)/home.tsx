@@ -44,10 +44,6 @@ export default function HomeScreen() {
         )}
         <View className='flex-row justify-center pt-2 gap-4'>
           <CircularButton
-            icon='add'
-            onPress={() => router.push("/scan/camera")}
-          />
-          <CircularButton
             icon='search'
             onPress={() => console.log("Search button pressed")}
           />
