@@ -135,13 +135,16 @@ export default function CameraScreen()
     }
 
     // Just for testing at the moment, needs data from database and refacotor
-    const textInput = "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
+    const textInput =
+      "Gib mir eine JSON-Antwort zurück. Erkenne in diesem Bild alle Artikel mit ihrem Preis und einem erkannten Namen (name). Bei Ausgaben soll der Betrag negativ in der Ausgabe sein. Alle Einnahmen und Rabatte sollen unter Einnahmen kategorisiert werden und positiv in der Ausgabe sein." +
       "Leite aus name eine allgemeinere Produktbezeichnung ab (term). Im Anhang sind alle schon existierenden Produktbezeichnungen, an denen kannst du dich orintieren. Ordne jeden Artikel genau einer Kategorie zu, sei Kreativ und ordne es möglichst tief im Baum ein . " +
-      "Verwende dabei nur die Kategorie aus der folgenden Liste. Verwende nur die Währungs ids aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
+      "Verwende dabei nur die Kategorie aus der folgenden Liste. Gib für jeden Artikel ein JSON-Objekt mit diesen Feldern zurück: " +
       "- name (Kurzbezeichnung aus dem Bild) " +
       "- term (allgemeinere Produktbezeichnung) " +
       "- amount (Preis/Betrag in Euro) " +
-      "- category (zugewiesenen Kategorie)" +
+      "- category (zugeordnete Kategorie aus folgender JSON)" + 
+
+      JSON.stringify(categories)
     
     changeState(true);
 
