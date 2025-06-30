@@ -249,17 +249,20 @@ export default function TransactionFormScreen() {
 
           <View className='flex-row justify-between items-center'>
             <Text className='text-base font-semibold mb-2 text-gray-950 dark:text-gray-100'>
-              Transaction Type
+              {t("screens.transactionForm.transactionType")}
             </Text>
             <DuoSwitch
               value={formData.type === "income"}
-              onChange={(option: "Expense" | "Income") =>
+              onChange={() =>
                 setFormData((prev) => ({
                   ...prev,
-                  type: option === "Income" ? "income" : "expense",
+                  type: prev.type === "expense" ? "income" : "expense",
                 }))
               }
-              options={["Expense", "Income"]}
+              options={[
+                t("screens.transactionForm.expense"),
+                t("screens.transactionForm.income"),
+              ]}
             />
           </View>
 

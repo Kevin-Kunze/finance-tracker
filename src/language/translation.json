@@ -157,6 +157,18 @@
         "en": "Enter transaction name",
         "de": "Transaktionsname eingeben"
       },
+      "transactionType": {
+        "en": "Transaction Type",
+        "de": "Transaktionstyp"
+      },
+      "expense": {
+        "en": "Expense",
+        "de": "Ausgabe"
+      },
+      "income": {
+        "en": "Income",
+        "de": "Einnahme"
+      },
       "amount": {
         "en": "Amount (€)",
         "de": "Betrag (€)"
