@@ -1,5 +1,5 @@
 = Projektplan: {project-name}
-Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <s86218@htw-dresden.de>; Loris Kulke <s87072@htw-dresden.de>; Luca Funk <s84313@htw-dresden.de>; Ruben Czock <s87149@htw-dresden.de>; Lucas Effenberger <s87202@htw-dresden.de>; Ali <s85161@htw-dresden.de>
+Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <s86218@htw-dresden.de>; Loris Kulke <s87072@htw-dresden.de>; Luca Funk <s84313@htw-dresden.de>; Ruben Czock <s87149@htw-dresden.de>; Lucas Effenberger <s87202@htw-dresden.de>; Ali Zeinelov <s85161@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -32,7 +32,7 @@ Folgende Kommunkationskanäle wurden genutzt:
 
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
-Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlich am Montag war unser "Weekly", indem wir über die abgeschlossenen Tasks, Probleme und die Aufgaben der nächsten Woche besprochen und zugeteilt haben. Aller zwei Wochen hatten wir eine Retroperspective im Weekly, indem wir über generelle Probleme der Projektentwicklung gesprochen haben z.B. technische Aspekte wie auch Kommunikationsprobleme. Besonders am Anfang bei der Erstellung der Produktidee, User Stories, Personas und auch später für die Retroperspektive wurde Miro als Sammelboard sämtlicher wichtiger Informationen genutzt, damit das Team jederzeit vergangene Informationen nachvollziehen können. Für die Zuteilung der Aufgaben wurde ein Ticketboard im Github genutzt, indem der Progress jeder Aufgabe getrackt wird. 
+Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlich am Montag war unser "Weekly", indem wir über die abgeschlossenen Tasks, Probleme und die Aufgaben der nächsten Woche gesprochen und zugeteilt haben. Aller zwei Wochen hatten wir eine Retroperspective im Weekly, indem wir über generelle Probleme der Projektentwicklung gesprochen haben z.B. technische Aspekte wie auch Kommunikationsprobleme. Besonders am Anfang bei der Erstellung der Produktidee, User Stories, Personas und auch später für die Retroperspektive wurde Miro als Sammelboard sämtlicher wichtiger Informationen genutzt, damit das Team jederzeit vergangene Informationen nachvollziehen können. Für die Zuteilung der Aufgaben wurde ein Ticketboard im Github genutzt, indem der Progress jeder Aufgabe getrackt wird. 
 
 === Definition of Ready
 // Listen Sie hier die Kriterien auf, die ein Product Backlog Item (z.B. User Story) erfüllen muss, damit es bei der Sprint-Planung berücksichtigt werden kann
@@ -50,17 +50,17 @@ Das Projekt wurde nach der Theorie der agilen Entwicklung umgesetzt. Wöchentlic
 
 == Deployment
 //Outline the strategy for deploying the software (and its updates) into the production environment.
-* Feature Enwicklung auf verschieden Branches
+* Feature Enwicklung auf verschiedenen Branches
 * Merge auf den Main Branch nach Review im Weekly
-* Deployment über Expo Hosting
+* Deployment und Updates über Expo Hosting
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
 [cols="1,1,1", options="header"]
 |===
 | Problem                    | Maßnahme                           | Ergebnis
-| Terminvergabe unübersichtlich. Jede Woche andere Zeit + Standort      | Termine vereinheitlicht. Jede Woche Montag Online  | Erhöhte Teilnahme, Pünktliche und höhere Flexibilität -> Online
+| Terminvergabe unübersichtlich. Jede Woche andere Zeit + Standort      | Termine vereinheitlicht. Jede Woche Montag Online  | Erhöhte Teilnahme, Pünktlichkeit und höhere Flexibilität -> Online
 | Diskussionen zwischen einzelnen Partein im Weekly -> Zeitverlust    | Lange Diskussionen ausgelagert in einzelne Gespräche ausserhalb des Weeklys   | Weekly Termine produktiver und schneller abgearbeitet
-| Unzureichende Kommunikation. Kommunikation fand nur im Weekly statt.     | Kommunikationskanäle stärker genutzt. Ergebnisse in der Woche geteilt        | Produktivität steigt. Diskussionen und Anmerkungen gleich geteilt anhand der präsentierten Ergebnisse
-|Git Hub Tasks vernachlässigt. Verhindert aktives Tracking der Ergebnisse |Git Hub Tasks erstellt und je nach Fortschritt getaggt |Erhöhte Übersicht und Planung möglich
+| Unzureichende Kommunikation. Kommunikation fand nur im Weekly statt     | Kommunikationskanäle stärker genutzt. Ergebnisse in der Woche geteilt        | Produktivität steigt. Diskussionen und Anmerkungen gleich geteilt anhand der präsentierten Ergebnisse
+|Git Hub Tasks vernachlässigt. Verhindert aktives Tracking der Ergebnisse |Git Hub Tasks erstellt und je nach Fortschritt bearbeitet |Erhöhte Übersicht und Planung möglich
 |===
