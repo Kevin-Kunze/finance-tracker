@@ -1,30 +1,18 @@
-import { useTypedTranslation } from "@/language/useTypedTranslation" // Language
 import CircularButton from "@/components/buttons/CircularButton"
-import { Ionicons } from "@expo/vector-icons"
 import { router, useFocusEffect } from "expo-router"
 import { useCallback, useState } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
-import { TransactionGroup } from "@/db/schemas/transactionGroups"
 import Button from "@/components/buttons/Button"
 import useTransaction from "@/db/queries/transaction"
-import BalanceWidget from "@/components/widgets/BalanceWidget"
 
 export default function HomeScreen() {
   const { error } = useTransactionGroup()
-  const [transactionGroups, setTransactionGroups] = useState<
-    (TransactionGroup & {
-      categoryName: string
-      categoryColor: string | null
-      categoryIcon: string | null
-    })[]
-  >([])
 
   const { getMany: getTransactions, getTotalAmount } = useTransaction()
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
-  const { t } = useTypedTranslation() // Language
 
   const fetchTotalAmount = useCallback(async () => {
     try {
@@ -36,20 +24,10 @@ export default function HomeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchTransactions = useCallback(async () => {
-    try {
-      // const data = await getTransactionGroups({ limit: 3 })
-      setTransactionGroups([])
-    } catch (err) {
-      console.error("Failed to fetch transactions:", err)
-    }
-  }, [])
-
   useFocusEffect(
     useCallback(() => {
-      fetchTransactions()
       fetchTotalAmount()
-    }, [fetchTotalAmount, fetchTransactions])
+    }, [fetchTotalAmount])
   )
 
   const handleDebug = async () => {
