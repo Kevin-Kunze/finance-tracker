@@ -1,4 +1,4 @@
-import { sqliteTable, real, integer } from "drizzle-orm/sqlite-core"
+import { sqliteTable, real, integer, text } from "drizzle-orm/sqlite-core"
 import { relations, sql } from "drizzle-orm"
 import { accountTable } from "./accounts"
 import { transactionGroupTable } from "./transactionGroups"
@@ -14,6 +14,7 @@ export const transactionTable = sqliteTable("transactions", {
   updatedAt: integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),
+  name: text().notNull(),
   amount: real().notNull(),
   categoryTermId: integer()
     .notNull()

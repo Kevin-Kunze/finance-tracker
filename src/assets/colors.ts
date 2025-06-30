@@ -49,9 +49,15 @@ export const colors = {
     green: "#4fe63b",
   },
   balance: {
-    red: "#ff8181",
+    green: {
+      DEFAULT: "#64eb55",
+      dark: "#36be27",
+    },
+    red: {
+      DEFAULT: "#ff8181",
+      dark: "#d24848",
+    },
     gray: "#bebebe",
-    green: "#8eff82",
   },
   functional: {
     delete: "#ff4d4d",

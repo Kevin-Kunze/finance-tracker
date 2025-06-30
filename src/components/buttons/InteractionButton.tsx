@@ -28,13 +28,9 @@ export default function InteractionButton(props: InteractionButtonProps) {
     <TouchableOpacity
       onPress={props.onPress}
       className={`justify-center items-center border-2 ${borderColor} rounded-xl p-2`}
+      activeOpacity={1}
     >
-      <Ionicons
-        name={icon}
-        color={iconColor}
-        onPress={props.onPress}
-        size={16}
-      />
+      <Ionicons name={icon} color={iconColor} size={16} />
     </TouchableOpacity>
   )
 }

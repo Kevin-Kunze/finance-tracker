@@ -1,5 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react"
-import { View, Text, ScrollView, Alert, TouchableOpacity } from "react-native"
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+  Keyboard,
+} from "react-native"
 import { useRouter, useLocalSearchParams, useFocusEffect } from "expo-router"
 import { SafeAreaView } from "react-native-safe-area-context"
 import TextField from "@/components/input/TextField"
@@ -35,11 +42,10 @@ export default function TransactionFormScreen() {
   const transactionIndex = params.transactionIndex
     ? Number(params.transactionIndex)
     : -1
-  const editData: {
-    name: string
-    amount: number
-    category: Category
-  } = params.editData ? JSON.parse(params.editData as string) : null
+
+  const editData = useMemo(() => {
+    return params.editData ? JSON.parse(params.editData as string) : null
+  }, [params.editData])
 
   const [formData, setFormData] = useState<TransactionFormData>({
     name: "",
@@ -55,6 +61,7 @@ export default function TransactionFormScreen() {
   const [, setIsLoading] = useState(false)
   const processedCategoryRef = useRef<string | null>(null)
   const isNavigatingToCategoryRef = useRef(false)
+  const processedEditDataRef = useRef<boolean>(false)
 
   const { getMany: getCategories } = useCategory()
 
@@ -67,6 +74,7 @@ export default function TransactionFormScreen() {
     })
     setSelectedCategory(null)
     processedCategoryRef.current = null
+    processedEditDataRef.current = false
   }, [])
   useFocusEffect(
     useCallback(() => {
@@ -111,18 +119,20 @@ export default function TransactionFormScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (isEditing && editData) {
-      setFormData({
-        name: editData.name,
-        amount: Math.abs(editData.amount).toString(),
-        categoryId: editData.category.id,
-        type: editData.amount < 0 ? "expense" : "income",
-      })
-      setSelectedCategory(editData.category)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing])
+  useFocusEffect(
+    useCallback(() => {
+      if (isEditing && editData && !processedEditDataRef.current) {
+        setFormData({
+          name: editData.name,
+          amount: Math.abs(editData.amount).toString(),
+          categoryId: editData.category.id,
+          type: editData.amount < 0 ? "expense" : "income",
+        })
+        setSelectedCategory(editData.category)
+        processedEditDataRef.current = true
+      }
+    }, [isEditing, editData])
+  )
 
   useEffect(() => {
     if (
@@ -153,6 +163,9 @@ export default function TransactionFormScreen() {
   }
 
   const handleSubmit = () => {
+    // Dismiss keyboard first
+    Keyboard.dismiss()
+
     if (
       !formData.name.trim() ||
       !formData.amount.trim() ||
@@ -204,17 +217,13 @@ export default function TransactionFormScreen() {
         },
       })
     }
-
-    if (!isEditing) {
-      resetForm()
-    }
+    resetForm()
   }
 
   const handleCancel = () => {
-    if (!isEditing) {
-      resetForm()
-    }
-    router.back()
+    Keyboard.dismiss()
+    router.push("/scan/input")
+    resetForm()
   }
 
   return (
@@ -277,7 +286,6 @@ export default function TransactionFormScreen() {
                   ? "bg-primary-50 dark:bg-primary-900 border-primary-200 dark:border-primary-700"
                   : "bg-gray-50 dark:bg-primary-800 border-gray-200 dark:border-primary-700"
               }`}
-              activeOpacity={0.7}
             >
               {selectedCategory ? (
                 <>
@@ -303,10 +311,7 @@ export default function TransactionFormScreen() {
 
           <View className='flex-row gap-4 mt-4'>
             <View className='flex-1'>
-              <Button
-                title={t("screens.transactionForm.cancel")}
-                onPress={handleCancel}
-              />
+              <Button title={t("common.cancel")} onPress={handleCancel} />
             </View>
             <View className='flex-1'>
               <Button

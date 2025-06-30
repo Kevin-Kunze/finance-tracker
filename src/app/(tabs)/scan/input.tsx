@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, Keyboard, Alert } from "react-native"
 import { useRoute } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import DateField from "@/components/input/DateField"
 import TextField from "@/components/input/TextField"
 import ScreenTitle from "@/components/tabs/ScreenTitle"
-import { useTranslation } from "react-i18next"
 import Button from "@/components/buttons/Button"
 import TransactionContainer from "@/components/containers/TransactionContainer"
 import useTransactionGroup from "@/db/queries/transactionGroup"
@@ -13,6 +12,7 @@ import useCategory from "@/db/queries/category"
 import { CustomColors } from "@/assets/colors"
 import FunctionalButton from "@/components/buttons/FunctionalButton"
 import { useRouter, useLocalSearchParams } from "expo-router"
+import { useTypedTranslation } from "@/language/useTypedTranslation"
 
 type TransactionResponse = {
   specific: string
@@ -36,7 +36,7 @@ type Transaction = {
 }
 
 export default function TransactionScreen() {
-  const { t } = useTranslation()
+  const { t } = useTypedTranslation()
   const router = useRouter()
   const params = useLocalSearchParams()
 
@@ -62,9 +62,10 @@ export default function TransactionScreen() {
         router.setParams({ newTransaction: undefined })
       } catch (error) {
         console.error("Error parsing new transaction:", error)
+        Alert.alert(t("common.error"), t("screens.input.errors.parsingError"))
       }
     }
-  }, [params.newTransaction, router])
+  }, [params.newTransaction, router, t])
 
   useEffect(() => {
     if (params.updatedTransaction) {
@@ -76,9 +77,10 @@ export default function TransactionScreen() {
         router.setParams({ updatedTransaction: undefined })
       } catch (error) {
         console.error("Error parsing updated transaction:", error)
+        Alert.alert(t("common.error"), t("screens.input.errors.parsingError"))
       }
     }
-  }, [params.updatedTransaction, router])
+  }, [params.updatedTransaction, router, t])
 
   const processGeminiResponse = async () => {
     console.log("Processing geminiResponse:", geminiResponse)
@@ -94,7 +96,10 @@ export default function TransactionScreen() {
         )
 
         if (!categoryIds || categoryIds.length === 0) {
-          console.warn("No category IDs found in parsed transactions")
+          Alert.alert(
+            t("common.error"),
+            t("screens.input.errors.noCategoryIds")
+          )
           setTransactions([])
           return
         }
@@ -104,7 +109,10 @@ export default function TransactionScreen() {
         })
 
         if (!categoryResult || categoryResult.length === 0) {
-          console.warn("Category not found")
+          Alert.alert(
+            t("common.error"),
+            t("screens.input.errors.categoryNotFound")
+          )
           return
         }
 
@@ -122,7 +130,8 @@ export default function TransactionScreen() {
           })
         )
       } catch (error) {
-        console.error("Error while parsing: ", error) //TODO add proper error handling
+        console.error("Error while parsing: ", error)
+        Alert.alert(t("common.error"), t("screens.input.errors.parsingError"))
       }
     } else {
       setTransactions([])
@@ -148,7 +157,7 @@ export default function TransactionScreen() {
 
   const handleSubmit = async () => {
     if (title.trim() === "" || transactions.length === 0) {
-      console.warn("Title or transactions are empty") //TODO add proper error handling
+      Alert.alert(t("common.error"), t("screens.input.errors.missingData"))
       return
     }
 
@@ -164,6 +173,9 @@ export default function TransactionScreen() {
       date,
       transactions: transactionData,
     })
+
+    Keyboard.dismiss()
+    router.push("/transactions")
 
     setTitle("")
     setNote("")

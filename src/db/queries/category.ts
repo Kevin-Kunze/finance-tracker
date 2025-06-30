@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDb, isDatabaseInitialized, initializeDatabase } from ".."
 import { categoryTable } from "../schemas/categories"
-import { inArray } from "drizzle-orm"
+import { inArray, isNull, eq } from "drizzle-orm"
 import { categoryTermTable } from "../schemas/categoryTerms"
 import { CustomColors } from "@/assets/colors"
 
@@ -142,10 +142,83 @@ export default function useCategory() {
     }
   }
 
+  const getByParentId = async ({ parentId }: { parentId?: number | null }) => {
+    setLoading(true)
+    setError(null)
+    try {
+      if (!db) {
+        throw new Error("Database connection not available")
+      }
+
+      if (!isDatabaseInitialized()) {
+        console.log("Database not initialized, waiting...")
+        await initializeDatabase()
+      }
+
+      const categoryResult = await db
+        .select({
+          id: categoryTable.id,
+          name: categoryTable.name,
+          color: categoryTable.color,
+          emoji: categoryTable.emoji,
+          parentCategoryId: categoryTable.parentCategoryId,
+        })
+        .from(categoryTable)
+        .where(
+          parentId === null || parentId === undefined
+            ? isNull(categoryTable.parentCategoryId)
+            : eq(categoryTable.parentCategoryId, parentId)
+        )
+
+      return categoryResult ?? []
+    } catch (err) {
+      const error =
+        err instanceof Error ? err : new Error("Unknown error occurred")
+      setError(error)
+      console.error("Error fetching categories by parent ID:", error)
+      return []
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const hasChildren = async ({ categoryId }: { categoryId: number }) => {
+    setLoading(true)
+    setError(null)
+    try {
+      if (!db) {
+        throw new Error("Database connection not available")
+      }
+
+      if (!isDatabaseInitialized()) {
+        console.log("Database not initialized, waiting...")
+        await initializeDatabase()
+      }
+
+      const children = await db
+        .select({ id: categoryTable.id })
+        .from(categoryTable)
+        .where(eq(categoryTable.parentCategoryId, categoryId))
+        .limit(1)
+
+      return children.length > 0
+    } catch (err) {
+      const error =
+        err instanceof Error ? err : new Error("Unknown error occurred")
+      setError(error)
+      console.error("Error checking if category has children:", error)
+      return false
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return {
     create,
     getMany,
     getManyAsJson,
+    getByParentId,
+    hasChildren,
     error,
     loading,
   }

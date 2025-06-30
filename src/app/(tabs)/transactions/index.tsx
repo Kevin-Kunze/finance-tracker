@@ -18,7 +18,8 @@ type TransactionGroups = {
 export default function TransactionsScreen() {
   const { t, i18n } = useTypedTranslation()
 
-  const { getMany: getTransactionGroups } = useTransactionGroup()
+  const { getMany: getTransactionGroups, remove: deleteTransactionGroup } =
+    useTransactionGroup()
   const [transactionGroups, setTransactionGroups] = useState<TransactionGroups>(
     []
   )
@@ -31,6 +32,7 @@ export default function TransactionsScreen() {
           transactionGroupsResult.map((grouped) => ({
             date: new Date(grouped.date),
             groups: grouped.groups.map((group) => ({
+              id: group.id,
               name: group.name!,
               amount: group.totalAmount!,
               color: group.categoryColor as CustomColors,
@@ -45,31 +47,58 @@ export default function TransactionsScreen() {
     }, [])
   )
 
+  const handleDeleteTransactionGroup = async (id: number) => {
+    try {
+      await deleteTransactionGroup({ id })
+      // Refresh the transaction groups after deletion
+      const transactionGroupsResult = await getTransactionGroups()
+      setTransactionGroups(
+        transactionGroupsResult.map((grouped) => ({
+          date: new Date(grouped.date),
+          groups: grouped.groups.map((group) => ({
+            id: group.id,
+            name: group.name!,
+            amount: group.totalAmount!,
+            color: group.categoryColor as CustomColors,
+            emoji: group.categoryEmoji,
+          })),
+        }))
+      )
+    } catch (error) {
+      console.error("Failed to delete transaction group:", error)
+    }
+  }
+
   return (
     <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950'>
       <View className='mx-4'>
         <ScreenTitle title={t("screens.transactions.title")} />
         <ScrollView>
-          {transactionGroups.map((grouped, index) => (
-            <View key={index} className='gap-2'>
-              <Text className='text-subtitle text-gray-950 dark:text-gray-100'>
-                {i18n.language === "en"
-                  ? grouped.date.toLocaleDateString("en-US", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
-                  : grouped.date.toLocaleDateString("de-DE", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-              </Text>
-              <TransactionGroupList groups={grouped.groups} />
-            </View>
-          ))}
+          <View className='gap-6'>
+            {transactionGroups.map((grouped, index) => (
+              <View key={index} className='gap-2'>
+                <Text className='text-subtitle text-gray-950 dark:text-gray-100'>
+                  {i18n.language === "en"
+                    ? grouped.date.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
+                    : grouped.date.toLocaleDateString("de-DE", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                </Text>
+                <TransactionGroupList
+                  groups={grouped.groups}
+                  onDelete={handleDeleteTransactionGroup}
+                />
+              </View>
+            ))}
+          </View>
         </ScrollView>
       </View>
     </SafeAreaView>

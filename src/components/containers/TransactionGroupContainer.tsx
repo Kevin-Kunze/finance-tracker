@@ -1,7 +1,17 @@
-import { View, Text } from "react-native"
+import { View, Text, Alert, TouchableOpacity } from "react-native"
 import EmojiWithBackground from "@/components/display/EmojiWithBackground"
 import AmountBadge from "@/components/display/AmountBadge"
 import { CustomColors } from "@/assets/colors"
+import { Ionicons } from "@expo/vector-icons"
+import { forwardRef, useImperativeHandle } from "react"
+import { useTypedTranslation } from "@/language/useTypedTranslation"
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from "react-native-reanimated"
+import { Gesture, GestureDetector } from "react-native-gesture-handler"
 
 export type TransactionGroupContainerProps = {
   name: string
@@ -9,11 +19,30 @@ export type TransactionGroupContainerProps = {
   color: CustomColors
   emoji: string
   rounded?: "top" | "bottom" | "full"
+  id?: number
+  onDelete?: (id: number) => void
+  onSwipeOpen?: () => void
 }
 
-export default function TransactionGroupContainer(
-  props: TransactionGroupContainerProps
-) {
+export type TransactionGroupContainerRef = {
+  close: () => void
+}
+
+const TransactionGroupContainer = forwardRef<
+  TransactionGroupContainerRef,
+  TransactionGroupContainerProps
+>((props, ref) => {
+  const { t } = useTypedTranslation()
+  const translateX = useSharedValue(0)
+  const isOpen = useSharedValue(false)
+
+  useImperativeHandle(ref, () => ({
+    close: () => {
+      translateX.value = withSpring(0)
+      isOpen.value = false
+    },
+  }))
+
   const rounded = {
     none: "",
     top: "rounded-t-xl",
@@ -21,7 +50,61 @@ export default function TransactionGroupContainer(
     full: "rounded-xl",
   }[props.rounded ?? "none"]
 
-  return (
+  const handleDelete = () => {
+    if (props.id && props.onDelete) {
+      Alert.alert(
+        t("common.deleteTransaction"),
+        t("common.deleteTransactionConfirmation"),
+        [
+          {
+            text: t("common.cancel"),
+            style: "cancel",
+          },
+          {
+            text: t("common.delete"),
+            style: "destructive",
+            onPress: () => props.onDelete!(props.id!),
+          },
+        ]
+      )
+    }
+  }
+
+  const onSwipeOpen = () => {
+    runOnJS(props.onSwipeOpen ?? (() => {}))()
+  }
+
+  const gestureHandler = Gesture.Pan()
+    .onStart(() => {
+      if (!isOpen.value) {
+        runOnJS(onSwipeOpen)()
+      }
+    })
+    .onUpdate((event) => {
+      const clampedTranslateX = Math.min(0, Math.max(-100, event.translationX))
+      translateX.value = clampedTranslateX
+    })
+    .onEnd((event) => {
+      const shouldOpen = event.translationX < -40 || event.velocityX < -500
+
+      if (shouldOpen) {
+        translateX.value = withSpring(-80)
+        isOpen.value = true
+      } else {
+        translateX.value = withSpring(0)
+        isOpen.value = false
+      }
+    })
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }))
+
+  const deleteButtonStyle = useAnimatedStyle(() => ({
+    opacity: translateX.value < -10 ? 1 : 0,
+  }))
+
+  const TransactionContent = () => (
     <View
       className={`bg-gray-50 dark:bg-primary-800 px-4 py-3 flex-row items-center justify-between ${rounded}`}
     >
@@ -39,4 +122,34 @@ export default function TransactionGroupContainer(
       <AmountBadge amount={props.amount} />
     </View>
   )
-}
+
+  if (props.id && props.onDelete) {
+    return (
+      <View className='relative overflow-hidden'>
+        <Animated.View
+          style={[deleteButtonStyle]}
+          className={`absolute right-0 top-0 bottom-0 w-20 bg-balance-red dark:bg-balance-red-dark flex-row items-center justify-center ${rounded}`}
+        >
+          <TouchableOpacity
+            onPress={handleDelete}
+            className='flex-1 items-center justify-center'
+          >
+            <Ionicons name='trash-outline' size={24} color='white' />
+          </TouchableOpacity>
+        </Animated.View>
+
+        <GestureDetector gesture={gestureHandler}>
+          <Animated.View style={animatedStyle}>
+            <TransactionContent />
+          </Animated.View>
+        </GestureDetector>
+      </View>
+    )
+  }
+
+  return <TransactionContent />
+})
+
+TransactionGroupContainer.displayName = "TransactionGroupContainer"
+
+export default TransactionGroupContainer

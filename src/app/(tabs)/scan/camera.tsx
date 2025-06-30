@@ -107,7 +107,7 @@ export default function CameraScreen() {
       "- specific: The exact label as it appears in the image.\n" +
       '- term: A more general, standardized term derived from the name (e.g., "Cappuccino Large" → "Coffee drink", or "Tax Advisor May 2024" → "Tax service").\n' +
       "- amount: The monetary amount in Euros. Use a negative value for expenses (e.g., -12.49), and a positive value for all income, discounts, and refunds (e.g., 2500.00 or 0.50).\n" +
-      "- categoryId: The ID of that specific category (only the final selected category, not the entire path).\n" +
+      "- categoryId: The ID of that specific category (only the final selected category, not the entire path; always an integer).\n" +
       "\n" +
       "Classification Rules:\n" +
       "- Use only the category structure provided in the JSON below.\n" +
@@ -123,7 +123,7 @@ export default function CameraScreen() {
       '    "specific": "Original label from the image",\n' +
       '    "term": "Generalized product/service name",\n' +
       '    "amount": -12.49,\n' +
-      '    "categoryId": "61"\n' +
+      '    "categoryId": 61\n' +
       "  },\n" +
       "  ...\n" +
       "]\n" +

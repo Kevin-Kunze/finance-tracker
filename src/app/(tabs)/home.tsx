@@ -8,6 +8,8 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
 import { TransactionGroup } from "@/db/schemas/transactionGroups"
 import Button from "@/components/buttons/Button"
+import useTransaction from "@/db/queries/transaction"
+import BalanceWidget from "@/components/widgets/BalanceWidget"
 
 export default function HomeScreen() {
   const { error } = useTransactionGroup()
@@ -19,16 +21,19 @@ export default function HomeScreen() {
     })[]
   >([])
 
+  const { getMany: getTransactions, getTotalAmount } = useTransaction()
+
   const [totalAmount, setTotalAmount] = useState<string>("0")
   const { t } = useTypedTranslation() // Language
 
   const fetchTotalAmount = useCallback(async () => {
     try {
-      // const data = await getTotalAmount()
-      setTotalAmount("0")
+      const totalAmountResult = await getTotalAmount()
+      setTotalAmount(totalAmountResult ?? "0")
     } catch (err) {
       console.error("Failed to fetch totalAmount:", err)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchTransactions = useCallback(async () => {
@@ -47,7 +52,9 @@ export default function HomeScreen() {
     }, [fetchTotalAmount, fetchTransactions])
   )
 
-  const handleDebug = async () => {}
+  const handleDebug = async () => {
+    console.log(await getTransactions())
+  }
 
   return (
     <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950 '>
@@ -71,35 +78,10 @@ export default function HomeScreen() {
             onPress={() => router.push("/kitchensink")}
           />
         </View>
-
         <View className='bg-primary-600 dark:bg-primary-800 p-4 rounded-lg'>
           <Text className='text-gray-50 text-base text-center'>
             {totalAmount} €
           </Text>
-        </View>
-        <View className='bg-primary-600 dark:bg-primary-800 rounded-lg'>
-          <TouchableOpacity
-            className='flex-row items-center justify-center m-4 gap-2'
-            onPress={() => {
-              router.push("/(tabs)/transactions")
-            }}
-          >
-            <Ionicons name='card' size={16} color='white' />
-            <Text className='text-white text-base text-gray-50 text-center'>
-              {t("screens.home.lastTransactions")}
-            </Text>
-          </TouchableOpacity>
-          <View className='rounded-lg'>
-            {transactionGroups.map((transaction) => (
-              <View
-                key={transaction.id}
-                className='flex-row bg-background dark:bg-background-dark p-3 items-center justify-between mx-2 mb-2 rounded-lg'
-              >
-                <Text>{transaction.name}</Text>
-                <Text className='text-text dark:text-text-dark'>0 €</Text>
-              </View>
-            ))}
-          </View>
         </View>
         <Button
           title='Debug'

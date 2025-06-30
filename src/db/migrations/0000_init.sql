@@ -70,6 +70,7 @@ CREATE TABLE `transactions` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`createdAt` integer DEFAULT (unixepoch()) NOT NULL,
 	`updatedAt` integer DEFAULT (unixepoch()) NOT NULL,
+	`name` text NOT NULL,
 	`amount` real NOT NULL,
 	`categoryTermId` integer NOT NULL,
 	`accountId` integer NOT NULL,

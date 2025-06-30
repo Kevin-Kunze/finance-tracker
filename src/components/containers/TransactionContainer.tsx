@@ -29,8 +29,8 @@ export default function TransactionContainer(props: TransactionContainerProps) {
   }[props.category.color]
 
   const balanceColor = props.amount.startsWith("-")
-    ? "text-balance-red"
-    : "text-balance-green"
+    ? "text-balance-red dark:text-balance-red-dark"
+    : "text-balance-green dark:text-balance-green-dark"
 
   return (
     <View className='flex-row justify-between items-center bg-gray-50 dark:bg-primary-800 rounded-xl p-4 gap-4'>
