@@ -319,7 +319,7 @@ export default function useTransactionGroup() {
             (a, b) => Number(b.totalAmount) - Number(a.totalAmount)
           ),
         }))
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
       return Object.values(sortedResult)
     } catch (err) {

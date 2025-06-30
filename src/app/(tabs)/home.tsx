@@ -57,12 +57,12 @@ export default function HomeScreen() {
             {totalAmount} €
           </Text>
         </View>
-        <Button
+        {/* <Button
           title='Debug'
           onPress={() => {
             handleDebug()
           }}
-        />
+        /> */}
       </View>
     </SafeAreaView>
   )
