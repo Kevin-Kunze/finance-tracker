@@ -4,13 +4,12 @@ import { useCallback, useState } from "react"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import useTransactionGroup from "@/db/queries/transactionGroup"
-import Button from "@/components/buttons/Button"
 import useTransaction from "@/db/queries/transaction"
 
 export default function HomeScreen() {
   const { error } = useTransactionGroup()
 
-  const { getMany: getTransactions, getTotalAmount } = useTransaction()
+  const { getTotalAmount } = useTransaction()
 
   const [totalAmount, setTotalAmount] = useState<string>("0")
 
@@ -29,10 +28,6 @@ export default function HomeScreen() {
       fetchTotalAmount()
     }, [fetchTotalAmount])
   )
-
-  const handleDebug = async () => {
-    console.log(await getTransactions())
-  }
 
   return (
     <SafeAreaView className='flex-1 bg-gray-100 dark:bg-primary-950 '>
