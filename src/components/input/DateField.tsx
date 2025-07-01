@@ -35,7 +35,6 @@ export default function DateField(props: DateInputProps) {
 
       <Pressable
         onPress={() => {
-          console.log("Date field pressed")
           setShowPicker(true)
         }}
       >

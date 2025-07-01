@@ -40,7 +40,7 @@ export default function HomeScreen() {
         <View className='flex-row justify-center pt-2 gap-4'>
           <CircularButton
             icon='search'
-            onPress={() => console.log("Search button pressed")}
+            onPress={() => {}}
           />
           <CircularButton
             icon='grid-outline'
