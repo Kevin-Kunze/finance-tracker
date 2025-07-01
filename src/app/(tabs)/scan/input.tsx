@@ -207,7 +207,11 @@ export default function TransactionScreen() {
 
   return (
     <SafeAreaView className='bg-gray-100 dark:bg-primary-950 flex-1'>
-      <ScrollView className='mx-4' keyboardShouldPersistTaps='handled'>
+      <ScrollView
+        className='mx-4'
+        keyboardShouldPersistTaps='handled'
+        showsVerticalScrollIndicator={false}
+      >
         <ScreenTitle title={t("screens.input.title")} />
 
         <View className='gap-4 mb-6'>
