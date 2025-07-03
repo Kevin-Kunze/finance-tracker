@@ -6,13 +6,8 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Einführung
-In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-name} beschrieben. Dies können sein:
+Dieses Dokument beschreibt das UX-Konzept für die Finanzapp "Spendex". Es dient als Grundlage für die nutzerzentrierte Gestaltung der Anwendung und dokumentiert zentrale Aspekte wie Zielgruppen, Nutzungskontext, visuelles Design und grundlegende Bedienabläufe. Ziel ist es, eine intuitive, alltagstaugliche und visuell ansprechende Benutzeroberfläche zu entwickeln, die den Bedürfnissen der Nutzerinnen und Nutzer gerecht wird.
 
-* Personas der wichtigsten Stakeholder
-* Nutzerkontext
-* Wireframes relevanter Benutzeroberflächen
-* Zusammenhänge mittels Taskflow-Diagrammen
-* Angaben über die Gestaltung der Benutzeroberfläche, z.B. Styling, Bedienbarkeit, ...
 
 == Personas
 * Drei mögliche User Personas
@@ -50,20 +45,46 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 
 
 == Nutzungskontext
-// Beschreiben Sie die Arbeitsaufgaben, Arbeitsmittel, physische und soziale Umgebung, in der das Produkt genutzt wird. 
-// Eventuell sind Angaben zu Fehlerquellen, Häufigkeiten von Ereignisse sowie Bearbeitungsdauern von Vorgängen relevant
+**Aufgaben:**
+Die Hauptaufgabe der Nutzerinnen und Nutzer besteht darin, einen Überblick über ihre Einnahmen und Ausgaben zu behalten, Abonnements zu verwalten und Sparziele zu planen. Je nach Persona sind die Aufgaben unterschiedlich komplex:
 
-//Hier sind einige Anregungen:
+Eva möchte möglichst schnell ansprechende Übersichten erhalten
+Joachim benötigt Motivation und Führung durch klare Anweisungen
+Norman interessiert sich für konkrete Zahlen und Details
 
-//Zutreffendes angeben, nicht zutreffendes streichen oder auskommentieren
-. Anzahl der Personen, die an der Erfüllung der Aufgabe beteiligt sind. Ändert sich das?
-. Wie lange dauert die Bearbeitung der Aufgabe? Wie viel Zeit wird für jeden Arbeitsschritt benötigt? Ändert sich das?
-. Gibt es besondere Umgebungsbedingungen, z.B. mobil, offline, Außeneinsatz, Touchbedienung, Nutzung durch seh- oder hörbeeinträchtigte Personen?
-. Welche Systemplattformen werden heute eingesetzt? Welche sind es ggf. zukünftig?
-. Welche anderen Anwendungen sind im Einsatz? Muss ihre Anwendung mit diesen integriert werden?
+**Plattform:**
+Die App läuft auf iOS und Android Smartphones.
 
-Hier können zudem bei Bedarf Teile des Unternehmensmodells (Prozesse, Organigramme, IT-Landschaft, ...) eingefügt werden, um die beteiligten Aufgaben und Rollen zu skizzieren.
+**physische Umgebung:**
+Die App wird in unterschiedlichen Alltagssituationen verwendet – beispielsweise unterwegs, zu Hause oder während kurzer Pausen im Studium. Dabei variiert der Nutzungskontext stark: In ruhigen Momenten kann die App fokussiert verwendet werden, oft jedoch erfolgt die Nutzung unter Zeitdruck oder Ablenkung, z.B.: im öffentlichen Nahverkehr, in der Uni oder in Wartesituationen. Die Benutzeroberfläche muss daher sowohl eine schnelle Erfassung von Informationen als auch eine intuitive, reibungslose Bedienung in unruhigen Umgebungen ermöglichen.
+
+**Soziale Umgebung:**
+In den meisten Fällen nutzen die Personen die App allein. Sie tauschen sich jedoch gelegentlich mit Freund*innen über Finanzziele aus oder zeigen ihre Ergebnisse. Außerdem hilft ein schneller Blick auf die App, das Wochenende mit Freunden zu planen, ob noch genügend Budget vorhanden ist.
+
+**Besondere Anforderungen:**
+
+* Nutzung häufig in kurzer Zeit
+* Visuelle Übersichtlichkeit
+* Begrenzte Aufmerksamkeitsspanne
+
+
 
 == Wireframes und Wireflow
-// Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
-// Beziehen Sie ihre Wireframes auf konkrete User Stories oder Epics.
+Wireframes im Miro Board: link:https://miro.com/app/board/uXjVIEIkF1s=/?share_link_id=606927591476[Miro Whiteboard öffnen]
+
+== Design
+
+**Logo:**
+Für das Logo unserer App haben wir uns bewusst für die Darstellung eines Elefanten entschieden. Dieses Motiv verleiht dem Gesamtauftritt eine freundliche, zugängliche Ausstrahlung und schafft eine emotionale Verbindung zur Nutzerin bzw. zum Nutzer.
+In der Farbgestaltung fiel die Wahl nach der Erprobung verschiedener Varianten auf die Farbe Blau. Diese Entscheidung basiert auf psychologischen Aspekten: Blau vermittelt Vertrauen, Ruhe und Zuverlässigkeit – alles zentrale Werte, die eine Finanz-App verkörpern sollte.
+
+**Design Mockup:**
+Mockups/Farbpalette/Logo im Miro Board: link:https://miro.com/app/board/uXjVIEIkF1s=/?share_link_id=606927591476[Miro Whiteboard öffnen]
+
+Das Design der App wurde bewusst minimalistisch gehalten und durch gezielte blaue Akzente ergänzt. Die verwendeten Blautöne stammen aus einer eigens entwickelten Farbpalette und wurden sorgfältig auf das Logo abgestimmt, um ein harmonisches Gesamtbild zu gewährleisten.
+
+In Anlehnung an unsere definierten Personas lag ein besonderer Fokus auf einer klar strukturierten, intuitiv bedienbaren und verständlich gestalteten Benutzeroberfläche. Ziel war es, eine App zu entwickeln, die nicht nur funktional, sondern auch benutzerfreundlich ist – insbesondere für eine jüngere Zielgruppe.
+
+Als Schriftart kommt „Helvetica“ zum Einsatz. Diese Wahl unterstreicht den professionellen und seriösen Anspruch, der mit einer Finanzanwendung einhergeht. Gleichzeitig bringt Helvetica durch ihre sanften Rundungen bei Buchstaben und Ziffern eine subtile, spielerische Leichtigkeit mit – ein Aspekt, der besonders im Hinblick auf die Ansprache junger Nutzerinnen und Nutzer von Bedeutung ist.
+
+Insgesamt wurde das Design so konzipiert, dass es nicht nur Vertrauen schafft, sondern auch visuell ansprechend ist und zur wiederholten Nutzung einlädt.
