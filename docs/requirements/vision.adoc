@@ -1,5 +1,5 @@
 = Vision: {project-name}
-Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <s86218@htw-dresden.de>; Loris Kulke <s87072@htw-dresden.de>; Luca Funk <s84313@htw-dresden.de>; Ruben Czock <s87149@htw-dresden.de>; Lucas Effenberger <s87202@htw-dresden.de>; Ali <s85161@htw-dresden.de>
+Kevin Kunze <s87006@htw-dresden.de>; Natalie Hinze <s86218@htw-dresden.de>; Loris Kulke <s87072@htw-dresden.de>; Luca Funk <s84313@htw-dresden.de>; Ruben Czock <s87149@htw-dresden.de>; Lucas Effenberger <s87202@htw-dresden.de>; Ali Zeinelov<s85161@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
