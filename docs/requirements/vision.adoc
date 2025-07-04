@@ -133,7 +133,7 @@ a|
 * Manuelle Eingabe von Einnahmen und Ausgaben
 ** Vorschläge für Kategorien
 * Wiederkehrende Transaktionen
-| xx
+| MVP
 
 | Kategorisierung
 | sehr hoch
@@ -142,14 +142,14 @@ a|
 * Möglichkeit Kategorien zu organisieren
 * Möglichkeit Kategorien visuell zu gestalten (Farben, Icons)
 * Möglichkeit Kategorien zu einer Transaktion zuzuordnen
-| xx
+| MVP
 
 | Budget
 | hoch
 a|
 * Möglichkeit Budgets zu erstellen, zu bearbeiten und zu löschen
 * Möglichkeit Budgets Kategorien zuzuordnen
-| xx
+| MVP
 
 | Konto
 | hoch
@@ -159,7 +159,7 @@ a|
 * Möglichkeit Konten visuell zu gestalten (Farben, Icons)
 * Möglichkeit Konten Transaktionen zuzuordnen
 * Anzeigen des aktuellen Kontostands
-| xx
+| MVP
 
 | Sparziele
 | mittel
@@ -167,14 +167,14 @@ a|
 * Möglichkeit Sparziele zu erstellen, zu bearbeiten und zu löschen
 * Möglichkeit Raten für Sparziele zu erstellen
 * Möglichkeit Sparziele visuell zu gestalten (Farben, Icons)
-| xx
+| Release 2
 
 | Dashboard
 | mittel
 a|
 * Überblick über aktuelle Trends
 * Darstellung von übersichtlichen Statistiken
-| xx
+| Release 2
 
 | Export/Import
 | niedrig
@@ -182,7 +182,7 @@ a|
 * Export aller Daten in einem geeigneten Format
 ** auch in offiziellen Formaten
 * Import von Daten aus einem geeigneten Format
-| xx
+| Release 3
 
 | Benachrichtigungen
 | niedrig
@@ -190,7 +190,7 @@ a|
 * Benachrichtigung bei und vor dem Erreichen von Budgets
 * Benachrichtigung wenn wiederkehrende Transaktionen anstehen
 * Benutzerdefinierte regelmäßige zusammenfassende Benachrichtigungen
-| xx
+| Release 3
 
 |===
 
@@ -210,18 +210,18 @@ Hinweise:
 
 | Gute Leistung (auf einfachen Geräten)
 | sehr hoch
-| xx
+| MVP
 
 | Benutzerfreundlichkeit
 | sehr hoch
-| xx
+| MVP
 
 | Robustheit
 | hoch
-| xx
+| MVP
 
 | Onboarding
 | mittel
-| xx
+| Release 2
 
 |===
